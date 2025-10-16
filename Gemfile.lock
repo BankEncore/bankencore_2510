@@ -124,6 +124,8 @@ GEM
       railties (>= 6.1.0)
     faker (3.5.2)
       i18n (>= 1.8.11, < 2)
+    foreman (0.90.0)
+      thor (~> 1.4)
     fugit (1.11.2)
       et-orbi (~> 1, >= 1.2.11)
       raabro (~> 1.4)
@@ -378,6 +380,14 @@ GEM
     stringio (3.1.7)
     strong_migrations (2.5.1)
       activerecord (>= 7.1)
+    tailwindcss-rails (4.3.0)
+      railties (>= 7.0.0)
+      tailwindcss-ruby (~> 4.0)
+    tailwindcss-ruby (4.1.13)
+    tailwindcss-ruby (4.1.13-aarch64-linux-gnu)
+    tailwindcss-ruby (4.1.13-aarch64-linux-musl)
+    tailwindcss-ruby (4.1.13-x86_64-linux-gnu)
+    tailwindcss-ruby (4.1.13-x86_64-linux-musl)
     thor (1.4.0)
     thruster (0.1.15)
     thruster (0.1.15-aarch64-linux)
@@ -429,6 +439,7 @@ DEPENDENCIES
   debug
   factory_bot_rails
   faker
+  foreman
   importmap-rails
   jbuilder
   kamal
@@ -449,6 +460,7 @@ DEPENDENCIES
   solid_queue
   stimulus-rails
   strong_migrations
+  tailwindcss-rails
   thruster
   turbo-rails
   tzinfo-data

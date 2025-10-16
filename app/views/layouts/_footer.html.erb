@@ -1,0 +1,54 @@
+<footer class="footer footer-center bg-base-100 text-base-content p-6 mt-12 border-t">
+  <aside>
+    <p>&copy; <%= Time.current.year %> BankEncore</p>
+  </aside>
+</footer>
+<% content_for :page_scripts do %>
+<script type="module">
+const MAP = {
+  cool: { light: "encoreCool",  dark: "encoreCoolDark" },
+  warm: { light: "encoreWarm",  dark: "encoreWarmDark" }, // <-- fix here
+};
+const LS_PALETTE = "ui.theme.palette";
+const LS_MODE = "ui.theme.mode"; // "light"|"dark"
+
+function current() {
+  const palette = localStorage.getItem(LS_PALETTE) || "cool";
+  const mode = localStorage.getItem(LS_MODE) || "light";
+  return { palette, mode, theme: (MAP[palette]||MAP.cool)[mode] };
+}
+
+function apply() {
+  const { palette, mode, theme } = current();
+  // set daisyUI theme via theme-controller
+  const controller = document.querySelector('.theme-controller');
+  if (controller) {
+    controller.value = theme;
+    controller.checked = true; // triggers daisyUI to set data-theme
+    controller.dispatchEvent(new Event("change", { bubbles: true }));
+  } else {
+    document.documentElement.setAttribute("data-theme", theme);
+  }
+  // sync UI
+  document.querySelectorAll('.theme-palette').forEach(r => r.checked = r.value === palette);
+  const t = document.querySelector('.theme-mode'); if (t) t.checked = mode === "dark";
+}
+
+function init() {
+  document.addEventListener("change", (e) => {
+    if (e.target.matches(".theme-palette")) {
+      localStorage.setItem(LS_PALETTE, e.target.value);
+      apply();
+    }
+    if (e.target.matches(".theme-mode")) {
+      localStorage.setItem(LS_MODE, e.target.checked ? "dark" : "light");
+      apply();
+    }
+  });
+  apply();
+}
+
+document.addEventListener("DOMContentLoaded", init);
+document.addEventListener("turbo:load", init);
+</script>
+<% end %>

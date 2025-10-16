@@ -1,0 +1,2 @@
+web: rm -f tmp/pids/server.pid && bin/rails s -b ${HOST:-0.0.0.0} -p ${PORT:-3000}
+css: PATH=./node_modules/.bin:$PATH tailwindcss -i app/assets/tailwind/application.css -o app/assets/builds/tailwind.css --watch
