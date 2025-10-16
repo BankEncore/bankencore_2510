@@ -9,6 +9,7 @@
 
 # Ignore all environment files.
 /.env*
+/.env.*
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -27,11 +28,19 @@
 /tmp/storage/*
 !/tmp/storage/
 !/tmp/storage/.keep
+*.swp
 
 /public/assets
+/public/packs
+/node_modules/
+/vendor/bundle/
+
+/db/*.sqliite3
+*.DS_Store
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+/config/credentials.yml.enc
 
 # Ignore non-git folder
 /non-git/*.secrets.baseline
