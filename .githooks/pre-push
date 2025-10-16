@@ -1,2 +1,2 @@
-#!/bin/sh
-bin/ci
+#!/usr/bin/env bash
+exec bin/ci

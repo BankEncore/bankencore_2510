@@ -1,4 +1,4 @@
-# bin/ci
+#!/usr/bin/env bash
 #!/usr/bin/env bash
 set -euo pipefail
 
@@ -25,10 +25,10 @@ else
   bin/rails test
 fi
 
-echo "== Frontend build =="
+# echo "== Frontend build =="
 # Tailwind (add this script once in package.json)
 # "tailwind:build:ci": "tailwindcss -i app/assets/stylesheets/application.tailwind.css -o app/assets/builds/tailwind.css --minify"
-npm run -s tailwind:build:ci
+# npm run -s tailwind:build:ci
 
 # If you use Vite:
 # bin/vite build
