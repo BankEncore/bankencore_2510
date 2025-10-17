@@ -1,0 +1,6 @@
+# parties.address_uses.yml
+list: { key: parties.address_uses, name: Address Uses }
+values:
+  - { key: mailing,  label: Mailing }
+  - { key: physical, label: Physical }
+  - { key: billing,  label: Billing }

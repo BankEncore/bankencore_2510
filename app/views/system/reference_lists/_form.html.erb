@@ -1,0 +1,42 @@
+<div class="card bg-base-100 shadow">
+  <div class="card-body">
+    <%= form_with model: @list, class: "space-y-4" do |f| %>
+      <% if @list.errors.any? %>
+        <div class="alert alert-error">
+          <span><%= pluralize(@list.errors.count, "error") %> prevented saving.</span>
+        </div>
+      <% end %>
+
+      <label class="form-control">
+        <span class="label-text">Key</span>
+        <%= f.text_field :key, class: "input input-bordered" %>
+      </label>
+
+      <label class="form-control">
+        <span class="label-text">Name</span>
+        <%= f.text_field :name, class: "input input-bordered" %>
+      </label>
+
+      <label class="form-control">
+        <span class="label-text">Description</span>
+        <%= f.text_area :description, rows: 2, class: "textarea textarea-bordered" %>
+      </label>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <label class="form-control">
+          <span class="label-text">Visibility</span>
+          <%= f.text_field :visibility, class: "input input-bordered" %>
+        </label>
+        <label class="form-control">
+          <span class="label-text">Tags (comma-separated)</span>
+          <%= f.text_field :tags, value: Array(@list.tags).join(", "), class: "input input-bordered" %>
+        </label>
+      </div>
+
+      <div class="flex gap-2">
+        <%= f.submit "Save", class: "btn btn-primary" %>
+        <%= link_to "Cancel", (@list.persisted? ? system_reference_list_path(@list) : system_reference_lists_path), class: "btn" %>
+      </div>
+    <% end %>
+  </div>
+</div>

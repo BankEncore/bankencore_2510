@@ -1,0 +1,4 @@
+list: { key: parties.address_types, name: Address Types }
+values:
+  - { key: primary,   label: Primary }
+  - { key: secondary, label: Secondary }

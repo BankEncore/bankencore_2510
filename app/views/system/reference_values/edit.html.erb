@@ -1,0 +1,3 @@
+<h1>Edit Value — <%= @list.name %></h1>
+<%= render "form", list: @list, value: @value %>
+<%= link_to "Back", system_reference_list_reference_value_path(@list, @value) %>

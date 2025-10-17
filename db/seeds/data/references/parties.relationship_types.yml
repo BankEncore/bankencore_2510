@@ -1,0 +1,41 @@
+list:
+  key: parties.relationship_types
+  name: Relationship Types
+  description: Party↔Party relationship catalog with directed inverses
+values:
+  - key: beneficial_owner
+    label: Beneficial Owner
+    metadata: { direction: "person→org", inverse: { code: beneficially_owned_entity, name: "Beneficially Owned Entity" } }
+  - key: control_person
+    label: Control Person
+    metadata: { direction: "person→org", inverse: { code: controlled_entity, name: "Controlled Entity" } }
+  - key: authorized_signer
+    label: Authorized Signer
+    metadata: { direction: "person→org", inverse: { code: signing_principal, name: "Signing Principal" } }
+  - key: guarantor
+    label: Guarantor
+    metadata: { direction: "person→org", inverse: { code: obligor, name: "Obligor" } }
+  - key: custodian
+    label: Custodian
+    metadata: { direction: "org/person→org/person", inverse: { code: asset_owner, name: "Asset Owner" }, symmetric: false }
+  - key: trustee
+    label: Trustee
+    metadata: { direction: "person/org→trust", inverse: { code: trust_with_trustee, name: "Trust With Trustee" } }
+  - key: settlor
+    label: Settlor
+    metadata: { direction: "person→trust", inverse: { code: trust_with_settlor, name: "Trust With Settlor" } }
+  - key: beneficiary
+    label: Beneficiary
+    metadata: { direction: "person/org→trust/estate", inverse: { code: instrument_with_beneficiary, name: "Instrument With Beneficiary" } }
+  - key: executor
+    label: Executor
+    metadata: { direction: "person→estate", inverse: { code: estate_with_executor, name: "Estate With Executor" } }
+  - key: administrator
+    label: Administrator
+    metadata: { direction: "person→estate", inverse: { code: estate_with_administrator, name: "Estate With Administrator" } }
+  - key: guardian
+    label: Guardian
+    metadata: { direction: "person→person", inverse: { code: ward, name: "Ward" } }
+  - key: power_of_attorney
+    label: Power of Attorney
+    metadata: { direction: "person→person", inverse: { code: principal_person, name: "Principal" } }

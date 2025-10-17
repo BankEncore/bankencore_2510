@@ -46,7 +46,8 @@ gem "pg_trunk", require: false # Postgres features via SQL helpers (views, FKs, 
 gem "rack-attack"              # DoS/rate limiting
 
 # Money and locales
-gem "money-rails"
+gem "money"                     # money gem
+gem "money-rails"               # integrates money gem with Rails
 gem "countries"                # ISO 3166 data for country validation
 
 # AuthZ / AuthN (pick one stack)
@@ -77,6 +78,7 @@ group :development, :test do
   gem "faker"
   gem "bundler-audit", require: false
   gem "annotate", require: false
+  gem "shoulda-matchers"       # simplifies model tests
 end
 
 group :development do
@@ -90,3 +92,13 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Gemfile
+group :tools do
+  gem "carmen"                  # countries, states, and provinces
+  gem "phonelib"                # phone number validation
+  gem "routing_numbers"         # routing number validation
+  gem "naics"                   # North American Industry Classification System
+end
+
+gem "roo", "~> 3.0"

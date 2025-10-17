@@ -1,0 +1,29 @@
+list:
+  key: parties.tax_id_types
+  name: Tax ID Types
+  description: Personal and organization tax identifiers
+values:
+  - key: ssn
+    label: U.S. SSN
+    metadata:
+      profile_types: ["person"]
+      format: '^\d{3}-?\d{2}-?\d{4}$'
+      mask: '***-**-####'
+  - key: itin
+    label: U.S. ITIN
+    metadata:
+      profile_types: ["person"]
+      format: '^(9\d{2})-?\d{2}-?\d{4}$'
+      mask: '***-**-####'
+  - key: ein
+    label: U.S. EIN
+    metadata:
+      profile_types: ["organization"]
+      format: '^\d{2}-?\d{7}$'
+      mask: '##-#######'
+  - key: foreign
+    label: Foreign Tax ID
+    metadata:
+      profile_types: ["person", "organization"]
+      format: '^[A-Za-z0-9\-]{1,20}$'
+      mask: '*************####'

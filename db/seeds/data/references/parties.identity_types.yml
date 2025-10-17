@@ -1,0 +1,30 @@
+list:
+  key: parties.identity_types
+  name: Identity Types
+  description: Issued identity documents and registrations
+values:
+  - key: driver_license
+    label: Driver License
+    metadata:
+      applies_to: ["person"]
+      requires: { country: required, region: required, issue_date: optional, expiration_date: required, issuer_freeflow: optional, number: required }
+      assurance: high
+      number_format: '^\d{3,9}$'
+  - key: passport
+    label: Passport
+    metadata:
+      applies_to: ["person"]
+      requires: { country: required, region: none, issue_date: optional, expiration_date: required, issuer_freeflow: optional, number: required }
+      assurance: high
+  - key: military_id
+    label: U.S. Uniformed Services ID/CAC
+    metadata:
+      applies_to: ["person"]
+      requires: { country: optional, region: none, number: required }
+      assurance: high
+  - key: lei
+    label: Legal Entity Identifier
+    metadata:
+      applies_to: ["organization"]
+      requires: { number: required, country: none, region: none }
+      assurance: high

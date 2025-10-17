@@ -1,0 +1,4 @@
+list: { key: relationship_statuses, name: Relationship Statuses }
+values:
+  - { key: active, label: Active }
+  - { key: ended,  label: Ended }

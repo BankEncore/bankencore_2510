@@ -1,0 +1,15 @@
+list: { key: parties.consent_types, name: Consent Types, description: Catalog of consent records }
+values:
+  - { key: terms_of_service, label: Terms of Service, metadata: { jurisdiction: "US", required: true, typical_channels: [web, app, paper] } }
+  - { key: privacy_policy_consent, label: Privacy Policy Consent, metadata: { jurisdiction: "US/GLBA", required: true, typical_channels: [web, app, paper] } }
+  - { key: esign_consent, label: E-Sign Consent, metadata: { jurisdiction: "US/ESIGN+UETA", required: true, typical_channels: [web, app] } }
+  - { key: credit_pull_consent, label: Credit Pull Consent, metadata: { jurisdiction: "US/FCRA", required: true, typical_channels: [web, app, voice] } }
+  - { key: background_check_consent, label: Background Check Consent, metadata: { jurisdiction: "US/FCRA", required: false, typical_channels: [web, app, paper] } }
+  - { key: kyc_data_use, label: KYC Data Use, metadata: { jurisdiction: "US/BSA-AML", required: true, typical_channels: [web, app, paper] } }
+  - { key: ach_debit_authorization, label: ACH Debit Authorization, metadata: { jurisdiction: "US/NACHA", required: "yes-if ACH", typical_channels: [web, app, paper] } }
+  - { key: card_autopay_authorization, label: Card Autopay Authorization, metadata: { jurisdiction: "US/Network", required: false, typical_channels: [web, app] } }
+  - { key: overdraft_opt_in, label: Overdraft Opt-In, metadata: { jurisdiction: "US/Reg E §1005.17", required: false, typical_channels: [web, app, branch] } }
+  - { key: marketing_email_opt_in, label: Marketing Email Opt-In, metadata: { jurisdiction: "US/CAN-SPAM", required: false, typical_channels: [web, app] } }
+  - { key: marketing_sms_opt_in, label: Marketing SMS Opt-In, metadata: { jurisdiction: "US/TCPA", required: false, typical_channels: [web, app] } }
+  - { key: marketing_call_opt_in, label: Marketing Call Opt-In, metadata: { jurisdiction: "US/TCPA", required: false, typical_channels: [web, app, voice] } }
+  - { key: data_sharing_affiliates_opt_out, label: Affiliate Sharing Opt-Out }

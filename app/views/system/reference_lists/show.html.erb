@@ -1,0 +1,57 @@
+<div class="breadcrumbs text-sm mb-4">
+  <ul>
+    <li><%= link_to "Reference Lists", system_reference_lists_path, class: "link" %></li>
+    <li><%= @list.name %></li>
+  </ul>
+</div>
+
+<div class="flex items-start justify-between mb-4">
+  <div>
+    <h1 class="text-2xl font-semibold"><%= @list.name %></h1>
+    <p class="opacity-70"><code><%= @list.key %></code></p>
+  </div>
+  <div class="join">
+    <%= link_to "Edit List", edit_system_reference_list_path(@list), class: "btn join-item" %>
+    <%= link_to "Add Value", new_system_reference_list_reference_value_path(@list), class: "btn btn-primary join-item" %>
+  </div>
+</div>
+
+<div class="card bg-base-100 shadow mb-6">
+  <div class="card-body">
+    <p><span class="font-medium">Visibility:</span> <span class="badge badge-outline ml-2"><%= @list.visibility %></span></p>
+    <p class="mt-2"><span class="font-medium">Tags:</span>
+      <% Array(@list.tags).each { |t| %><span class="badge badge-neutral ml-1"><%= t %></span><% } %>
+    </p>
+    <p class="mt-2"><%= @list.description %></p>
+  </div>
+</div>
+
+<div class="card bg-base-100 shadow">
+  <div class="card-body">
+    <h2 class="card-title">Values</h2>
+    <div class="overflow-x-auto">
+      <table class="table">
+        <thead>
+          <tr><th>Key</th><th>Code</th><th>Label</th><th>Active</th><th>Pos</th><th></th></tr>
+        </thead>
+        <tbody>
+          <% @list.reference_values.order(:position, :key).each do |v| %>
+            <tr>
+              <td><code class="badge badge-ghost"><%= v.key %></code></td>
+              <td><%= v.code %></td>
+              <td><%= link_to v.label, system_reference_list_reference_value_path(@list, v), class: "link link-primary" %></td>
+              <td><span class="badge <%= v.active ? 'badge-success' : 'badge-ghost' %>"><%= v.active ? "Active" : "Inactive" %></span></td>
+              <td><%= v.position %></td>
+              <td class="text-right">
+                <%= link_to "Edit", edit_system_reference_list_reference_value_path(@list, v), class: "btn btn-xs" %>
+                <%= link_to "Delete", system_reference_list_reference_value_path(@list, v),
+                      data: { turbo_method: :delete, turbo_confirm: "Delete value?" },
+                      class: "btn btn-xs btn-error ml-2" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+# parties.email_types.yml
+list: { key: parties.email_types, name: Email Types }
+values:
+  - { key: business, label: Business }
+  - { key: personal, label: Personal }

@@ -1,0 +1,21 @@
+<!-- app/views/payments/ach_routings/index.html.erb -->
+<h1>ACH Routings</h1>
+<form method="get">
+  <input type="text" name="q" value="<%= h params[:q] %>" placeholder="routing, name, state">
+  <input type="text" name="state" value="<%= h params[:state] %>" placeholder="MI">
+  <button type="submit">Search</button>
+</form>
+
+<table>
+  <thead><tr><th>Routing</th><th>Name</th><th>City</th><th>State</th></tr></thead>
+  <tbody>
+  <% @routings.each do |r| %>
+    <tr>
+      <td><%= link_to r.routing_number, payments_ach_routing_path(r) %></td>
+      <td><%= r.customer_name %></td>
+      <td><%= r.city %></td>
+      <td><%= r.state_code %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

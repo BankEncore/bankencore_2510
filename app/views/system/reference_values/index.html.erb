@@ -1,0 +1,29 @@
+<h1 class="text-2xl font-semibold mb-4">Values — <%= @list.name %></h1>
+<div class="mb-3">
+  <%= link_to "Add Value", new_system_reference_list_reference_value_path(@list), class: "btn btn-primary" %>
+  <%= link_to "Back to List", system_reference_list_path(@list), class: "btn ml-2" %>
+</div>
+
+<div class="card bg-base-100 shadow">
+  <div class="card-body">
+    <div class="overflow-x-auto">
+      <table class="table">
+        <thead><tr><th>Key</th><th>Label</th><th>Code</th><th>Active</th><th>Pos</th><th></th></tr></thead>
+        <tbody>
+          <% @values.each do |v| %>
+            <tr>
+              <td><code class="badge badge-ghost"><%= v.key %></code></td>
+              <td><%= link_to v.label, system_reference_list_reference_value_path(@list, v), class: "link link-primary" %></td>
+              <td><%= v.code %></td>
+              <td><span class="badge <%= v.active ? 'badge-success' : 'badge-ghost' %>"><%= v.active ? "Active" : "Inactive" %></span></td>
+              <td><%= v.position %></td>
+              <td class="text-right">
+                <%= link_to "Edit", edit_system_reference_list_reference_value_path(@list, v), class: "btn btn-xs" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

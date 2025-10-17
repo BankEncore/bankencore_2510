@@ -13,4 +13,14 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
 
   root "home#index"
+
+  namespace :payments do
+    resources :ach_routings, param: :public_id, only: [ :index, :show ]
+  end
+
+  namespace :system do
+    resources :reference_lists, param: :public_id do
+      resources :reference_values, param: :public_id
+    end
+  end
 end

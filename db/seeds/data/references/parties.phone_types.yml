@@ -1,0 +1,7 @@
+list: { key: parties.phone_types, name: Phone Types }
+values:
+  - { key: mobile, label: Mobile }
+  - { key: home,   label: Home }
+  - { key: work,   label: Work }
+  - { key: fax,    label: Fax }
+  - { key: other,  label: Other }
