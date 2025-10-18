@@ -19,6 +19,6 @@ Rails.application.routes.draw do
     end
 
     resources :country_currencies
-    resources :naics_codes, only: [:index, :show]
+    resources :naics_codes, only: [ :index, :show ]
   end
 end
