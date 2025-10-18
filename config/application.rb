@@ -26,5 +26,6 @@ module Bankencore
     # config/application.rb
     config.time_zone = "Eastern Time (US & Canada)"
     config.active_record.default_timezone = :utc
+    config.eager_load_paths << Rails.root.join("app/lib")
   end
 end

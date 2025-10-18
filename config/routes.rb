@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   root "home#index"
 
   namespace :payments do
-    resources :ach_routings, param: :public_id, only: [ :index, :show ]
+    resources :ach_routings, param: :public_id, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
   end
 
   namespace :system do

@@ -1,0 +1,13 @@
+<!-- app/views/payments/ach_routings/_details.html.erb -->
+<dl>
+  <dt>Routing</dt><dd><%= routing.routing_number %></dd>
+  <dt>Office</dt><dd><%= routing.office_code %></dd>
+  <dt>FRB</dt><dd><%= routing.servicing_frb_number %></dd>
+  <dt>Record Type</dt><dd><%= routing.record_type_code %></dd>
+  <dt>Changed</dt><dd><%= routing.change_date %></dd>
+  <dt>New Routing</dt><dd><%= routing.new_routing_number %></dd>
+  <dt>Address</dt><dd><%= routing.address %>, <%= routing.city %>, <%= routing.state_code %> <%= routing.zip_code %></dd>
+  <dt>Phone</dt><dd><%= routing.phone_number %></dd>
+  <dt>Status</dt><dd><%= routing.institution_status_code %></dd>
+  <dt>Data View</dt><dd><%= routing.data_view_code %></dd>
+</dl>

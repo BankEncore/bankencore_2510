@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_17_203635) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_18_014524) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -18,11 +18,11 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_17_203635) do
   create_table "payments_ach_routings", force: :cascade do |t|
     t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
     t.string "routing_number", limit: 9, null: false, comment: "Institution’s ABA routing number"
-    t.string "office_code", limit: 1, null: false, comment: "'O' main office, 'B' branch"
+    t.string "office_code", limit: 1, default: "0", null: false, comment: "'O' main office, 'B' branch"
     t.string "servicing_frb_number", limit: 9, comment: "Servicing Federal Reserve Bank routing number"
-    t.string "record_type_code", limit: 1, null: false, comment: "0=Fed, 1=send to customer, 2=send using new routing number"
+    t.string "record_type_code", limit: 1, default: "0", null: false, comment: "0=Fed, 1=send to customer, 2=send using new routing number"
     t.date "change_date", comment: "Last update date (MMDDYY source)"
-    t.string "new_routing_number", limit: 9, comment: "Updated routing number (e.g., merger)"
+    t.string "new_routing_number", limit: 9, default: "000000000", comment: "Updated routing number (e.g., merger)"
     t.string "customer_name", limit: 36, null: false, comment: "Abbreviated institution name"
     t.string "address", limit: 36, comment: "Delivery address"
     t.string "city", limit: 20, comment: "City name"
@@ -30,8 +30,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_17_203635) do
     t.bigint "system_region_id", comment: "Optional FK to SystemRegion (US)"
     t.string "zip_code", limit: 10, comment: "ZIP code"
     t.string "phone_number", limit: 10, comment: "Contact phone, digits only"
-    t.string "institution_status_code", limit: 1, comment: "1 = Receives gov/commercial ACH data"
-    t.string "data_view_code", limit: 1, comment: "1 = Current view"
+    t.string "institution_status_code", limit: 1, default: "1", comment: "1 = Receives gov/commercial ACH data"
+    t.string "data_view_code", limit: 1, default: "1", comment: "1 = Current view"
     t.boolean "us_treasury", default: false, null: false, comment: "ACH number is U.S. Treasury payment"
     t.boolean "us_postal_service", default: false, null: false, comment: "ACH number is U.S. Postal Service money order"
     t.boolean "federal_reserve_bank", default: false, null: false, comment: "ACH number is a Federal Reserve Bank"

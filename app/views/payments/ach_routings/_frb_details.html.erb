@@ -1,0 +1,31 @@
+<!-- app/views/payments/ach_routings/_frb_details.html.erb -->
+<% routing = local_assigns.fetch(:routing, @routing) %>
+<% if (b = routing.frb_branch) %>
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Federal Reserve Branch</h2>
+      <div class="grid md:grid-cols-3 gap-4 text-sm">
+        <div>
+          <div class="opacity-70">District</div>
+          <div><%= b.district %></div>
+        </div>
+        <div>
+          <div class="opacity-70">Name</div>
+          <div><%= b.name %></div>
+        </div>
+        <div>
+          <div class="opacity-70">RTN</div>
+          <div class="font-mono"><%= b.rtn %></div>
+        </div>
+        <div class="md:col-span-2">
+          <div class="opacity-70">Address</div>
+          <div><%= b.street %>, <%= b.city %>, <%= b.state %> <%= b.zip %></div>
+        </div>
+        <div>
+          <div class="opacity-70">Phone</div>
+          <div class="font-mono"><%= number_to_phone(b.phone) %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
