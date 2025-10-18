@@ -27,11 +27,12 @@ bin/rails strong_migrations:check || true
 
 echo "== Tests =="
 if [ -x bin/rspec ]; then
-  bin/rspec \
-    --force-color \
-    --format progress \
-    --format RspecJunitFormatter \
-    --out tmp/test-results/rspec.xml
+    mkdir -p tmp/test-results
+    bundle exec rspec \
+      --force-color \
+      --format progress \
+      --format RspecJunitFormatter \
+      --out tmp/test-results/rspec.xml
 else
   bin/rails test
 fi

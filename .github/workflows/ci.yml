@@ -72,7 +72,7 @@ jobs:
       - name: RSpec
         run: |
           mkdir -p tmp/test-results
-          bin/rspec \
+          bundle exec rspec \
             --force-color \
             --format progress \
             --format RspecJunitFormatter \
