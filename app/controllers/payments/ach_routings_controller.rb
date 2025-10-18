@@ -1,23 +1,19 @@
 # app/controllers/payments/ach_routings_controller.rb
 module Payments
   class AchRoutingsController < ApplicationController
+    include Pagy::Backend
     helper Payments::AchRoutingsHelper
+
     def index
-      @limit  = params[:limit].presence&.to_i || 50
-      @limit  = 200 if @limit > 200
-      @offset = params[:offset].presence&.to_i || 0
+      @q      = params[:q].to_s.strip
+      @state  = params[:state].presence
+      @states = Payments::AchRouting.distinct.order(:state_code).pluck(:state_code)
 
-      scope = Payments::AchRouting.active_view
-      scope = scope.q(params[:q]).state(params[:state])
+      scope = Payments::AchRouting.order(:routing_number)
+      scope = scope.where("routing_number ILIKE :q OR customer_name ILIKE :q", q: "%#{@q}%") if @q.present?
+      scope = scope.where(state_code: @state) if @state
 
-      @routings = scope.order(:routing_number).limit(@limit).offset(@offset)
-
-      @has_next = scope.offset(@offset + @limit).limit(1).exists?
-      @next_off = @offset + @limit
-      @prev_off = [ @offset - @limit, 0 ].max
-
-      @range_start = @routings.empty? ? 0 : (@offset + 1)
-      @range_end   = @offset + @routings.size
+      @pagy, @ach_routings = pagy(scope, items: (params[:items].presence || 50).to_i)
     end
 
     def new

@@ -1,118 +1,80 @@
 <!-- app/views/payments/ach_routings/index.html.erb -->
-<div class="flex items-center justify-between">
-  <h1 class="text-2xl font-semibold">ACH Routings</h1>
-  <div class="flex items-center gap-3">
-    <div class="text-sm opacity-70"><%= number_with_delimiter(@routings.size) %> shown</div>
-    <%= link_to new_payments_ach_routing_path, class: "btn btn-ghost btn-sm gap-2" do %>New<% end %>
-  </div>
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-xl font-semibold">ACH Routings</h1>
 </div>
 
-  <!-- Filters -->
-  <div class="card bg-base-100 shadow">
-    <div class="card-body">
-      <form method="get" class="grid gap-3 md:grid-cols-4">
-        <label class="form-control w-full md:col-span-2">
-          <div class="label"><span class="label-text">Search</span></div>
-          <label class="input input-bordered flex items-center gap-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4a6 6 0 104.472 10.03l3.75 3.75 1.415-1.414-3.75-3.75A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"/></svg>
-            <input
-              type="text"
-              name="q"
-              value="<%= h params[:q] %>"
-              placeholder="routing number, institution, city"
-              class="grow"
-            >
-          </label>
-        </label>
+<%= form_with url: payments_ach_routings_path, method: :get, local: true,
+              class: "mb-3 flex flex-wrap sm:flex-nowrap items-center gap-2" do |f| %>
+  <label class="input input-bordered flex items-center gap-2 flex-1 min-w-[220px]">
+    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4a6 6 0 104.472 10.03l3.75 3.75 1.415-1.414-3.75-3.75A6 6 0 0010 4z"/></svg>
+    <%= f.text_field :q, value: @q, placeholder: "Search routing # or name", class: "grow" %>
+  </label>
 
-        <label class="form-control w-full">
-          <div class="label"><span class="label-text">State</span></div>
-          <select name="state" class="select select-bordered">
-            <option value="">All</option>
-            <% Payments::AchRoutingsHelper::US_STATES.each do |abbr| %>
-              <option value="<%= abbr %>" <%= "selected" if params[:state] == abbr %>><%= abbr %></option>
-            <% end %>
-          </select>
-        </label>
-
-        <label class="form-control w-full">
-          <div class="label"><span class="label-text">Per page</span></div>
-          <select name="limit" class="select select-bordered">
-            <% [25,50,100,200].each do |n| %>
-              <option value="<%= n %>" <%= "selected" if @limit.to_i == n %>><%= n %></option>
-            <% end %>
-          </select>
-        </label>
-
-        <div class="md:col-span-4 flex gap-2">
-          <button type="submit" class="btn btn-primary">Apply</button>
-          <a href="<%= url_for(only_path: true) %>" class="btn btn-ghost">Reset</a>
-        </div>
-      </form>
-    </div>
-  </div>
-
-<!-- Results -->
-<div class="card bg-base-100 shadow">
-  <div class="card-body p-0">
-    <% if @routings.empty? %>
-      <div class="p-6">
-        <div class="alert"><span>No results. Adjust filters and try again.</span></div>
-      </div>
-    <% else %>
-      <div class="overflow-x-auto">
-        <table class="table table-zebra table-sm table-pin-rows">
-          <thead>
-            <tr>
-              <th>Routing</th>
-              <th>Institution</th>
-              <th class="hidden md:table-cell">City</th>
-              <th>State</th>
-              <th class="hidden lg:table-cell">FRB</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @routings.each do |r| %>
-              <tr>
-                <td class="font-mono">
-                  <%= link_to r.routing_number, payments_ach_routing_path(r), class: "link link-primary" %>
-                </td>
-                <td class="max-w-[36ch] truncate"><%= hl(r.customer_name, params[:q]) %></td>
-                <td class="hidden md:table-cell"><%= hl(r.city, params[:q]) %></td>
-                <td><%= r.state_code %></td>
-                <td class="hidden lg:table-cell">
-                <% if (b = r.frb_branch) %>
-                  <span class="badge badge-sm badge-accent ml-2"><%= b.city %></span>
-                <% end %>
-              </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="px-4 py-3 text-sm opacity-70">
-        Showing <%= @range_start %>–<%= @range_end %>
-      </div>
+  <select name="state" class="select select-bordered select-sm shrink-0">
+    <option value="" <%= "selected" if @state.blank? %>>All states</option>
+    <% @states.each do |st| %>
+      <option value="<%= st %>" <%= "selected" if @state == st %>><%= st %></option>
     <% end %>
-  </div>
-</div>
+  </select>
 
+  <select name="items" class="select select-bordered select-sm shrink-0">
+    <% [25,50,100,200].each do |n| %>
+      <option value="<%= n %>" <%= "selected" if params[:items].to_i == n %>><%= n %></option>
+    <% end %>
+  </select>
 
-  <!-- Pagination -->
-  <div class="flex items-center justify-between">
-    <div class="text-sm opacity-70">
-      Offset <%= @offset %> • Limit <%= @limit %>
+  <%= f.submit "Apply", class: "btn btn-sm shrink-0" %>
+<% end %>
+
+<div class="overflow-x-auto">
+  <table class="table table-zebra table-sm">
+    <thead>
+      <tr>
+        <th>Routing #</th><th>Name</th><th>City</th><th>State</th><th>Type</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @ach_routings.each do |r| %>
+        <tr>
+          <td class="font-mono"><%= r.routing_number %></td>
+          <td><%= r.customer_name %></td>
+          <td><%= r.city %></td>
+          <td><%= r.state_code %></td>
+          <td><%= r.office_code %></td> <!-- 'O' main, 'B' branch -->
+          <td><%= link_to "Show", payments_ach_routing_path(r), class: "btn btn-xs" %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+    <% if @pagy.pages > 1 %>
+    <% base = params.permit(:q, :items, :state).to_h %>
+    <div class="mt-4 flex items-center justify-between">
+      <div class="text-sm opacity-70">Page <%= @pagy.page %> of <%= @pagy.pages %></div>
+      <nav class="join">
+        <% if @pagy.prev %>
+          <%= link_to "«", url_for(base.merge(page: @pagy.prev)), class: "join-item btn btn-sm", rel: "prev" %>
+        <% else %>
+          <span class="join-item btn btn-sm btn-disabled">«</span>
+        <% end %>
+
+        <% @pagy.series.each do |item| %>
+          <% if item == :gap %>
+            <span class="join-item btn btn-sm btn-disabled">…</span>
+          <% elsif item == @pagy.page %>
+            <span class="join-item btn btn-sm btn-active"><%= item %></span>
+          <% else %>
+            <%= link_to item, url_for(base.merge(page: item)), class: "join-item btn btn-sm" %>
+          <% end %>
+        <% end %>
+
+        <% if @pagy.next %>
+          <%= link_to "»", url_for(base.merge(page: @pagy.next)), class: "join-item btn btn-sm", rel: "next" %>
+        <% else %>
+          <span class="join-item btn btn-sm btn-disabled">»</span>
+        <% end %>
+      </nav>
     </div>
-    <div class="join">
-      <%= link_to "« Prev",
-                  url_for(request.query_parameters.merge(offset: @prev_off, limit: @limit)),
-                  class: ["btn", "join-item", (@offset.positive? ? nil : "btn-disabled")] %>
-
-      <%= link_to "Next »",
-                  url_for(request.query_parameters.merge(offset: @next_off, limit: @limit)),
-                  class: ["btn", "join-item", (@has_next ? nil : "btn-disabled")] %>
-    </div>
-  </div>
+  <% end %>
 
 </div>
