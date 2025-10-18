@@ -1,0 +1,91 @@
+<!-- app/views/system/naics_codes/show.html.erb -->
+
+<!-- Breadcrumbs -->
+<div class="breadcrumbs text-sm mb-4">
+  <ul>
+    <li><%= link_to "NAICS", system_naics_codes_path, class: "badge badge-ghost" %></li>
+    <% @ancestors.each do |a| %>
+      <li><%= link_to a.code, system_naics_code_path(a), class: "badge badge-outline" %></li>
+    <% end %>
+    <li><span class="badge badge-primary"><%= @naics.code %></span></li>
+  </ul>
+</div>
+
+<!-- Record header banner -->
+<div class="bg-base-200 p-4 rounded-lg mb-4 flex items-center gap-3 justify-between">
+  <h1 class="text-lg font-semibold font-mono truncate">
+    <%= @naics.code %>: <span class="font-normal not-italic"><%= @naics.title %></span>
+  </h1>
+  <div class="shrink-0 space-x-2">
+    <%= link_to "Edit", edit_system_naics_code_path(@naics), class: "btn btn-sm" %>
+    <%= link_to "Back", system_naics_codes_path, class: "btn btn-ghost btn-sm" %>
+  </div>
+</div>
+
+<!-- Two-column summary -->
+<div class="grid md:grid-cols-2 gap-4 mb-4">
+  <!-- Metadata -->
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body p-4">
+      <h3 class="card-title text-sm mb-2">Metadata</h3>
+      <dl class="text-sm grid grid-cols-3 gap-y-2">
+        <dt class="opacity-60 col-span-1">Parent</dt>
+        <dd class="col-span-2">
+          <% if @parent %>
+            <%= link_to "#{@parent.code}: #{@parent.title}", system_naics_code_path(@parent), class: "link" %>
+          <% else %>
+            -
+          <% end %>
+        </dd>
+
+        <dt class="opacity-60 col-span-1">Sector</dt>
+        <dd class="col-span-2"><span class="badge badge-outline"><%= @naics.sector %></span></dd>
+
+        <dt class="opacity-60 col-span-1">Level</dt>
+        <dd class="col-span-2"><span class="badge"><%= @naics.level %></span></dd>
+
+        <dt class="opacity-60 col-span-1">Status</dt>
+        <dd class="col-span-2"><%= @naics.respond_to?(:active) ? (@naics.active ? "Active" : "Inactive") : "-" %></dd>
+      </dl>
+    </div>
+  </div>
+
+  <!-- Lineage -->
+  <div class="card bg-base-100 shadow-sm">
+    <div class="card-body p-4">
+      <h3 class="card-title text-sm mb-2">Lineage</h3>
+      <p class="mb-2 text-sm opacity-70">Level <%= @naics.level %></p>
+      <ol class="list-decimal pl-5 space-y-1 text-sm">
+        <% @lineage.each do |n| %>
+          <li>
+            <span class="font-mono"><%= link_to n.code, system_naics_code_path(n), class: "link" %></span>
+            <span class="opacity-60">—</span>
+            <span><%= n.title %></span>
+          </li>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs / jump links -->
+<div class="tabs tabs-boxed mb-4">
+  <a href="#description" class="tab tab-sm tab-active">Description</a>
+  <a href="#hierarchy"   class="tab tab-sm">Hierarchy</a>
+</div>
+
+<!-- Description -->
+<div id="description" class="prose max-w-none bg-base-100 p-6 rounded-lg shadow-sm mb-6">
+  <h3>Description</h3>
+  <%= @naics.description.present? ? simple_format(@naics.description) : content_tag(:p, "No description.") %>
+</div>
+
+<!-- Hierarchy tree -->
+<div id="hierarchy" class="card bg-base-100 shadow-sm">
+  <div class="card-body p-4">
+    <h3 class="card-title text-sm mb-2">Hierarchy</h3>
+    <ul class="menu menu-sm bg-base-100 rounded-box">
+      <%= render partial: "node", locals: { node: @naics } %>
+    </ul>
+  </div>
+</div>

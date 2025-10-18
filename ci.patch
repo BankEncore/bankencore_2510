@@ -1,0 +1,17 @@
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -84,6 +84,14 @@ jobs:
+       - name: Checkout code
+         uses: actions/checkout@v5
+ 
++      - name: Set up Node.js
++        uses: actions/setup-node@v4
++        with:
++          node-version: '20'
++          cache: 'npm'
++
++      - name: Install Node dependencies
++        run: npm ci
+       - name: Set up Ruby
+         uses: ruby/setup-ruby@v1
+         with:

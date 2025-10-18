@@ -143,3 +143,12 @@
   --depth: 1;
   --noise: 1;
 }
+
+
+/* hide native markers */
+details > summary::marker { content: ""; }
+details summary::-webkit-details-marker { display: none; }
+
+/* rotate chevron when open */
+details[open] summary .chev { transform: rotate(90deg); }
+details summary .chev { transition: transform .15s ease; }

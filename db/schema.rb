@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_18_014524) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_18_152632) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -100,6 +100,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_014524) do
     t.integer "level", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
+    t.boolean "active", default: true, null: false
     t.index ["public_id"], name: "index_system_naics_codes_on_public_id", unique: true
     t.index ["year", "code"], name: "index_system_naics_codes_on_year_and_code", unique: true
     t.index ["year", "parent_code"], name: "index_system_naics_codes_on_year_and_parent_code"
@@ -135,10 +137,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_014524) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "reference_list_id", null: false
+    t.bigint "system_reference_list_id"
     t.index ["metadata"], name: "index_system_reference_values_on_metadata", using: :gin
     t.index ["parent_id"], name: "index_system_reference_values_on_parent_id"
     t.index ["public_id"], name: "index_system_reference_values_on_public_id", unique: true
     t.index ["reference_list_id"], name: "index_system_reference_values_on_reference_list_id"
+    t.index ["system_reference_list_id"], name: "index_system_reference_values_on_system_reference_list_id"
   end
 
   create_table "system_regions", force: :cascade do |t|
@@ -158,6 +162,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_014524) do
   end
 
   add_foreign_key "payments_ach_routings", "system_regions"
+  add_foreign_key "system_reference_values", "system_reference_lists"
   add_foreign_key "system_reference_values", "system_reference_lists", column: "reference_list_id"
   add_foreign_key "system_reference_values", "system_reference_values", column: "parent_id", name: "fk_srv_to_parent"
   add_foreign_key "system_regions", "system_countries"

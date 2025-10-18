@@ -23,4 +23,10 @@ Rails.application.routes.draw do
       resources :reference_values, param: :public_id
     end
   end
+
+  Rails.application.routes.draw do
+    namespace :system do
+      resources :naics_codes
+    end
+  end
 end
