@@ -45,3 +45,6 @@
 # Ignore non-git folder
 /non-git/*.secrets.baseline
 .secrets.baseline
+
+/app/assets/builds/*
+!/app/assets/builds/.keep

@@ -1,0 +1,10 @@
+# parties.organization_types.yml
+list: { key: parties.organization_types, name: Organization Types }
+values:
+  - { key: c_corp,   label: C-Corp }
+  - { key: s_corp,   label: S-Corp }
+  - { key: llc,      label: LLC }
+  - { key: partnership, label: Partnership }
+  - { key: nonprofit,   label: Nonprofit }
+  - { key: trust,    label: Trust }
+  - { key: other,    label: Other }

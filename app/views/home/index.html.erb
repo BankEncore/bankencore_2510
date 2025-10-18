@@ -1,0 +1,79 @@
+<div class="min-h-screen bg-base-200">
+  <!-- Hero -->
+  <section class="hero bg-gradient-to-b from-base-100 to-base-200">
+    <div class="hero-content text-center">
+      <div>
+        <h1 class="text-5xl font-bold">BankEncore</h1>
+        <p class="py-4 opacity-80">Modular banking platform</p>
+        <div class="join">
+          <a class="btn btn-primary join-item">Get started</a>
+          <a class="btn btn-outline join-item">Docs</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Key stats -->
+  <section class="container mx-auto max-w-6xl p-6">
+    <div class="stats stats-vertical lg:stats-horizontal shadow">
+      <div class="stat">
+        <div class="stat-title">Accounts</div>
+        <div class="stat-value">0</div>
+        <div class="stat-desc">seed pending</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Customers</div>
+        <div class="stat-value">0</div>
+        <div class="stat-desc">onboarding</div>
+      </div>
+      <div class="stat">
+        <div class="stat-title">Latency</div>
+        <div class="stat-value">~</div>
+        <div class="stat-desc">dev mode</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section class="container mx-auto max-w-6xl p-6">
+    <div class="grid gap-6 md:grid-cols-3">
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
+          <h3 class="card-title">CIF / Party</h3>
+          <p>Customers, organizations, relationships, screenings.</p>
+          <div class="card-actions"><a class="btn btn-outline btn-sm" href="#">Open</a></div>
+        </div>
+      </div>
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
+          <h3 class="card-title">Core & Ledger</h3>
+          <p>Postings, holds, balances, reconciliation.</p>
+          <div class="card-actions"><a class="btn btn-outline btn-sm" href="#">Open</a></div>
+        </div>
+      </div>
+      <div class="card bg-base-100 shadow">
+        <div class="card-body">
+          <h3 class="card-title">Compliance</h3>
+          <p>KYC, beneficial ownership, audit trails.</p>
+          <div class="card-actions"><a class="btn btn-outline btn-sm" href="#">Open</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="container mx-auto max-w-6xl p-6">
+    <div class="join flex flex-col md:flex-row items-center justify-between gap-3 bg-base-100 p-6 rounded-box border">
+      <p class="text-base-content/80">Ready to wire up your first module?</p>
+      <div class="join">
+        <input class="input input-bordered join-item" placeholder="e.g. Parties" />
+        <button class="btn btn-primary join-item">Create</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer note -->
+  <section class="text-center text-sm text-base-content/60 pb-10">
+    <p>Rails <%= Rails.version %> · Ruby <%= RUBY_VERSION %> · PostgreSQL 16</p>
+  </section>
+</div>

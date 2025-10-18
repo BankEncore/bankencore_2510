@@ -1,0 +1,29 @@
+<header class="navbar bg-base-100 shadow">
+  <div class="flex-1">
+    <%= link_to "BankEncore", root_path, class: "btn btn-ghost text-xl" %>
+  </div>
+
+  <!-- make this a flex row -->
+  <div class="flex-none flex items-center gap-3">
+    <form action="/search" method="get" class="hidden md:block">
+      <label class="input input-bordered flex items-center gap-2 w-72">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4a6 6 0 104.472 10.03l3.75 3.75 1.415-1.414-3.75-3.75A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"/></svg>
+        <input name="q" placeholder="Search" class="grow" />
+      </label>
+    </form>
+
+    <div class="dropdown dropdown-end">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+        <div class="w-10 rounded-full bg-neutral text-neutral-content grid place-items-center">
+          <span class="font-bold">U</span>
+        </div>
+      </div>
+      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-56">
+        <li><%= link_to "Profile", "/profile" %></li>
+        <li><%= link_to "Settings", "/settings" %></li>
+        <li><%= link_to "Logout", "/logout", data: { turbo_method: :delete } %></li>
+        <li><%= render "layouts/theme_switcher" %></li>
+      </ul>
+    </div>
+  </div>
+</header>

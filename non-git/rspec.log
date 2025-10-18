@@ -1,0 +1,15 @@
+*...............*
+
+Pending: (Failures listed here are expected and do not affect your suite's status)
+
+  1) HomeHelper add some examples to (or delete) /home/syckot/bankencore/spec/helpers/home_helper_spec.rb
+     # Not yet implemented
+     # ./spec/helpers/home_helper_spec.rb:14
+
+  2) home/index.html.tailwindcss add some examples to (or delete) /home/syckot/bankencore/spec/views/home/index.html.tailwindcss_spec.rb
+     # Not yet implemented
+     # ./spec/views/home/index.html.tailwindcss_spec.rb:4
+
+Finished in 0.96841 seconds (files took 2.15 seconds to load)
+17 examples, 0 failures, 2 pending
+

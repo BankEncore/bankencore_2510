@@ -1,0 +1,5 @@
+list: { key: parties.name_types, name: Name Types }
+values:
+  - { key: legal,     label: Legal }
+  - { key: preferred, label: Preferred }
+  - { key: previous,  label: Previous }

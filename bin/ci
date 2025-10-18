@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "== Ruby deps =="
+bundle check || bundle install
+
+echo "== DB prepare =="
+bin/rails db:prepare
+RAILS_ENV=test bin/rails db:prepare
+
+echo "== Code quality =="
+bundle exec rubocop
+bundle exec brakeman -q
+bundle exec bundler-audit check --update || true   # fail only on real vulns if you prefer
+
+echo "== Safety checks =="
+bin/rails zeitwerk:check
+bundle exec rake -T strong_migrations
+
+echo "== Tests =="
+if [ -f bin/rspec ]; then
+  bundle exec rspec
+else
+  bin/rails test
+fi
+
+# echo "== Frontend build =="
+# Tailwind (add this script once in package.json)
+# "tailwind:build:ci": "tailwindcss -i app/assets/stylesheets/application.tailwind.css -o app/assets/builds/tailwind.css --minify"
+# npm run -s tailwind:build:ci
+
+# If you use Vite:
+# bin/vite build
+
+echo "OK"

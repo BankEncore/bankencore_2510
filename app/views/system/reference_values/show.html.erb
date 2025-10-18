@@ -1,0 +1,54 @@
+<div class="breadcrumbs text-sm mb-4">
+  <ul>
+    <li><%= link_to "Reference Lists", system_reference_lists_path, class: "link" %></li>
+    <li><%= link_to @list.name, system_reference_list_path(@list), class: "link" %></li>
+    <li><%= @value.label %></li>
+  </ul>
+</div>
+
+<div class="card bg-base-100 shadow">
+  <div class="card-body">
+    <div class="flex items-center justify-between">
+      <h1 class="text-2xl font-semibold"><%= @value.label %></h1>
+      <div class="join">
+        <%= link_to "Edit", edit_system_reference_list_reference_value_path(@list, @value), class: "btn join-item" %>
+        <%= link_to "Delete", system_reference_list_reference_value_path(@list, @value),
+              data: { turbo_method: :delete, turbo_confirm: "Delete value?" },
+              class: "btn btn-error join-item" %>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+      <div class="stats shadow w-full">
+        <div class="stat">
+          <div class="stat-title">Key</div>
+          <div class="stat-value text-base"><code><%= @value.key %></code></div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Code</div>
+          <div class="stat-value text-base"><%= @value.code %></div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Active</div>
+          <div class="stat-value text-base"><span class="badge <%= @value.active ? 'badge-success' : 'badge-ghost' %>"><%= @value.active ? "Active" : "Inactive" %></span></div>
+        </div>
+        <div class="stat">
+          <div class="stat-title">Position</div>
+          <div class="stat-value text-base"><%= @value.position %></div>
+        </div>
+      </div>
+
+      <div>
+        <div class="mb-2 font-medium">Effective</div>
+        <div class="join">
+          <span class="join-item badge badge-outline">From: <%= @value.effective_from %></span>
+          <span class="join-item badge badge-outline">To: <%= @value.effective_to %></span>
+        </div>
+        <div class="mt-4">
+          <div class="font-medium mb-1">Metadata</div>
+          <pre class="p-3 bg-base-200 rounded"><%= JSON.pretty_generate(@value.metadata || {}) %></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

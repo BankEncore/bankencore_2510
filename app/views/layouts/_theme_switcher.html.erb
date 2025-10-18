@@ -1,0 +1,29 @@
+<li>
+  <details>
+    <summary>Theme</summary>
+    <div class="p-3 w-64 space-y-3">
+      <div class="form-control">
+        <div class="label-text mb-1">Palette</div>
+        <label class="label cursor-pointer justify-start gap-2">
+          <input type="radio" name="palette" value="cool" class="radio radio-xs theme-palette">
+          <span>Encore Cool</span>
+        </label>
+        <div />
+        <label class="label cursor-pointer justify-start gap-2">
+          <input type="radio" name="palette" value="warm" class="radio radio-xs theme-palette">
+          <span>Encore Warm</span>
+        </label>
+      </div>
+
+      <div class="form-control">
+        <label class="label cursor-pointer justify-between">
+          <span class="label-text">Dark mode</span>
+          <input type="checkbox" class="toggle theme-mode">
+        </label>
+      </div>
+
+      <!-- daisyUI theme controller input (value = actual theme id) -->
+      <input type="radio" name="theme" class="theme-controller hidden" value="encoreCool">
+    </div>
+  </details>
+</li>

@@ -6,4 +6,9 @@
 #
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
+load Rails.root.join("db/seeds/countries_regions_from_gems.rb")
+load Rails.root.join("db/seeds/references.rb")
+load Rails.root.join("db/seeds/fedach.rb")
+load Rails.root.join("db/seeds/currencies.rb")
+load Rails.root.join("db/seeds/naics_from_xlsx.rb")
 #   end

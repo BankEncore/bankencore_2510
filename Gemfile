@@ -46,7 +46,8 @@ gem "pg_trunk", require: false # Postgres features via SQL helpers (views, FKs, 
 gem "rack-attack"              # DoS/rate limiting
 
 # Money and locales
-gem "money-rails"
+gem "money"                     # money gem
+gem "money-rails"               # integrates money gem with Rails
 gem "countries"                # ISO 3166 data for country validation
 
 # AuthZ / AuthN (pick one stack)
@@ -58,7 +59,8 @@ gem "pundit"                   # authorization (RBAC policies)
 # Auditing and trails
 gem "paper_trail"              # versioning for compliance
 
-
+# CSS
+gem "tailwindcss-rails"        # Tailwind CSS via Propshaft
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
@@ -76,11 +78,13 @@ group :development, :test do
   gem "faker"
   gem "bundler-audit", require: false
   gem "annotate", require: false
+  gem "shoulda-matchers"       # simplifies model tests
 end
 
 group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
+  gem "foreman", require: false
 end
 
 group :test do
@@ -88,3 +92,13 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+# Gemfile
+group :tools do
+  gem "carmen"                  # countries, states, and provinces
+  gem "phonelib"                # phone number validation
+  gem "routing_numbers"         # routing number validation
+  gem "naics"                   # North American Industry Classification System
+end
+
+gem "roo", "~> 3.0"

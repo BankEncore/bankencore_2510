@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "home/index"
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -10,5 +11,16 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
+
+  root "home#index"
+
+  namespace :payments do
+    resources :ach_routings, param: :public_id, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
+  end
+
+  namespace :system do
+    resources :reference_lists, param: :public_id do
+      resources :reference_values, param: :public_id
+    end
+  end
 end
