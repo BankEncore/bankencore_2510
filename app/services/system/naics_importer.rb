@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module System
   class NaicsImporter
     def self.run(path:, year:)

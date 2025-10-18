@@ -61,6 +61,7 @@ gem "paper_trail"              # versioning for compliance
 
 # CSS
 gem "tailwindcss-rails"        # Tailwind CSS via Propshaft
+gem "pagy", "~> 6.4"                     # pagination
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem

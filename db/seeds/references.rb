@@ -38,7 +38,7 @@ def load_yaml_file(path)
   doc = YAML.safe_load_file(path)
   unless doc.is_a?(Hash) && doc["list"].is_a?(Hash)
     puts "SKIP invalid YAML: #{path}"
-    return [0, 0]
+    return [ 0, 0 ]
   end
 
   lists_added = 0
@@ -54,7 +54,7 @@ def load_yaml_file(path)
     end
   end
 
-  [lists_added, vals_added]
+  [ lists_added, vals_added ]
 rescue => e
   warn "ERROR in #{path}: #{e.class}: #{e.message}"
   raise

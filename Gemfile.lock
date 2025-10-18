@@ -235,6 +235,7 @@ GEM
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
     ostruct (0.6.3)
+    pagy (6.5.0)
     paper_trail (16.0.0)
       activerecord (>= 6.1)
       request_store (~> 1.4)
@@ -491,6 +492,7 @@ DEPENDENCIES
   money
   money-rails
   naics
+  pagy (~> 6.4)
   paper_trail
   pg (~> 1.1)
   pg_trunk
