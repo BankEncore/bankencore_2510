@@ -1,0 +1,41 @@
+<%= form_with model: @country_currency, class: "space-y-4" do |f| %>
+  <% if @country_currency.errors.any? %>
+    <div class="alert alert-error">
+      <span><%= pluralize(@country_currency.errors.count, "error") %> prevented saving</span>
+    </div>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <label class="form-control">
+      <div class="label"><span class="label-text">Country</span></div>
+      <%= f.collection_select :country_id, @countries, :id, :name,
+            { prompt: "Select country" }, class: "select select-bordered" %>
+    </label>
+
+    <label class="form-control">
+      <div class="label"><span class="label-text">Currency</span></div>
+      <%= f.collection_select :currency_id, @currencies, :id, ->(c) { "#{c.code} — #{c.name}" },
+            { prompt: "Select currency" }, class: "select select-bordered" %>
+    </label>
+
+    <label class="form-control">
+      <div class="label"><span class="label-text">Valid From</span></div>
+      <%= f.date_field :valid_from, class: "input input-bordered" %>
+    </label>
+
+    <label class="form-control">
+      <div class="label"><span class="label-text">Valid To</span></div>
+      <%= f.date_field :valid_to, class: "input input-bordered" %>
+    </label>
+
+    <label class="label cursor-pointer col-span-1 md:col-span-2">
+      <span class="label-text mr-4">Default for country</span>
+      <%= f.check_box :default_for_country, class: "toggle" %>
+    </label>
+  </div>
+
+  <div class="flex gap-2">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", system_country_currencies_path, class: "btn btn-ghost" %>
+  </div>
+<% end %>

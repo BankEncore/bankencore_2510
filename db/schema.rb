@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_18_152632) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_18_185603) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -75,6 +75,21 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_152632) do
     t.index ["iso3"], name: "index_system_countries_on_iso3", unique: true
     t.index ["numeric"], name: "index_system_countries_on_numeric"
     t.index ["public_id"], name: "index_system_countries_on_public_id", unique: true
+  end
+
+  create_table "system_country_currencies", force: :cascade do |t|
+    t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
+    t.bigint "country_id", null: false
+    t.bigint "currency_id", null: false
+    t.boolean "default_for_country", default: true, null: false
+    t.date "valid_from"
+    t.date "valid_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["country_id", "currency_id"], name: "idx_scc_on_country_currency", unique: true
+    t.index ["country_id"], name: "idx_scc_default_per_country", where: "default_for_country"
+    t.index ["public_id"], name: "index_system_country_currencies_on_public_id", unique: true
+    t.check_constraint "valid_to IS NULL OR valid_from IS NULL OR valid_from <= valid_to", name: "chk_scc_valid_window"
   end
 
   create_table "system_currencies", force: :cascade do |t|
@@ -162,6 +177,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_152632) do
   end
 
   add_foreign_key "payments_ach_routings", "system_regions"
+  add_foreign_key "system_country_currencies", "system_countries", column: "country_id"
+  add_foreign_key "system_country_currencies", "system_currencies", column: "currency_id"
   add_foreign_key "system_reference_values", "system_reference_lists"
   add_foreign_key "system_reference_values", "system_reference_lists", column: "reference_list_id"
   add_foreign_key "system_reference_values", "system_reference_values", column: "parent_id", name: "fk_srv_to_parent"

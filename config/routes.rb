@@ -24,6 +24,11 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :system do
+    resources :country_currencies
+  end
+
+
   Rails.application.routes.draw do
     namespace :system do
       resources :naics_codes

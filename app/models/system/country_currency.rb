@@ -1,16 +1,3 @@
-# app/models/system/currency.rb
-class System::Currency < ApplicationRecord
-  self.table_name = "system_currencies"
-
-  has_many :country_currencies,
-           class_name: "System::CountryCurrency",
-           foreign_key: :currency_id,
-           dependent: :destroy
-
-  # existing validations are fine; keep money-gem data authoritative
-end
-
-# app/models/system/country_currency.rb
 class System::CountryCurrency < ApplicationRecord
   self.table_name = "system_country_currencies"
 

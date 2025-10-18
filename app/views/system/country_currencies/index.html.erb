@@ -1,0 +1,70 @@
+<div class="p-4">
+  <div class="navbar bg-base-200 rounded-box mb-4">
+    <div class="flex-1">
+      <span class="text-lg font-semibold">Country ↔ Currency</span>
+    </div>
+    <div class="flex-none">
+      <%= link_to "New", new_system_country_currency_path, class: "btn btn-primary btn-sm" %>
+    </div>
+  </div>
+
+  <%= form_with url: system_country_currencies_path, method: :get, local: true, class: "mb-4" do %>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Country</span></div>
+        <%= select_tag :country_id,
+              options_from_collection_for_select(@countries, :id, :name, params[:country_id]),
+              include_blank: "All", class: "select select-bordered w-full" %>
+      </label>
+
+      <label class="form-control w-full">
+        <div class="label"><span class="label-text">Currency</span></div>
+        <%= select_tag :currency_id,
+              options_from_collection_for_select(@currencies, :id, ->(c) { "#{c.code} — #{c.name}" }, params[:currency_id]),
+              include_blank: "All", class: "select select-bordered w-full" %>
+      </label>
+
+      <div class="flex items-end">
+        <button class="btn btn-outline">Filter</button>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="overflow-x-auto">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Country</th>
+          <th>Currency</th>
+          <th>Default</th>
+          <th>Valid From</th>
+          <th>Valid To</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @country_currencies.each do |cc| %>
+          <tr>
+            <td><%= cc.country.name %></td>
+            <td><%= "#{cc.currency.code} — #{cc.currency.name}" %></td>
+            <td>
+              <% if cc.default_for_country %>
+                <span class="badge badge-primary">Default</span>
+              <% else %>
+                <span class="badge">No</span>
+              <% end %>
+            </td>
+            <td><%= cc.valid_from&.to_s %></td>
+            <td><%= cc.valid_to&.to_s %></td>
+            <td class="flex gap-2">
+              <%= link_to "Show", system_country_currency_path(cc), class: "btn btn-sm" %>
+              <%= link_to "Edit", edit_system_country_currency_path(cc), class: "btn btn-sm btn-outline" %>
+              <%= button_to "Delete", system_country_currency_path(cc), method: :delete,
+                    data: { confirm: "Delete mapping?" }, class: "btn btn-sm btn-error" %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>

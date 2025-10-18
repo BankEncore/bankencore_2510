@@ -59,3 +59,26 @@ rescue => e
   warn "ERROR in #{path}: #{e.class}: #{e.message}"
   raise
 end
+
+def ensure_country_currency(iso2_code, currency_code, default: true, from: nil, to: nil)
+  country  = System::Country.find_by!(iso2: iso2_code)
+  currency = System::Currency.find_by!(code: currency_code)
+
+  rec = System::CountryCurrency.find_or_initialize_by(country: country, currency: currency)
+  rec.default_for_country = default
+  rec.valid_from = from
+  rec.valid_to   = to
+  rec.save!
+
+  # keep a single default per country
+  if default
+    System::CountryCurrency.where(country_id: country.id)
+      .where.not(id: rec.id)
+      .update_all(default_for_country: false)
+  end
+
+  rec
+end
+
+ensure_country_currency("US", "USD")
+ensure_country_currency("CA", "CAD")

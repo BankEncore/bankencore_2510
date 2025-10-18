@@ -1,0 +1,19 @@
+<div class="p-4">
+  <div class="card bg-base-200">
+    <div class="card-body">
+      <h2 class="card-title">Mapping</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div><span class="font-semibold">Country:</span> <%= @country_currency.country.name %></div>
+        <div><span class="font-semibold">Currency:</span> <%= "#{@country_currency.currency.code} — #{@country_currency.currency.name}" %></div>
+        <div><span class="font-semibold">Default:</span> <%= @country_currency.default_for_country ? "Yes" : "No" %></div>
+        <div><span class="font-semibold">Valid From:</span> <%= @country_currency.valid_from&.to_s %></div>
+        <div><span class="font-semibold">Valid To:</span> <%= @country_currency.valid_to&.to_s %></div>
+      </div>
+
+      <div class="card-actions justify-end mt-4">
+        <%= link_to "Edit", edit_system_country_currency_path(@country_currency), class: "btn" %>
+        <%= link_to "Back", system_country_currencies_path, class: "btn btn-ghost" %>
+      </div>
+    </div>
+  </div>
+</div>
