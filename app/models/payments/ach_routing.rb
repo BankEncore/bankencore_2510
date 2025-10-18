@@ -24,11 +24,11 @@ module Payments
 
     def flags
       pairs = []
-      pairs << ["U.S. Treasury",        "badge-primary"]   if us_treasury
-      pairs << ["USPS Money Order",     "badge-secondary"] if us_postal_service
-      pairs << ["Federal Reserve Bank", "badge-accent"]    if federal_reserve_bank
-      pairs << ["On Us",                "badge-info"]      if on_us
-      pairs << ["Special Handling",     "badge-warning"]   if special_handling
+      pairs << [ "U.S. Treasury",        "badge-primary" ]   if us_treasury
+      pairs << [ "USPS Money Order",     "badge-secondary" ] if us_postal_service
+      pairs << [ "Federal Reserve Bank", "badge-accent" ]    if federal_reserve_bank
+      pairs << [ "On Us",                "badge-info" ]      if on_us
+      pairs << [ "Special Handling",     "badge-warning" ]   if special_handling
       pairs
     end
 
