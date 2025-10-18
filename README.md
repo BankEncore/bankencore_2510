@@ -1,4 +1,5 @@
 # BankEncore
+[![CI](https://github.com/BankEncore/bankencore_2510/actions/workflows/ci.yml/badge.svg)](https://github.com/BankEncore/bankencore_2510/actions/workflows/ci.yml)
 
 BankEncore is a modular core-banking platform built with **Ruby on Rails 8**, **PostgreSQL 16**, and **Tailwind CSS 4**.  
 It is designed for clarity, auditability, and extensibility—each business domain (Parties, Products, Ledger, Compliance, etc.) lives in its own namespace.
