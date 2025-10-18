@@ -1,0 +1,48 @@
+<!-- app/views/system/naics_codes/show.html.erb -->
+<div class="breadcrumbs text-sm mb-3">
+  <ul>
+    <li><%= link_to "System", "#" %></li>
+    <li><%= link_to "NAICS", system_naics_codes_path %></li>
+    <li><%= @naics.code %></li>
+  </ul>
+</div>
+
+<div class="card bg-base-100 shadow">
+  <div class="card-body">
+    <div class="flex items-center justify-between">
+      <h2 class="card-title"><%= @naics.year %> / <%= @naics.code %></h2>
+      <div class="space-x-2">
+        <%= link_to "Edit", edit_system_naics_code_path(@naics), class: "btn btn-sm" %>
+        <%= link_to "Back", system_naics_codes_path, class: "btn btn-ghost btn-sm" %>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <div>
+        <div class="text-sm opacity-70">Title</div>
+        <div><%= @naics.title %></div>
+      </div>
+      <div>
+        <div class="text-sm opacity-70">Sector</div>
+        <div class="badge badge-outline"><%= @naics.sector %></div>
+      </div>
+      <div>
+        <div class="text-sm opacity-70">Parent</div>
+        <div><%= @naics.parent_code.presence || "-" %></div>
+      </div>
+      <div>
+        <div class="text-sm opacity-70">Level</div>
+        <div class="badge"><%= @naics.level %></div>
+      </div>
+      <% if @naics.respond_to?(:active) %>
+        <div>
+          <div class="text-sm opacity-70">Status</div>
+          <div><%= @naics.active ? "Active" : "Inactive" %></div>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="divider">Description</div>
+    <div class="prose max-w-none"><%= simple_format(@naics.description) %></div>
+  </div>
+</div>

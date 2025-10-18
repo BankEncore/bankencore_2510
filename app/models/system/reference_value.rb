@@ -1,6 +1,6 @@
 # app/models/system/reference_value.rb
 class System::ReferenceValue < ApplicationRecord
-  belongs_to :reference_list, class_name: "System::ReferenceList", foreign_key: :reference_list_id
+  belongs_to :reference_list, class_name: "System::ReferenceList", foreign_key: :reference_list_id, inverse_of: :reference_values
 
   # ensure polymorphic routing uses reference_values
   def self.model_name = ActiveModel::Name.new(self, nil, "ReferenceValue")

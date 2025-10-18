@@ -1,0 +1,47 @@
+<!-- app/views/system/naics_codes/index.html.erb -->
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-xl font-semibold">NAICS</h1>
+  <%= link_to "New", new_system_naics_code_path, class: "btn btn-primary btn-sm" %>
+</div>
+
+<%= form_with url: system_naics_codes_path, method: :get, local: true, class: "mb-3" do |f| %>
+  <label class="input input-bordered flex items-center gap-2 max-w-md">
+    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4a6 6 0 104.472 10.03l3.75 3.75 1.415-1.414-3.75-3.75A6 6 0 0010 4z"/></svg>
+    <%= f.text_field :q, value: @q, placeholder: "Search code or title", class: "grow" %>
+  </label>
+<% end %>
+
+<div class="overflow-x-auto">
+  <table class="table table-zebra">
+    <thead>
+      <tr>
+        <th>Year</th><th>Code</th><th>Title</th><th>Sector</th><th>Parent</th><th>Lvl</th><th>Active</th><th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @naics_codes.each do |n| %>
+        <tr>
+          <td><%= n.year %></td>
+          <td><%= link_to n.code, system_naics_code_path(n), class: "link link-primary" %></td>
+          <td><%= n.title %></td>
+          <td><span class="badge badge-outline"><%= n.sector %></span></td>
+          <td><%= n.parent_code.presence || "-" %></td>
+          <td><span class="badge"><%= n.level %></span></td>
+          <td>
+            <% if n.respond_to?(:active) && n.active %>
+              <span class="badge badge-success">Active</span>
+            <% elsif n.respond_to?(:active) %>
+              <span class="badge badge-ghost">Inactive</span>
+            <% else %>-<% end %>
+          </td>
+          <td class="space-x-2">
+            <%= link_to "Edit", edit_system_naics_code_path(n), class: "btn btn-xs" %>
+            <%= link_to "Delete", system_naics_code_path(n),
+                  class: "btn btn-error btn-xs",
+                  data: { turbo_method: :delete, turbo_confirm: "Delete #{n.code}?" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
