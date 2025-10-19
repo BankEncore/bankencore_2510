@@ -1,8 +1,7 @@
 name: Feature Request
-about: Suggest a feature or enhancement
+description: Suggest a feature or enhancement
 title: "[Feature] "
 labels: ["type/feature", "needs triage"]
-project: ["bankencore/1"]
 assignees: 
   - tswarren
 body:
