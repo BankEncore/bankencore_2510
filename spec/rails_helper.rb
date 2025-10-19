@@ -19,6 +19,9 @@ Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 RSpec.configure do |config|
   # FactoryBot
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include Devise::Test::ControllerHelpers,  type: :controller
 
   # Use transactional DB tests
   config.use_transactional_fixtures = true
