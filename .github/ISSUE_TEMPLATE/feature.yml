@@ -20,7 +20,7 @@ body:
     attributes:
       label: User Story
       description: Describe the feature from the user's perspective.
-      placeholder: As a [type of user], I want [an action] so that [a benefit].
+      placeholder: "As a [type of user], I want [an action] so that [a benefit]."
     validations:
       required: false
   - type: textarea
@@ -28,7 +28,7 @@ body:
     attributes:
       label: Acceptance Criteria
       description: List the conditions that must be met for the feature to be considered complete.
-      placeholder: - Given [context], when [action], then [outcome].
+      placeholder: "- Given [context], when [action], then [outcome].""
     validations:
       required: false
   - type: textarea
