@@ -13,6 +13,6 @@ Rails.application.routes.draw do
       resources :reference_values, param: :public_id
     end
     resources :country_currencies
-    resources :naics_codes, only: [:index, :show]
+    resources :naics_codes, only: [ :index, :show ]
   end
 end
