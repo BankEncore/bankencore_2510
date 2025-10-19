@@ -1,0 +1,21 @@
+<!-- app/views/layouts/admin.html.erb -->
+<!DOCTYPE html>
+<html lang="en" data-theme="<%= content_for?(:theme) ? yield(:theme) : "encoreCool" %>">
+  <head><%= render "layouts/head" %></head>
+  <body class="min-h-screen bg-base-200 text-base-content">
+    <header class="navbar bg-base-100 shadow">
+      <div class="flex-1">
+        <%= link_to "Admin", admin_root_path, class: "btn btn-ghost text-xl" %>
+      </div>
+      <div class="flex-none">
+        <%= link_to "Back to app", root_path, class: "btn btn-outline btn-sm" %>
+      </div>
+    </header>
+
+    <div class="container mx-auto max-w-5xl p-4">
+      <main><%= yield %></main>
+    </div>
+
+    <%= render "layouts/footer" %>
+  </body>
+</html>

@@ -4,6 +4,10 @@ Rails.application.routes.draw do
   get "home/index", to: "home#index"
   root "home#index"
 
+  namespace :admin do
+    root "dashboard#index"
+  end
+
   namespace :payments do
     resources :ach_routings, param: :public_id
   end
@@ -13,6 +17,6 @@ Rails.application.routes.draw do
       resources :reference_values, param: :public_id
     end
     resources :country_currencies
-    resources :naics_codes, only: [ :index, :show ]
+    resources :naics_codes, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
   end
 end
