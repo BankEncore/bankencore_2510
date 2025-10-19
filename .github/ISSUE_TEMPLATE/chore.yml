@@ -1,0 +1,11 @@
+name: Maintenance Task
+about: Refactor, dependency bump, config, or CI
+title: "[Chore] "
+labels: type/chore
+body:
+  - type: textarea
+    attributes:
+      label: Purpose
+  - type: textarea
+    attributes:
+      label: Steps or Files Affected

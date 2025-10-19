@@ -1,0 +1,41 @@
+name: Feature Request
+about: Suggest a feature or enhancement
+title: "[Feature] "
+labels: ["type/feature", "needs triage"]
+project: ["bankencore/1"]
+assignees: 
+  - tswarren
+body:
+  - body: description
+    type: input
+    id: feature_description
+    attributes:
+      label: Feature Description
+      description: Provide a brief description of the feature you are requesting.
+      placeholder: A clear and concise description of what the feature is.
+      validations:
+        required: true
+  - type: textarea
+    id: user_story
+    attributes:
+      label: User Story
+      description: Describe the feature from the user's perspective.
+      placeholder: As a [type of user], I want [an action] so that [a benefit].
+    validations:
+      required: false
+  - type: textarea
+    id: acceptance_criteria
+    attributes:
+      label: Acceptance Criteria
+      description: List the conditions that must be met for the feature to be considered complete.
+      placeholder: - Given [context], when [action], then [outcome].
+    validations:
+      required: false
+  - type: textarea
+    id: tasks
+    attributes:
+      label: Implementation tasks
+      description: Outline the tasks needed to implement this feature.
+      default: "- [ ] Task 1\n- [ ] Task 2\n"
+    validations:
+    required: false
