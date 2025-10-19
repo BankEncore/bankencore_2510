@@ -1,7 +1,8 @@
 # spec/factories/payments_ach_routings.rb
 FactoryBot.define do
+  sequence(:ach_rn) { |n| format("%09d", 20_000_000 + n) }
   factory :payments_ach_routing, class: "Payments::AchRouting" do
-    routing_number        { "031000040" }
+    routing_number        { generate(:ach_rn) }
     new_routing_number    { "000000000" }
     customer_name         { "Test Bank" }
     address               { "1 Main St" }
