@@ -2,8 +2,6 @@ name: Feature Request
 description: Suggest a feature or enhancement
 title: "[Feature] "
 labels: ["type/feature", "needs triage"]
-assignees: 
-  - tswarren
 body:
   - type: input
     id: feature_description
