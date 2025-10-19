@@ -3,7 +3,7 @@ description: Suggest a feature or enhancement
 title: "[Feature] "
 labels: ["type/feature", "needs triage"]
 body:
-  - type: input
+  - type: textarea
     id: feature_description
     attributes:
       label: Feature Description
