@@ -1,14 +1,20 @@
 # spec/models/payments/ach_routing_spec.rb
 require "rails_helper"
+require "securerandom"
 
 RSpec.describe Payments::AchRouting, type: :model do
   describe "defaults and normalization" do
     it "generates public_id and pads routing numbers" do
-      r = described_class.create!(routing_number: "518", customer_name: "U.S. TREASURY",
-                                  city: "ARLINGTON", state_code: "VA", servicing_frb_number: "31000040")
+      r = described_class.create!(
+        routing_number: "518",
+        customer_name: "U.S. TREASURY",
+        city: "ARLINGTON",
+        state_code: "VA",
+        servicing_frb_number: "31000040"
+      )
       expect(r.public_id).to be_present
       expect(r.routing_number).to eq("000000518")
-      expect(r.servicing_frb_number).to eq("987654321")
+      expect(r.servicing_frb_number).to eq("031000040")
       expect(r.new_routing_number).to eq("000000000")
       expect(r.record_type_code).to eq("0")
       expect(r.office_code).to eq("O")
@@ -18,12 +24,17 @@ RSpec.describe Payments::AchRouting, type: :model do
 
     it "maps office_code digits to letters per constraint" do
       rn = format("%09d", 200_000_000 + SecureRandom.random_number(700_000_000))
-      r = described_class.create!(routing_number: rn, customer_name: "X",
-                                  city: "PHL", state_code: "PA", servicing_frb_number: rn,
-                                  office_code: "1")
-       expect(r.office_code).to eq("B")
-     end
-   end
+      r = described_class.create!(
+        routing_number: rn,
+        customer_name: "X",
+        city: "PHL",
+        state_code: "PA",
+        servicing_frb_number: rn,
+        office_code: "1"
+      )
+      expect(r.office_code).to eq("B")
+    end
+  end
 
   describe "#routing_changed?" do
     it "is false for 000000000 and true for any 9-digit other" do
@@ -34,14 +45,14 @@ RSpec.describe Payments::AchRouting, type: :model do
     end
   end
 
-    describe "#flags" do
+  describe "#flags" do
     it "returns label/class pairs for true booleans" do
-        r = build(:payments_ach_routing, us_treasury: true, on_us: true)
-        labels = r.flags.map(&:first)
-        expect(labels).to include("U.S. Treasury", "On Us")
-        expect(labels).not_to include("Special Handling")
+      r = build(:payments_ach_routing, us_treasury: true, on_us: true)
+      labels = r.flags.map(&:first)
+      expect(labels).to include("U.S. Treasury", "On Us")
+      expect(labels).not_to include("Special Handling")
     end
-    end
+  end
 
   describe "#frb_branch" do
     it "looks up FRB by servicing_frb_number" do
