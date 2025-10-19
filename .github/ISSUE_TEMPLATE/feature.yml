@@ -28,7 +28,7 @@ body:
     attributes:
       label: Acceptance Criteria
       description: List the conditions that must be met for the feature to be considered complete.
-      placeholder: "- Given [context], when [action], then [outcome].""
+      placeholder: "- Given [context], when [action], then [outcome]."
     validations:
       required: false
   - type: textarea
