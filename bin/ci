@@ -24,6 +24,16 @@ bundle exec bundler-audit check --update || true
 echo "== Safety checks =="
 bin/rails zeitwerk:check
 
+echo "== Frontend build =="
+if [ -f package.json ]; then
+  npm ci
+  if grep -q '"tailwind:build:ci"' package.json; then
+    npm run -s tailwind:build:ci
+  else
+    bin/rails assets:precompile RAILS_ENV=test
+  fi
+fi
+
 echo "== Tests =="
 if [ -x bin/rspec ]; then
     mkdir -p tmp/test-results

@@ -67,6 +67,14 @@ jobs:
         with:
           ruby-version: .ruby-version
           bundler-cache: true
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install JS deps
+        run: npm ci
       - name: Prepare DB
         run: bin/rails db:prepare
       - name: RSpec

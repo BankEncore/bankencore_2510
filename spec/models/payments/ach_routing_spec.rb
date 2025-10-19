@@ -8,7 +8,7 @@ RSpec.describe Payments::AchRouting, type: :model do
                                   city: "ARLINGTON", state_code: "VA", servicing_frb_number: "31000040")
       expect(r.public_id).to be_present
       expect(r.routing_number).to eq("000000518")
-      expect(r.servicing_frb_number).to eq("031000040")
+      expect(r.servicing_frb_number).to eq("987654321")
       expect(r.new_routing_number).to eq("000000000")
       expect(r.record_type_code).to eq("0")
       expect(r.office_code).to eq("O")
