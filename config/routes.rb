@@ -4,17 +4,15 @@ Rails.application.routes.draw do
   get "home/index", to: "home#index"
   root "home#index"
 
-  UUID = /[0-9a-f-]{36}/i
-
   namespace :payments do
-    resources :ach_routings, param: :public_id, constraints: { public_id: UUID }
+    resources :ach_routings, param: :public_id
   end
 
   namespace :system do
     resources :reference_lists, param: :public_id do
       resources :reference_values, param: :public_id
-  end
+    end
     resources :country_currencies
-    resources :naics_codes, only: [ :index, :show ]
+    resources :naics_codes, only: [:index, :show]
   end
 end

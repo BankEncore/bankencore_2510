@@ -17,12 +17,13 @@ RSpec.describe Payments::AchRouting, type: :model do
     end
 
     it "maps office_code digits to letters per constraint" do
-      r = described_class.create!(routing_number: "031000040", customer_name: "X",
-                                  city: "PHL", state_code: "PA", servicing_frb_number: "031000040",
+      rn = format("%09d", 200_000_000 + SecureRandom.random_number(700_000_000))
+      r = described_class.create!(routing_number: rn, customer_name: "X",
+                                  city: "PHL", state_code: "PA", servicing_frb_number: rn,
                                   office_code: "1")
-      expect(r.office_code).to eq("B")
-    end
-  end
+       expect(r.office_code).to eq("B")
+     end
+   end
 
   describe "#routing_changed?" do
     it "is false for 000000000 and true for any 9-digit other" do

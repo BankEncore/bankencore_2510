@@ -16,7 +16,7 @@ else
   puts "NAICS CSV not found at #{naics_path}"
 end
 load Rails.root.join("db/seeds/countries_regions_from_gems.rb")
-load Rails.root.join("db/seeds/fedach.rb")
+load Rails.root.join("db/seeds/fedach.rb") unless Rails.env.test?
 load Rails.root.join("db/seeds/currencies.rb")
 load Rails.root.join("db/seeds/references.rb")
 
