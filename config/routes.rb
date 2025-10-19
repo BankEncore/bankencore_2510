@@ -1,5 +1,6 @@
 # config/routes.rb
 Rails.application.routes.draw do
+  devise_for :users
   get "up", to: "rails/health#show", as: :rails_health_check
   get "home/index", to: "home#index"
   root "home#index"
@@ -18,5 +19,9 @@ Rails.application.routes.draw do
     end
     resources :country_currencies
     resources :naics_codes, only: [ :index, :show, :new, :create, :edit, :update, :destroy ]
+  end
+
+  if Rails.env.development?
+    mount LetterOpenerWeb::Engine, at: "/letter_opener"
   end
 end

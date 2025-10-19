@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_18_185603) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_19_203436) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -174,6 +174,42 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_18_185603) do
     t.index ["public_id"], name: "index_system_regions_on_public_id", unique: true
     t.index ["system_country_id", "code"], name: "index_system_regions_on_system_country_id_and_code", unique: true
     t.index ["system_country_id"], name: "index_system_regions_on_system_country_id"
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
+    t.integer "failed_attempts", default: 0, null: false
+    t.string "unlock_token"
+    t.datetime "locked_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name", limit: 100
+    t.string "time_zone", limit: 50, default: "UTC"
+    t.string "role", limit: 30, default: "user", null: false
+    t.string "status", limit: 20, default: "active", null: false
+    t.datetime "last_active_at"
+    t.boolean "mfa_enabled", default: false, null: false
+    t.datetime "terms_accepted_at"
+    t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
+    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["last_active_at"], name: "index_users_on_last_active_at"
+    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["role"], name: "index_users_on_role"
+    t.index ["status"], name: "index_users_on_status"
+    t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
   add_foreign_key "payments_ach_routings", "system_regions"
