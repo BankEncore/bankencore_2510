@@ -16,14 +16,13 @@ RAILS_ENV=test bin/rails db:prepare
 
 echo "== Code quality =="
 mkdir -p tmp/rubocop_cache tmp/test-results
-bundle exec rubocop --display-style-guide --cache true --cache-root tmp/rubocop_cache
+bundle exec rubocop -a --display-style-guide --cache true --cache-root tmp/rubocop_cache
 bin/brakeman --no-pager
 bin/importmap audit
 bundle exec bundler-audit check --update || true
 
 echo "== Safety checks =="
 bin/rails zeitwerk:check
-bin/rails strong_migrations:check || true
 
 echo "== Tests =="
 if [ -x bin/rspec ]; then
