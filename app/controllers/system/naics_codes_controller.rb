@@ -55,7 +55,7 @@ class System::NaicsCodesController < ApplicationController
 
   def naics_params
     params.require(:system_naics_code).permit(
-      :year, :code, :title, :sector, :parent_code, :level, :description, :active
+      params.require(:system_naics_code).permit(:year, :code, :title, :sector, :parent_code, :level, :description, :active)
     )
   end
 end
