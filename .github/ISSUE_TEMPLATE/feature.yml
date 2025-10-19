@@ -32,6 +32,6 @@ body:
     attributes:
       label: Implementation tasks
       description: Outline the tasks needed to implement this feature.
-      default: "- [ ] Task 1\n- [ ] Task 2\n"
+      placeholder: "- [ ] Task 1\n- [ ] Task 2\n"
     validations:
       required: false
