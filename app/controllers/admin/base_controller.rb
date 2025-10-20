@@ -4,9 +4,7 @@ class Admin::BaseController < ApplicationController
   before_action :authorize_admin!
 
   private
-
   def authorize_admin!
-    return if current_user&.role == "admin"
-    head :forbidden
+    authorize :admin, :access?
   end
 end

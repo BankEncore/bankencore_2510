@@ -5,6 +5,8 @@ require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 
 require "rspec/rails"
+require "factory_bot_rails"   # ← add
+require "devise"              # optional but harmless
 
 # Maintain test schema
 begin
@@ -19,19 +21,16 @@ Dir[Rails.root.join("spec/support/**/*.rb")].sort.each { |f| require f }
 RSpec.configure do |config|
   # FactoryBot
   config.include FactoryBot::Syntax::Methods
+
+  # Devise helpers
   config.include Devise::Test::IntegrationHelpers, type: :request
   config.include Devise::Test::IntegrationHelpers, type: :system
   config.include Devise::Test::ControllerHelpers,  type: :controller
+  config.include Devise::Test::ControllerHelpers,  type: :view
 
-  # Use transactional DB tests
   config.use_transactional_fixtures = true
-
-  # Infer spec type from file location (models, requests, etc.)
   config.infer_spec_type_from_file_location!
-
-  # Cleaner backtraces
   config.filter_rails_from_backtrace!
-  # config.filter_gems_from_backtrace("gem name") # add as needed
 end
 
 # Shoulda Matchers

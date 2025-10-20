@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_19_203436) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_20_003944) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -203,6 +203,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_19_203436) do
     t.datetime "last_active_at"
     t.boolean "mfa_enabled", default: false, null: false
     t.datetime "terms_accepted_at"
+    t.integer "role_i", default: 0, null: false
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["last_active_at"], name: "index_users_on_last_active_at"
