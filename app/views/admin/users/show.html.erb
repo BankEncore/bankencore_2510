@@ -1,0 +1,18 @@
+<h1><%= @user.email %></h1>
+
+<ul>
+  <li><strong>Name:</strong> <%= @user.name %></li>
+  <li><strong>Admin:</strong> <%= @user.admin? %></li>
+  <li><strong>Role:</strong> <%= @user.respond_to?(:role_i) ? @user.role_i : @user.role %></li>
+  <li><strong>Status:</strong> <%= @user.status %></li>
+  <li><strong>Time zone:</strong> <%= @user.time_zone %></li>
+  <li>
+    <strong>Branches:</strong>
+    <%= @user.branches.order(:code).map { |b| "#{b.code} – #{b.name}" }.join(", ") %>
+  </li>
+</ul>
+
+<p>
+  <%= link_to "Edit", edit_admin_user_path(@user) %> |
+  <%= link_to "Back", admin_users_path %>
+</p>

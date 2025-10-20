@@ -1,5 +1,7 @@
 # app/models/system/reference_list.rb
 class System::ReferenceList < ApplicationRecord
+  audited if ApplicationRecord.respond_to?(:audited)
+
   has_many :reference_values, class_name: "System::ReferenceValue", dependent: :destroy, inverse_of: :reference_list
 
   validates :name, presence: true

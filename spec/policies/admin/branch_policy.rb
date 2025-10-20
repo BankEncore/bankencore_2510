@@ -6,11 +6,11 @@ RSpec.describe Admin::BranchPolicy do
 
   it "allows admin" do
     user = build(:user, :admin)
-    expect(policy).to permit(user, [:admin, branch])
+    expect(policy).to permit(user, [ :admin, branch ])
   end
 
   it "denies non-admin" do
     user = build(:user)
-    expect(policy).not_to permit(user, [:admin, branch])
+    expect(policy).not_to permit(user, [ :admin, branch ])
   end
 end

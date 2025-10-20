@@ -1,0 +1,28 @@
+<!-- app/views/system/naics_codes/_node.html.erb -->
+<li>
+  <% children = node.children %>
+
+  <details class="collapse">
+    <summary class="collapse-title p-0">
+      <div class="flex items-center gap-2">
+        <span class="chev inline-flex h-6 w-6 items-center justify-center rounded hover:bg-base-200">
+          <!-- chevron-right -->
+          <svg viewBox="0 0 24 24" class="h-4 w-4" fill="currentColor" aria-hidden="true">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </span>
+        <%= link_to "#{node.code} — #{node.title}", system_naics_code_path(node), class: "link" %>
+      </div>
+    </summary>
+
+    <% if children.any? %>
+      <div class="collapse-content p-0 pl-6">
+        <ul class="menu menu-sm">
+          <% children.each do |ch| %>
+            <%= render partial: "node", locals: { node: ch } %>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+  </details>
+</li>

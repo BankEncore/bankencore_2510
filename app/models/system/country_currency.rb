@@ -1,4 +1,5 @@
 class System::CountryCurrency < ApplicationRecord
+  include HasPublicId
   self.table_name = "system_country_currencies"
 
   belongs_to :country,  class_name: "System::Country", foreign_key: :country_id

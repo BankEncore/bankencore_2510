@@ -1,0 +1,21 @@
+<%= form_with model: [:admin, @branch] do |f| %>
+  <div>
+    <%= f.label :code %><br>
+    <%= f.text_field :code, required: true, autofocus: true %>
+  </div>
+
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name, required: true %>
+  </div>
+
+  <div>
+    <%= f.label :status %><br>
+    <%= f.select :status, Branch::STATUSES, {}, required: true %>
+  </div>
+
+  <div style="margin-top:1rem">
+    <%= f.submit %>
+    <%= link_to "Cancel", @branch.persisted? ? [:admin, @branch] : admin_branches_path %>
+  </div>
+<% end %>

@@ -1,5 +1,6 @@
 # app/models/system/currency.rb
 class System::Currency < ApplicationRecord
+  include HasPublicId
   self.table_name = "system_currencies"
 
   has_many :country_currencies,
@@ -12,6 +13,7 @@ end
 
 # app/models/system/country_currency.rb
 class System::CountryCurrency < ApplicationRecord
+  include HasPublicId
   self.table_name = "system_country_currencies"
 
   belongs_to :country,  class_name: "System::Country", foreign_key: :country_id

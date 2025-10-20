@@ -8,22 +8,45 @@
     <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:ach_routings]) %> records</div>
   <% end %>
 
-  <%= link_to system_country_currencies_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
-    <div class="text-sm text-base-content/70">System</div>
-    <div class="text-xl font-medium">Country Currencies</div>
-    <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:country_currencies]) %> records</div>
-  <% end %>
+  <% if policy(:system_admin).access? %>
+    <%= link_to admin_system_country_currencies_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+      <div class="text-sm text-base-content/70">System • Admin</div>
+      <div class="text-xl font-medium">Country Currencies</div>
+      <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:country_currencies]) %> records</div>
+    <% end %>
 
-  <%= link_to system_naics_codes_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
-    <div class="text-sm text-base-content/70">System</div>
-    <div class="text-xl font-medium">NAICS Codes</div>
-    <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:naics_codes]) %> records</div>
-  <% end %>
+    <%= link_to admin_system_naics_codes_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+      <div class="text-sm text-base-content/70">System • Admin</div>
+      <div class="text-xl font-medium">NAICS Codes</div>
+      <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:naics_codes]) %> records</div>
+    <% end %>
 
-  <%= link_to system_reference_lists_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
-    <div class="text-sm text-base-content/70">System</div>
-    <div class="text-xl font-medium">Reference Lists</div>
-    <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:reference_lists]) %> lists</div>
-  <% end %>
+    <%= link_to admin_system_reference_lists_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+      <div class="text-sm text-base-content/70">System • Admin</div>
+      <div class="text-xl font-medium">Reference Lists</div>
+      <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:reference_lists]) %> lists</div>
+    <% end %>
 
+    <%= link_to admin_system_reference_values_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+      <div class="text-sm text-base-content/70">System • Admin</div>
+      <div class="text-xl font-medium">Reference Values</div>
+      <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:reference_values]) %> values</div>
+    <% end %>
+
+    <% if policy(User).index? %>
+      <%= link_to admin_users_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+        <div class="text-sm text-base-content/70">Admin</div>
+        <div class="text-xl font-medium">Users</div>
+        <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:users]) %> users</div>
+      <% end %>
+    <% end %>
+
+    <% if policy(Branch).index? %>
+      <%= link_to admin_branches_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+        <div class="text-sm text-base-content/70">Admin</div>
+        <div class="text-xl font-medium">Branches</div>
+        <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:branches]) %> branches</div>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>

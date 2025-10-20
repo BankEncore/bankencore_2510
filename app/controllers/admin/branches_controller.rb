@@ -21,7 +21,7 @@ class Admin::BranchesController < ApplicationController
     @branch = Branch.new(branch_params)
     authorize @branch, policy_class: Admin::BranchPolicy
     if @branch.save
-      redirect_to [:admin, @branch], notice: "Branch created."
+      redirect_to [ :admin, @branch ], notice: "Branch created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -34,7 +34,7 @@ class Admin::BranchesController < ApplicationController
   def update
     authorize @branch, policy_class: Admin::BranchPolicy
     if @branch.update(branch_params)
-      redirect_to [:admin, @branch], notice: "Branch updated."
+      redirect_to [ :admin, @branch ], notice: "Branch updated."
     else
       render :edit, status: :unprocessable_entity
     end

@@ -16,6 +16,6 @@ class CreateBranches < ActiveRecord::Migration[7.1]
       t.references :branch,  null: false, foreign_key: true
       t.timestamps
     end
-    add_index :branch_memberships, [:user_id, :branch_id], unique: true
+    add_index :branch_memberships, [ :user_id, :branch_id ], unique: true
   end
 end

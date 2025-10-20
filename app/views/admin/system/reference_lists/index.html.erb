@@ -1,0 +1,47 @@
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-semibold">Reference Lists</h1>
+  <%= link_to "New List", new_system_reference_list_path, class: "btn btn-primary" %>
+</div>
+
+<div class="card bg-base-100 shadow">
+  <div class="card-body gap-4">
+    <%= form_with url: system_reference_lists_path, method: :get, local: true, class: "flex gap-2" do %>
+      <input type="text" name="q" value="<%= h params[:q] %>" placeholder="Search key or name" class="input input-bordered w-full max-w-md" />
+      <button class="btn">Search</button>
+    <% end %>
+
+    <div class="overflow-x-auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Key</th>
+            <th>Name</th>
+            <th>Visibility</th>
+            <th>Tags</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @lists.each do |l| %>
+            <tr>
+              <td><code class="badge badge-ghost"><%= l.key %></code></td>
+              <td><%= link_to l.name, system_reference_list_path(public_id: l.public_id), class: "link link-primary" %></td>
+              <td><span class="badge badge-outline"><%= l.visibility %></span></td>
+              <td>
+                <% Array(l.tags).each do |t| %>
+                  <span class="badge badge-neutral mr-1"><%= t %></span>
+                <% end %>
+              </td>
+              <td class="text-right">
+                <%= link_to "Edit", edit_system_reference_list_path(public_id: l.public_id), class: "btn btn-xs" %>
+                <%= link_to "Delete", system_reference_list_path(public_id: l.public_id),
+                      data: { turbo_method: :delete, turbo_confirm: "Delete list?" },
+                      class: "btn btn-xs btn-error ml-2" %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

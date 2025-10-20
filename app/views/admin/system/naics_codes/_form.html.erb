@@ -1,0 +1,57 @@
+<!-- app/views/system/naics_codes/_form.html.erb -->
+<%= form_with model: @naics, local: true, class: "space-y-4" do |f| %>
+  <% if @naics.errors.any? %>
+    <div class="alert alert-error">
+      <span><%= @naics.errors.full_messages.to_sentence %></span>
+    </div>
+  <% end %>
+
+  <div class="grid md:grid-cols-3 gap-4">
+    <label class="form-control">
+      <span class="label"><span class="label-text">Year</span></span>
+      <%= f.text_field :year, class: "input input-bordered" %>
+    </label>
+
+    <label class="form-control">
+      <span class="label"><span class="label-text">Code</span></span>
+      <%= f.text_field :code, class: "input input-bordered" %>
+    </label>
+
+    <label class="form-control">
+      <span class="label"><span class="label-text">Level</span></span>
+      <%= f.number_field :level, class: "input input-bordered" %>
+    </label>
+
+    <label class="form-control md:col-span-2">
+      <span class="label"><span class="label-text">Title</span></span>
+      <%= f.text_field :title, class: "input input-bordered" %>
+    </label>
+
+    <label class="form-control">
+      <span class="label"><span class="label-text">Sector</span></span>
+      <%= f.text_field :sector, class: "input input-bordered" %>
+    </label>
+
+    <label class="form-control">
+      <span class="label"><span class="label-text">Parent code</span></span>
+      <%= f.text_field :parent_code, class: "input input-bordered" %>
+    </label>
+
+    <label class="form-control md:col-span-3">
+      <span class="label"><span class="label-text">Description</span></span>
+      <%= f.text_area :description, rows: 6, class: "textarea textarea-bordered" %>
+    </label>
+
+    <% if @naics.respond_to?(:active) %>
+      <label class="form-control">
+        <span class="label"><span class="label-text">Active</span></span>
+        <%= f.check_box :active, class: "toggle toggle-primary" %>
+      </label>
+    <% end %>
+  </div>
+
+  <div class="flex gap-2">
+    <%= f.submit(@naics.persisted? ? "Update" : "Create", class: "btn btn-primary") %>
+    <%= link_to "Cancel", (@naics.persisted? ? system_naics_code_path(@naics) : system_naics_codes_path), class: "btn btn-ghost" %>
+  </div>
+<% end %>

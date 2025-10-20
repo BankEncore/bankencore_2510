@@ -10,10 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_20_013125) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_20_165029) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "audits", force: :cascade do |t|
+    t.string "auditable_type", null: false
+    t.bigint "auditable_id", null: false
+    t.string "associated_type"
+    t.bigint "associated_id"
+    t.string "user_type"
+    t.bigint "user_id"
+    t.string "username"
+    t.string "action", null: false
+    t.jsonb "audited_changes"
+    t.integer "version", default: 0, null: false
+    t.string "comment"
+    t.string "remote_address"
+    t.string "request_uuid"
+    t.datetime "created_at", null: false
+    t.index ["associated_type", "associated_id"], name: "index_audits_on_associated_type_and_associated_id"
+    t.index ["auditable_type", "auditable_id"], name: "index_audits_on_auditable_type_and_auditable_id"
+    t.index ["created_at"], name: "index_audits_on_created_at"
+    t.index ["request_uuid"], name: "index_audits_on_request_uuid"
+    t.index ["user_id", "user_type"], name: "index_audits_on_user_id_and_user_type"
+  end
 
   create_table "branch_memberships", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -109,6 +131,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_013125) do
     t.datetime "updated_at", null: false
     t.index ["country_id", "currency_id"], name: "idx_scc_on_country_currency", unique: true
     t.index ["country_id"], name: "idx_scc_default_per_country", where: "default_for_country"
+    t.index ["public_id"], name: "idx_scc_public_id_unique", unique: true
     t.index ["public_id"], name: "index_system_country_currencies_on_public_id", unique: true
     t.check_constraint "valid_to IS NULL OR valid_from IS NULL OR valid_from <= valid_to", name: "chk_scc_valid_window"
   end
@@ -138,6 +161,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_013125) do
     t.datetime "updated_at", null: false
     t.text "description"
     t.boolean "active", default: true, null: false
+    t.index ["public_id"], name: "idx_snc_public_id_unique", unique: true
     t.index ["public_id"], name: "index_system_naics_codes_on_public_id", unique: true
     t.index ["year", "code"], name: "index_system_naics_codes_on_year_and_code", unique: true
     t.index ["year", "parent_code"], name: "index_system_naics_codes_on_year_and_parent_code"
@@ -154,6 +178,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_013125) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["key"], name: "index_system_reference_lists_on_key", unique: true
+    t.index ["public_id"], name: "idx_srl_public_id_unique", unique: true
     t.index ["public_id"], name: "index_system_reference_lists_on_public_id", unique: true
   end
 
@@ -176,6 +201,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_013125) do
     t.bigint "system_reference_list_id"
     t.index ["metadata"], name: "index_system_reference_values_on_metadata", using: :gin
     t.index ["parent_id"], name: "index_system_reference_values_on_parent_id"
+    t.index ["public_id"], name: "idx_srv_public_id_unique", unique: true
     t.index ["public_id"], name: "index_system_reference_values_on_public_id", unique: true
     t.index ["reference_list_id"], name: "index_system_reference_values_on_reference_list_id"
     t.index ["system_reference_list_id"], name: "index_system_reference_values_on_system_reference_list_id"

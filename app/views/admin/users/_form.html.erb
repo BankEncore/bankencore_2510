@@ -1,0 +1,40 @@
+<%= form_with model: [:admin, @user] do |f| %>
+  <div>
+    <%= f.label :email %><br>
+    <%= f.email_field :email, required: true, autofocus: true %>
+  </div>
+
+  <div>
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :role_i, "Role" %><br>
+    <%= f.select :role_i,
+          options_for_select(User.defined_enums["role_i"].keys, @user.role_i) %>
+  </div>
+
+  <div>
+    <%= f.label :status %><br>
+    <%= f.select :status,
+          options_for_select(User.statuses.keys, @user.status) %>
+  </div>
+
+  <div>
+    <%= f.check_box :admin %>
+    <%= f.label :admin, "Administrator" %>
+  </div>
+
+  <div>
+    <%= f.collection_select :branch_ids,
+                            Branch.order(:code), :id, :code,
+                            {}, multiple: true, size: 8,
+                            data: { controller: "tom-select" } %>
+  </div>
+
+  <div style="margin-top:1rem">
+    <%= f.submit %>
+    <%= link_to "Cancel", @user.persisted? ? [:admin, @user] : admin_users_path %>
+  </div>
+<% end %>

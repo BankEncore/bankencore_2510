@@ -16,10 +16,20 @@ Rails.application.routes.draw do
   end
 
   resources :branches, only: %i[index show]
+  resources :users,    only: %i[index show]
 
   namespace :admin do
     root "dashboard#index"
+
     resources :branches
+    resources :users
+
+    namespace :system do
+      resources :reference_lists,    param: :public_id
+      resources :reference_values,   param: :public_id
+      resources :naics_codes,        param: :public_id
+      resources :country_currencies, param: :public_id
+    end
   end
 
   namespace :payments do

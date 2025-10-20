@@ -57,7 +57,8 @@ gem "devise"                 # authentication if you want turnkey
 # gem "sorcery"                # lighter auth alternative
 
 # Auditing and trails
-gem "paper_trail"              # versioning for compliance
+# gem "paper_trail"              # versioning for compliance
+gem "audited", "~> 5.0"                   # audit logging of model changes
 
 # CSS
 gem "tailwindcss-rails"        # Tailwind CSS via Propshaft

@@ -6,22 +6,24 @@ class System::CountryCurrenciesController < ApplicationController
   def index
     @q_country  = params[:country_id].presence
     @q_currency = params[:currency_id].presence
-    scope = System::CountryCurrency.includes(:country, :currency).order(:country_id, :currency_id)
+    scope = ::System::CountryCurrency.includes(:country, :currency).order(:country_id, :currency_id)
     scope = scope.where(country_id:  @q_country)  if @q_country
     scope = scope.where(currency_id: @q_currency) if @q_currency
     @country_currencies = scope
   end
 
-  def show; end
+  def show
+    authorize @country_currency
+  end
 
   def new
-    @country_currency = System::CountryCurrency.new(default_for_country: true)
+    @country_currency = ::System::CountryCurrency.new(default_for_country: true)
   end
 
   def create
-    @country_currency = System::CountryCurrency.new(country_currency_params)
+    @country_currency = ::System::CountryCurrency.new(country_currency_params)
     if @country_currency.save
-      redirect_to system_country_currency_path(@country_currency), notice: "Mapping created"
+      redirect_to [ :system, @country_currency ], notice: "Mapping created"
     else
       load_collections
       render :new, status: :unprocessable_entity
@@ -47,12 +49,14 @@ class System::CountryCurrenciesController < ApplicationController
   private
 
   def set_country_currency
-    @country_currency = System::CountryCurrency.find(params[:id])
+    # scoped and using public_id
+    @country_currency = policy_scope(::System::CountryCurrency)
+                          .find_by!(public_id: params[:id])
   end
 
   def load_collections
-    @countries  = System::Country.order(:name).select(:id, :name)
-    @currencies = System::Currency.order(:code).select(:id, :code, :name)
+    @countries  = ::System::Country.order(:name).select(:id, :name)
+    @currencies = ::System::Currency.order(:code).select(:id, :code, :name)
   end
 
   def country_currency_params
