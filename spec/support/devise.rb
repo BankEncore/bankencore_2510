@@ -1,12 +1,9 @@
 # spec/support/devise.rb
-module AuthHelpers
-  def sign_in_confirmed(user = create(:user, :confirmed))
-    sign_in user
-    user
-  end
-end
+require "devise"
+require "warden"
 
 RSpec.configure do |config|
-  config.include AuthHelpers, type: :request
-  config.include AuthHelpers, type: :system
+  # config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Warden::Test::Helpers,           type: :request
+  config.after(type: :request) { Warden.test_reset! }
 end
