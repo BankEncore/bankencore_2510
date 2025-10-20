@@ -1,26 +1,69 @@
-<h2>Log in</h2>
+<div class="min-h-[60vh] grid place-items-center">
+  <div class="card w-full max-w-md bg-base-100 shadow">
+    <div class="card-body">
+      <h1 class="card-title">Sign in</h1>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
+      <%= form_with model: resource,
+                    url: session_path(resource_name),
+                    html: { class: "space-y-4" } do |f| %>
 
-  <div class="field">
-    <%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "current-password" %>
-  </div>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Email</span>
+          </label>
+          <%= f.email_field :email,
+                autofocus: true,
+                autocomplete: "email",
+                class: "input input-bordered w-full" %>
+        </div>
 
-  <% if devise_mapping.rememberable? %>
-    <div class="field">
-      <%= f.check_box :remember_me %>
-      <%= f.label :remember_me %>
+        <div class="form-control">
+          <label class="label">
+            <span class="label-text">Password</span>
+          </label>
+          <%= f.password_field :password,
+                autocomplete: "current-password",
+                class: "input input-bordered w-full" %>
+        </div>
+
+        <% if devise_mapping.rememberable? %>
+          <div class="form-control">
+            <label class="label cursor-pointer justify-start gap-3">
+              <%= f.check_box :remember_me, class: "checkbox" %>
+              <span class="label-text">Remember me</span>
+            </label>
+          </div>
+        <% end %>
+          <% if devise_mapping.recoverable? %>
+          <span class="label-text">
+            <%= link_to "Forgot password?", new_password_path(resource_name), class: "link" %>
+          </span>
+          <% end %>
+
+        <div class="card-actions justify-end">
+          <%= f.submit "Sign in", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+      <div class="divider my-2"></div>
+
+      <div class="text-sm flex items-center justify-between">
+        <div>
+          <%# Extra links (confirm/unlock) if enabled %>
+          <% if devise_mapping.confirmable? %>
+            <%= link_to "Resend confirmation", new_confirmation_path(resource_name), class: "link" %>
+          <% end %>
+          <% if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) %>
+            <span class="mx-2">·</span>
+            <%= link_to "Resend unlock", new_unlock_path(resource_name), class: "link" %>
+          <% end %>
+        </div>
+        <div>
+          <% if devise_mapping.registerable? %>
+            <%= link_to "Create account", new_registration_path(resource_name), class: "link" %>
+          <% end %>
+        </div>
+      </div>
     </div>
-  <% end %>
-
-  <div class="actions">
-    <%= f.submit "Log in" %>
   </div>
-<% end %>
-
-<%= render "users/shared/links" %>
+</div>

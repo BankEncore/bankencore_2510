@@ -1,9 +1,10 @@
 <header class="navbar bg-base-100 shadow">
   <div class="flex-1">
-    <%= link_to "BankEncore", root_path, class: "btn btn-ghost text-xl" %>
+    <%= link_to "BankEncore",
+            (user_signed_in? ? authenticated_root_path : new_user_session_path),
+            class: "btn btn-ghost text-xl" %>
   </div>
 
-  <!-- make this a flex row -->
   <div class="flex-none flex items-center gap-3">
     <form action="/search" method="get" class="hidden md:block">
       <label class="input input-bordered flex items-center gap-2 w-72">
@@ -12,20 +13,28 @@
       </label>
     </form>
 
-    <li><%= link_to "Admin", admin_root_path, class: "btn btn-ghost" %></li>
-
-    <div class="dropdown dropdown-end">
-      <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-        <div class="w-10 rounded-full bg-neutral text-neutral-content grid place-items-center">
-          <span class="font-bold">U</span>
+    <% if user_signed_in? %>
+      <div class="dropdown dropdown-end">
+        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+          <div class="w-10 rounded-full bg-neutral text-neutral-content grid place-items-center">
+            <span class="font-bold"><%= current_user.email.first.upcase %></span>
+          </div>
         </div>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-56">
+          <li><%= link_to "Profile", "/profile" %></li>
+          <li><%= link_to "Settings", "/settings" %></li>
+          <li>
+            <li>
+            <%= button_to "Sign out", destroy_user_session_path,
+                  method: :delete,
+                  form: { class: "contents" },
+                  class: "justify-start w-full text-left" %> 
+          </li>
+          <li><%= render "layouts/theme_switcher" %></li>
+        </ul>
       </div>
-      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-56">
-        <li><%= link_to "Profile", "/profile" %></li>
-        <li><%= link_to "Settings", "/settings" %></li>
-        <li><%= link_to "Logout", "/logout", data: { turbo_method: :delete } %></li>
-        <li><%= render "layouts/theme_switcher" %></li>
-      </ul>
-    </div>
+    <% else %>
+      <%= link_to "Sign in", new_user_session_path, class: "btn btn-ghost" %>
+    <% end %>
   </div>
 </header>
