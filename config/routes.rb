@@ -1,6 +1,6 @@
 # config/routes.rb
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users if Rails.env.test? || Rails.env.development?
 
   get "up", to: "rails/health#show", as: :rails_health_check
   get "home/index", to: "home#index"
@@ -15,8 +15,11 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :branches, only: %i[index show]
+
   namespace :admin do
     root "dashboard#index"
+    resources :branches
   end
 
   namespace :payments do

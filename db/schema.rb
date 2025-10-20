@@ -10,10 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_20_003944) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_20_013125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "branch_memberships", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "branch_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branch_id"], name: "index_branch_memberships_on_branch_id"
+    t.index ["user_id", "branch_id"], name: "index_branch_memberships_on_user_id_and_branch_id", unique: true
+    t.index ["user_id"], name: "index_branch_memberships_on_user_id"
+  end
+
+  create_table "branches", force: :cascade do |t|
+    t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
+    t.string "code", limit: 10, null: false
+    t.string "name", limit: 100, null: false
+    t.string "status", default: "active", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["code"], name: "index_branches_on_code", unique: true
+    t.index ["public_id"], name: "index_branches_on_public_id", unique: true
+  end
 
   create_table "payments_ach_routings", force: :cascade do |t|
     t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
@@ -204,6 +225,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_003944) do
     t.boolean "mfa_enabled", default: false, null: false
     t.datetime "terms_accepted_at"
     t.integer "role_i", default: 0, null: false
+    t.boolean "admin", default: false, null: false
+    t.index ["admin"], name: "index_users_on_admin"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["last_active_at"], name: "index_users_on_last_active_at"
@@ -213,6 +236,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_003944) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "branch_memberships", "branches"
+  add_foreign_key "branch_memberships", "users"
   add_foreign_key "payments_ach_routings", "system_regions"
   add_foreign_key "system_country_currencies", "system_countries", column: "country_id"
   add_foreign_key "system_country_currencies", "system_currencies", column: "currency_id"

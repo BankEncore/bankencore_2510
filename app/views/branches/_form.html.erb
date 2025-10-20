@@ -1,0 +1,12 @@
+<%= form_with model: [:admin, @branch], class: "space-y-4" do |f| %>
+  <div><%= f.label :code %><%= f.text_field :code, class: "input input-bordered w-full" %></div>
+  <div><%= f.label :name %><%= f.text_field :name, class: "input input-bordered w-full" %></div>
+  <div>
+    <%= f.label :status %>
+    <%= f.select :status, Branch::STATUSES, {}, class: "select select-bordered w-full" %>
+  </div>
+  <div class="flex gap-2">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", @branch.persisted? ? [:admin, @branch] : admin_branches_path, class: "btn" %>
+  </div>
+<% end %>

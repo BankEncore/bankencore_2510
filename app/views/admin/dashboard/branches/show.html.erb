@@ -1,0 +1,6 @@
+<h1 class="text-xl font-semibold mb-2"><%= @branch.code %> — <%= @branch.name %></h1>
+<p>Status: <%= @branch.status %></p>
+<p class="mt-4">
+  <%= link_to "Edit", edit_admin_branch_path(@branch), class: "btn btn-sm" %>
+  <%= link_to "Back", admin_branches_path, class: "btn btn-sm" %>
+</p>
