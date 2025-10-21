@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_20_165029) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_21_023107) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -114,6 +114,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_165029) do
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "alpha2", limit: 2
+    t.string "alpha3", limit: 3
     t.index ["iso2"], name: "index_system_countries_on_iso2", unique: true
     t.index ["iso3"], name: "index_system_countries_on_iso3", unique: true
     t.index ["numeric"], name: "index_system_countries_on_numeric"
@@ -203,7 +205,9 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_20_165029) do
     t.index ["parent_id"], name: "index_system_reference_values_on_parent_id"
     t.index ["public_id"], name: "idx_srv_public_id_unique", unique: true
     t.index ["public_id"], name: "index_system_reference_values_on_public_id", unique: true
+    t.index ["reference_list_id", "code"], name: "idx_srv_on_list_code", unique: true
     t.index ["reference_list_id"], name: "index_system_reference_values_on_reference_list_id"
+    t.index ["system_reference_list_id", "code"], name: "idx_srv_on_syslist_code", unique: true
     t.index ["system_reference_list_id"], name: "index_system_reference_values_on_system_reference_list_id"
   end
 
