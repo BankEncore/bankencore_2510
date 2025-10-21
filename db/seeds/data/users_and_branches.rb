@@ -77,7 +77,7 @@ ActiveRecord::Base.transaction do
   force_confirm!(user)
 
   # --- memberships ----------------------------------------------------------
-  [[admin, %w[001 002 003 101 999]], [user, %w[001]]].each do |u, codes|
+  [ [ admin, %w[001 002 003 101 999] ], [ user, %w[001] ] ].each do |u, codes|
     codes.each do |code|
       b = by_code.fetch(code)
       BranchMembership.find_or_create_by!(user_id: u.id, branch_id: b.id)

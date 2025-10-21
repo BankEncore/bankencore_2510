@@ -10,7 +10,7 @@ LIST_ID_COL =
     raise "System::ReferenceValue missing list id column"
   end
 
-NAME_COL = ([:name, :title, :label].map(&:to_s) & value_cols).first&.to_sym
+NAME_COL = ([ :name, :title, :label ].map(&:to_s) & value_cols).first&.to_sym
 raise "System::ReferenceValue missing display column (:name/:title/:label)" unless NAME_COL
 
 HAS_SORT     = value_cols.include?("sort_index")
@@ -130,9 +130,9 @@ vals.concat [
 
 # 4) Resolve unique_by for upsert
 idx = ActiveRecord::Base.connection.indexes("system_reference_values").find do |i|
-  i.unique && i.columns.map(&:to_s) == [LIST_ID_COL.to_s, "code"]
+  i.unique && i.columns.map(&:to_s) == [ LIST_ID_COL.to_s, "code" ]
 end
-unique_by = idx ? idx.name.to_sym : [LIST_ID_COL, :code]
+unique_by = idx ? idx.name.to_sym : [ LIST_ID_COL, :code ]
 
 # 5) Upsert
 ActiveRecord::Base.transaction do

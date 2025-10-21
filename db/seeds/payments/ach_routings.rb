@@ -37,19 +37,19 @@ def parse_fedach_line(line)
   # 99–103: Zip Ext                       [ignored]
   # 104  : Institution Status Code
   # 105  : Data View Code
-  rn   = line[0,9]
+  rn   = line[0, 9]
   return nil if rn.nil? || rn.strip.empty? # skip blanks
   {
     routing_number:        pad9(rn),
-    office_code:           line[9,1]&.strip,
-    servicing_frb_number:  pad9(line[10,9]),
-    record_type_code:      line[19,1]&.strip,
-    new_routing_number:    pad9(line[20,15]),
-    customer_name:         line[36,35]&.rstrip,
-    city:                  line[71,20]&.rstrip,
-    state_code:            line[91,2]&.strip,
-    institution_status_code: line[103,1]&.strip,
-    data_view_code:        line[104,1]&.strip
+    office_code:           line[9, 1]&.strip,
+    servicing_frb_number:  pad9(line[10, 9]),
+    record_type_code:      line[19, 1]&.strip,
+    new_routing_number:    pad9(line[20, 15]),
+    customer_name:         line[36, 35]&.rstrip,
+    city:                  line[71, 20]&.rstrip,
+    state_code:            line[91, 2]&.strip,
+    institution_status_code: line[103, 1]&.strip,
+    data_view_code:        line[104, 1]&.strip
   }
 end
 

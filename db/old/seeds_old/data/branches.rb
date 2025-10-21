@@ -19,7 +19,7 @@ ActiveRecord::Base.transaction do
   admin.update!(admin: true, role: "admin", role_i: :system_admin)
   user.update!(admin: false, role: "user", role_i: :read_only)
 
-  [[admin, %w[001 002 003 101 999]], [user, %w[001]]].each do |u, codes|
+  [ [ admin, %w[001 002 003 101 999] ], [ user, %w[001] ] ].each do |u, codes|
     codes.each { |code| BranchMembership.find_or_create_by!(user_id: u.id, branch_id: by_code.fetch(code).id) }
   end
   def force_confirm!(u, at = Time.current)

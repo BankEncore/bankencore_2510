@@ -14,7 +14,7 @@ values = [
   { list: "phone_types",  code: "MOBILE", name: "Mobile",  sort_index: 10 },
   { list: "phone_types",  code: "WORK",   name: "Work",    sort_index: 20 },
   { list: "email_types",  code: "WORK",   name: "Work",    sort_index: 10 },
-  { list: "address_types",code: "HOME",   name: "Home",    sort_index: 10 }
+  { list: "address_types", code: "HOME",   name: "Home",    sort_index: 10 }
 ].map { |v| v.merge(reference_list_id: by_key.fetch(v[:list]).id, active: true, created_at: now, updated_at: now) }
 
 System::ReferenceValue.upsert_all(

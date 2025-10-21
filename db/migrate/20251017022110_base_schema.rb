@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 class BaseSchema < ActiveRecord::Migration[8.0]
   def change
     # ========== SYSTEM REFERENCE BACKBONE ==========
@@ -29,7 +30,7 @@ class BaseSchema < ActiveRecord::Migration[8.0]
       t.timestamps
     end
     add_index :system_reference_values, :public_id, unique: true
-    add_index :system_reference_values, [:reference_list_id, :code], unique: true, name: :idx_srv_on_list_code
+    add_index :system_reference_values, [ :reference_list_id, :code ], unique: true, name: :idx_srv_on_list_code
 
     # ========== STANDARDS ==========
     create_table :system_countries do |t|
@@ -61,7 +62,7 @@ class BaseSchema < ActiveRecord::Migration[8.0]
     end
     add_index :system_regions, :public_id, unique: true
     add_index :system_regions, :code,      unique: true
-    add_index :system_regions, [:country_alpha2, :local_code], unique: true
+    add_index :system_regions, [ :country_alpha2, :local_code ], unique: true
     add_foreign_key :system_regions, :system_countries, column: :country_alpha2, primary_key: :alpha2
 
     create_table :system_naics_codes do |t|
@@ -77,7 +78,7 @@ class BaseSchema < ActiveRecord::Migration[8.0]
       t.timestamps
     end
     add_index :system_naics_codes, :public_id, unique: true
-    add_index :system_naics_codes, [:version, :code], unique: true
+    add_index :system_naics_codes, [ :version, :code ], unique: true
     add_index :system_naics_codes, :parent_code
     add_index :system_naics_codes, :level
 
@@ -101,7 +102,7 @@ class BaseSchema < ActiveRecord::Migration[8.0]
       t.timestamps
     end
     add_index :system_country_currencies, :public_id, unique: true
-    add_index :system_country_currencies, [:country_id, :currency_id], unique: true, name: :idx_scc_on_country_currency
+    add_index :system_country_currencies, [ :country_id, :currency_id ], unique: true, name: :idx_scc_on_country_currency
     add_foreign_key :system_country_currencies, :system_countries, column: :country_id, primary_key: :alpha2
 
     # ========== USERS (Devise + app fields merged) ==========
@@ -152,7 +153,7 @@ class BaseSchema < ActiveRecord::Migration[8.0]
       t.references :branch, null: false, foreign_key: true
       t.timestamps
     end
-    add_index :branch_memberships, [:user_id, :branch_id], unique: true
+    add_index :branch_memberships, [ :user_id, :branch_id ], unique: true
 
     # ========== PAYMENTS::ACH ROUTINGS ==========
     create_table :payments_ach_routings do |t|
@@ -190,9 +191,9 @@ class BaseSchema < ActiveRecord::Migration[8.0]
       t.string   :auditable_name
       t.datetime :created_at, null: false
     end
-    add_index :audits, [:auditable_type, :auditable_id, :version], name: "auditable_index"
-    add_index :audits, [:associated_type, :associated_id],        name: "associated_index"
-    add_index :audits, [:user_id, :user_type],                    name: "user_index"
+    add_index :audits, [ :auditable_type, :auditable_id, :version ], name: "auditable_index"
+    add_index :audits, [ :associated_type, :associated_id ],        name: "associated_index"
+    add_index :audits, [ :user_id, :user_type ],                    name: "user_index"
     add_index :audits, :request_uuid
   end
 end

@@ -4,14 +4,14 @@ class EnsureUniqueIdxOnSrvListCode < ActiveRecord::Migration[8.0]
 
   def up
     if column_exists?(:system_reference_values, :reference_list_id) &&
-       !index_exists?(:system_reference_values, [:reference_list_id, :code], name: :idx_srv_on_list_code)
-      add_index :system_reference_values, [:reference_list_id, :code],
+       !index_exists?(:system_reference_values, [ :reference_list_id, :code ], name: :idx_srv_on_list_code)
+      add_index :system_reference_values, [ :reference_list_id, :code ],
                 unique: true, name: :idx_srv_on_list_code, algorithm: :concurrently
     end
 
     if column_exists?(:system_reference_values, :system_reference_list_id) &&
-       !index_exists?(:system_reference_values, [:system_reference_list_id, :code], name: :idx_srv_on_syslist_code)
-      add_index :system_reference_values, [:system_reference_list_id, :code],
+       !index_exists?(:system_reference_values, [ :system_reference_list_id, :code ], name: :idx_srv_on_syslist_code)
+      add_index :system_reference_values, [ :system_reference_list_id, :code ],
                 unique: true, name: :idx_srv_on_syslist_code, algorithm: :concurrently
     end
   end

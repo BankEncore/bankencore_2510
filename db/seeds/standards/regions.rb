@@ -27,22 +27,22 @@ else
 end
 
 US = {
-  "AL"=>"Alabama","AK"=>"Alaska","AZ"=>"Arizona","AR"=>"Arkansas","CA"=>"California","CO"=>"Colorado",
-  "CT"=>"Connecticut","DE"=>"Delaware","FL"=>"Florida","GA"=>"Georgia","HI"=>"Hawaii","ID"=>"Idaho",
-  "IL"=>"Illinois","IN"=>"Indiana","IA"=>"Iowa","KS"=>"Kansas","KY"=>"Kentucky","LA"=>"Louisiana",
-  "ME"=>"Maine","MD"=>"Maryland","MA"=>"Massachusetts","MI"=>"Michigan","MN"=>"Minnesota",
-  "MS"=>"Mississippi","MO"=>"Missouri","MT"=>"Montana","NE"=>"Nebraska","NV"=>"Nevada",
-  "NH"=>"New Hampshire","NJ"=>"New Jersey","NM"=>"New Mexico","NY"=>"New York","NC"=>"North Carolina",
-  "ND"=>"North Dakota","OH"=>"Ohio","OK"=>"Oklahoma","OR"=>"Oregon","PA"=>"Pennsylvania",
-  "RI"=>"Rhode Island","SC"=>"South Carolina","SD"=>"South Dakota","TN"=>"Tennessee","TX"=>"Texas",
-  "UT"=>"Utah","VT"=>"Vermont","VA"=>"Virginia","WA"=>"Washington","WV"=>"West Virginia",
-  "WI"=>"Wisconsin","WY"=>"Wyoming","DC"=>"District of Columbia"
+  "AL"=>"Alabama", "AK"=>"Alaska", "AZ"=>"Arizona", "AR"=>"Arkansas", "CA"=>"California", "CO"=>"Colorado",
+  "CT"=>"Connecticut", "DE"=>"Delaware", "FL"=>"Florida", "GA"=>"Georgia", "HI"=>"Hawaii", "ID"=>"Idaho",
+  "IL"=>"Illinois", "IN"=>"Indiana", "IA"=>"Iowa", "KS"=>"Kansas", "KY"=>"Kentucky", "LA"=>"Louisiana",
+  "ME"=>"Maine", "MD"=>"Maryland", "MA"=>"Massachusetts", "MI"=>"Michigan", "MN"=>"Minnesota",
+  "MS"=>"Mississippi", "MO"=>"Missouri", "MT"=>"Montana", "NE"=>"Nebraska", "NV"=>"Nevada",
+  "NH"=>"New Hampshire", "NJ"=>"New Jersey", "NM"=>"New Mexico", "NY"=>"New York", "NC"=>"North Carolina",
+  "ND"=>"North Dakota", "OH"=>"Ohio", "OK"=>"Oklahoma", "OR"=>"Oregon", "PA"=>"Pennsylvania",
+  "RI"=>"Rhode Island", "SC"=>"South Carolina", "SD"=>"South Dakota", "TN"=>"Tennessee", "TX"=>"Texas",
+  "UT"=>"Utah", "VT"=>"Vermont", "VA"=>"Virginia", "WA"=>"Washington", "WV"=>"West Virginia",
+  "WI"=>"Wisconsin", "WY"=>"Wyoming", "DC"=>"District of Columbia"
 }
 CA = {
-  "AB"=>"Alberta","BC"=>"British Columbia","MB"=>"Manitoba","NB"=>"New Brunswick",
-  "NL"=>"Newfoundland and Labrador","NS"=>"Nova Scotia","NT"=>"Northwest Territories",
-  "NU"=>"Nunavut","ON"=>"Ontario","PE"=>"Prince Edward Island","QC"=>"Quebec",
-  "SK"=>"Saskatchewan","YT"=>"Yukon"
+  "AB"=>"Alberta", "BC"=>"British Columbia", "MB"=>"Manitoba", "NB"=>"New Brunswick",
+  "NL"=>"Newfoundland and Labrador", "NS"=>"Nova Scotia", "NT"=>"Northwest Territories",
+  "NU"=>"Nunavut", "ON"=>"Ontario", "PE"=>"Prince Edward Island", "QC"=>"Quebec",
+  "SK"=>"Saskatchewan", "YT"=>"Yukon"
 }
 
 def make_row(cc:, lc:, name:, code_col:, local_col:, name_col:, type_col:, has_meta:, has_active:, country_fk:)
@@ -61,11 +61,11 @@ def make_row(cc:, lc:, name:, code_col:, local_col:, name_col:, type_col:, has_m
 end
 
 rows = []
-US.each { |lc,nm| rows << make_row(cc: "US", lc:, name: nm, code_col:, local_col:, name_col:, type_col:, has_meta:, has_active:, country_fk:) }
-CA.each { |lc,nm| rows << make_row(cc: "CA", lc:, name: nm, code_col:, local_col:, name_col:, type_col:, has_meta:, has_active:, country_fk:) }
+US.each { |lc, nm| rows << make_row(cc: "US", lc:, name: nm, code_col:, local_col:, name_col:, type_col:, has_meta:, has_active:, country_fk:) }
+CA.each { |lc, nm| rows << make_row(cc: "CA", lc:, name: nm, code_col:, local_col:, name_col:, type_col:, has_meta:, has_active:, country_fk:) }
 
 # Upsert if a unique index on code exists; else idempotent row-by-row
-idx = ActiveRecord::Base.connection.indexes("system_regions").find { |i| i.unique && i.columns.map(&:to_s) == [code_col] }
+idx = ActiveRecord::Base.connection.indexes("system_regions").find { |i| i.unique && i.columns.map(&:to_s) == [ code_col ] }
 
 if idx
   System::Region.upsert_all(rows, unique_by: idx.name.to_sym)

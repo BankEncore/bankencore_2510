@@ -19,14 +19,14 @@ def row(code2:, code3:, numeric:, name:, now:, namec:, has_numeric:, has_metadat
 end
 
 rows = [
-  row(code2: [code2, "US"], code3: [code3, "USA"], numeric: "840", name: "United States of America",
+  row(code2: [ code2, "US" ], code3: [ code3, "USA" ], numeric: "840", name: "United States of America",
       now:, namec:, has_numeric:, has_metadata:, has_active:),
-  row(code2: [code2, "CA"], code3: [code3, "CAN"], numeric: "124", name: "Canada",
+  row(code2: [ code2, "CA" ], code3: [ code3, "CAN" ], numeric: "124", name: "Canada",
       now:, namec:, has_numeric:, has_metadata:, has_active:)
 ]
 
 # Prefer a unique index on the detected 2-letter column if present
-idx = ActiveRecord::Base.connection.indexes("system_countries").find { |i| i.unique && i.columns == [code2] }
+idx = ActiveRecord::Base.connection.indexes("system_countries").find { |i| i.unique && i.columns == [ code2 ] }
 
 if idx
   System::Country.upsert_all(rows, unique_by: idx.name.to_sym)

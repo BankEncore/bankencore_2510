@@ -35,7 +35,7 @@ rows =
 idx = ActiveRecord::Base.connection
          .indexes("system_country_currencies")
          .find { |i| i.unique && i.columns.map(&:to_s) == %w[country_id currency_id] }
-unique_by = idx ? idx.name.to_sym : [:country_id, :currency_id]
+unique_by = idx ? idx.name.to_sym : [ :country_id, :currency_id ]
 
 System::CountryCurrency.upsert_all(rows, unique_by: unique_by)
 puts "CountryCurrencies: #{System::CountryCurrency.count} (country_id type: #{ctype}, country code col: #{code2_col})"
