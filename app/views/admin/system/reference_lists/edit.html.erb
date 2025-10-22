@@ -1,3 +1,14 @@
-<h1>Edit Reference List</h1>
+<%# app/views/admin/system/reference_lists/edit.html.erb %>
+
+<nav class="breadcrumbs text-sm mb-4">
+  <ul>
+    <li><%= link_to "Admin", admin_root_path, class: "badge badge-ghost" %></li>
+    <li><%= link_to "Reference Lists", admin_system_reference_lists_path, class: "badge badge-ghost" %></li>
+    <li><span class="badge badge-primary"><%= @list.key %></span></li>
+    <li><span class="badge">Edit</span></li>
+  </ul>
+</nav>
+
+<h1 class="text-xl font-semibold mb-4">Edit Reference List</h1>
+
 <%= render "form", list: @list %>
-<%= link_to "Back", system_reference_list_path(@list) %>

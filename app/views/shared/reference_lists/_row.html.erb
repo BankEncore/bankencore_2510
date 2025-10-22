@@ -1,0 +1,16 @@
+<%# app/views/shared/reference_lists/_row.html.erb %>
+<%# For tables. locals: list: System::ReferenceList %>
+<tr>
+  <td class="font-mono text-xs"><%= list.public_id %></td>
+  <td><%= list.name %></td>
+  <td class="font-mono"><%= list.key %></td>
+  <td><%= list.visibility %></td>
+  <td class="text-xs">
+    <% if list.tags.present? %>
+      <% list.tags.each { |t| concat content_tag(:span, t, class: "badge badge-outline mr-1") } %>
+    <% else %>
+      —
+    <% end %>
+  </td>
+  <td class="text-xs"><%= list.schema_version.presence || "—" %></td>
+</tr>

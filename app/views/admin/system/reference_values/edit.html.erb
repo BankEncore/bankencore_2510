@@ -1,3 +1,8 @@
-<h1>Edit Value — <%= @list.name %></h1>
+<h1 class="text-xl font-semibold mb-4">Edit Value — <%= @list.name %></h1>
+
 <%= render "form", list: @list, value: @value %>
-<%= link_to "Back", system_reference_list_reference_value_path(@list, @value) %>
+
+<div class="mt-4">
+  <%= link_to "Back to value", admin_system_reference_value_path(@value), class: "link link-primary mr-4" %>
+  <%= link_to "Back to list values", admin_system_reference_list_reference_values_path(@list), class: "link" %>
+</div>

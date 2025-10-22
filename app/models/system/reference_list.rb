@@ -1,14 +1,16 @@
-# app/models/system/reference_list.rb
 class System::ReferenceList < ApplicationRecord
-  audited if ApplicationRecord.respond_to?(:audited)
+  self.table_name = "system_reference_lists"
 
-  has_many :reference_values, class_name: "System::ReferenceValue", dependent: :destroy, inverse_of: :reference_list
+  has_many :reference_values,
+           class_name: "System::ReferenceValue",
+           foreign_key: :reference_list_id,
+           dependent: :restrict_with_exception
 
-  validates :name, presence: true
-  validates :public_id, presence: true, uniqueness: true
-  before_validation :ensure_public_id
+  validates :key, :name, :visibility, presence: true
+  validates :key, uniqueness: true
+  validates :visibility, inclusion: { in: %w[public internal private] }
+
+  scope :publicly_visible, -> { where(visibility: "public") }
 
   def to_param = public_id
-  private
-  def ensure_public_id = self.public_id ||= SecureRandom.uuid
 end

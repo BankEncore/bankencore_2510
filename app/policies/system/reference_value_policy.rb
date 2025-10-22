@@ -1,12 +1,22 @@
-# app/policies/system/reference_value_policy.rb
 class System::ReferenceValuePolicy < ApplicationPolicy
-  def index?  = user&.system_admin?
-  def show?   = user&.system_admin?
-  def create? = user&.system_admin?
-  def update? = user&.system_admin?
-  def destroy? = user&.system_admin?   # <-- space before =
+  def index?  = true
+  def show?   = parent_public? || user&.admin?
+  def create? = user&.admin?
+  def update? = user&.admin?
+  def destroy? = user&.admin?
 
   class Scope < Scope
-    def resolve = scope.all
+    def resolve
+      if user&.admin?
+        scope.all
+      else
+        scope.joins(:reference_list).where(system_reference_lists: { visibility: "public" })
+      end
+    end
+  end
+
+  private
+  def parent_public?
+    record.reference_list.visibility == "public"
   end
 end

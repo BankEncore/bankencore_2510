@@ -1,12 +1,13 @@
-# app/policies/system/reference_list_policy.rb
 class System::ReferenceListPolicy < ApplicationPolicy
-  def index? = user&.system_admin?
-  def show?  = user&.system_admin?
-  def create? = user&.system_admin?
-  def update? = user&.system_admin?
-  def destroy? = user&.system_admin?
+  def index?  = true
+  def show?   = record.visibility == "public" || user&.admin?
+  def create? = user&.admin?
+  def update? = user&.admin?
+  def destroy? = user&.admin?
+
   class Scope < Scope
-    def resolve = scope.all
+    def resolve
+      user&.admin? ? scope.all : scope.where(visibility: "public")
+    end
   end
 end
-# duplicate pattern for ReferenceValue, NaicsCode, CountryCurrency

@@ -1,38 +1,79 @@
-# app/controllers/admin/system/reference_lists_controller.rb
-class Admin::System::ReferenceValuesController < Admin::BaseController
-  before_action :set_list, only: %i[show edit update destroy]
+# app/controllers/admin/system/reference_values_controller.rb
+class Admin::System::ReferenceValuesController < ApplicationController
+  before_action :set_parent, only: %i[index new create]
+  before_action :set_value,  only: %i[show edit update destroy]
+  after_action  :verify_authorized
 
   def index
-    @lists = policy_scope(System::ReferenceList).order(:key)
-    authorize @lists
+    @values = policy_scope(System::ReferenceValue)
+                .where(reference_list_id: @list.id).ordered
+    authorize System::ReferenceValue
   end
 
-  def show; authorize @list; end
-  def new  ; @list = System::ReferenceList.new; authorize @list; end
+  def show
+    authorize @value
+  end
+
+  def new
+    @value = @list.reference_values.new(active: true, position: 0, metadata: {})
+    authorize @value
+  end
 
   def create
-    @list = System::ReferenceList.new(list_params); authorize @list
-    if @list.save then redirect_to [ :admin, :system, @list ], notice: "Created"
-    else render :new, status: :unprocessable_entity
+    @value = @list.reference_values.new(value_params)
+    authorize @value
+    if @value.save
+      redirect_to admin_system_reference_value_path(@value.public_id)
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  def edit; authorize @list; end
+  def edit
+    authorize @value
+  end
 
   def update
-    authorize @list
-    if @list.update(list_params) then redirect_to [ :admin, :system, @list ], notice: "Updated"
-    else render :edit, status: :unprocessable_entity
+    authorize @value
+    if @value.update(value_params)
+      redirect_to admin_system_reference_value_path(@value.public_id)
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    authorize @list
-    @list.destroy!
-    redirect_to [ :admin, :system, :reference_lists ], notice: "Deleted"
+    authorize @value
+    @value.destroy
+    redirect_to admin_system_reference_list_reference_values_path(@value.reference_list.public_id)
   end
 
   private
-  def set_list = @list = System::ReferenceList.find_by!(public_id: params[:id])
-  def list_params = params.require(:system_reference_list).permit(:key, :name, :description, :active)
+
+  # For nested routes: /admin/system/reference_lists/:reference_list_public_id/reference_values
+  def set_parent
+    pid = params[:reference_list_public_id] || params[:public_id]
+    @list = System::ReferenceList.find_by!(public_id: pid)
+  end
+
+  # For shallow routes: /admin/system/reference_values/:public_id
+  def set_value
+    @value = System::ReferenceValue.find_by!(public_id: params[:public_id])
+    @list  = @value.reference_list
+  end
+
+  def value_params
+    p = params.require(:system_reference_value).permit(
+      :reference_list_id, :parent_id, :key, :code, :label, :short_label,
+      :description, :position, :active, :effective_from, :effective_to,
+      :metadata_json
+    )
+    if p.key?(:metadata_json)
+      p[:metadata] = p.delete(:metadata_json).presence ? JSON.parse(p[:metadata_json]) : {}
+    end
+    p
+  rescue JSON::ParserError => e
+    (@value || System::ReferenceValue.new).errors.add(:metadata, "invalid JSON: #{e.message}")
+    p.except(:metadata) # prevent crash; validation will surface error
+  end
 end

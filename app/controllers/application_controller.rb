@@ -8,5 +8,9 @@ class ApplicationController < ActionController::Base
       fmt.html { render file: Rails.root.join("public/403.html"), status: :forbidden, layout: false }
       fmt.any  { head :forbidden }
     end
+
+    private
+
+    def forbidden = head :forbidden
   end
 end

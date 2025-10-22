@@ -27,12 +27,6 @@
       <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:reference_lists]) %> lists</div>
     <% end %>
 
-    <%= link_to admin_system_reference_values_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
-      <div class="text-sm text-base-content/70">System • Admin</div>
-      <div class="text-xl font-medium">Reference Values</div>
-      <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:reference_values]) %> values</div>
-    <% end %>
-
     <% if policy(User).index? %>
       <%= link_to admin_users_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
         <div class="text-sm text-base-content/70">Admin</div>

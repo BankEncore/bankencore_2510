@@ -1,26 +1,50 @@
-<h1 class="text-2xl font-semibold mb-4">Values — <%= @list.name %></h1>
-<div class="mb-3">
-  <%= link_to "Add Value", new_system_reference_list_reference_value_path(@list), class: "btn btn-primary" %>
-  <%= link_to "Back to List", system_reference_list_path(@list), class: "btn ml-2" %>
+<%# app/views/admin/system/reference_values/index.html.erb %>
+<%# If nested: @list is set. Otherwise this lists all values. %>
+
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-xl font-semibold">
+    Reference Values<%= @list ? " · #{h @list.key}" : "" %>
+  </h1>
+  <% if @list %>
+    <%= link_to "New Value", new_admin_system_reference_list_reference_value_path(@list), class: "btn btn-primary btn-sm" %>
+  <% end %>
 </div>
 
 <div class="card bg-base-100 shadow">
-  <div class="card-body">
+  <div class="card-body p-0">
     <div class="overflow-x-auto">
-      <table class="table">
-        <thead><tr><th>Key</th><th>Label</th><th>Code</th><th>Active</th><th>Pos</th><th></th></tr></thead>
+      <table class="table table-zebra">
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Code</th>
+            <th>Key</th>
+            <th>Label</th>
+            <th>Active</th>
+            <th>List</th>
+            <th></th>
+          </tr>
+        </thead>
         <tbody>
           <% @values.each do |v| %>
             <tr>
-              <td><code class="badge badge-ghost"><%= v.key %></code></td>
-              <td><%= link_to v.label, system_reference_list_reference_value_path(@list, v), class: "link link-primary" %></td>
-              <td><%= v.code %></td>
-              <td><span class="badge <%= v.active ? 'badge-success' : 'badge-ghost' %>"><%= v.active ? "Active" : "Inactive" %></span></td>
               <td><%= v.position %></td>
-              <td class="text-right">
-                <%= link_to "Edit", edit_system_reference_list_reference_value_path(@list, v), class: "btn btn-xs" %>
+              <td class="font-mono"><%= v.code.presence || "—" %></td>
+              <td class="font-mono"><%= v.key %></td>
+              <td><%= v.label %></td>
+              <td><%= v.active ? "yes" : "no" %></td>
+              <td class="text-xs"><%= link_to v.reference_list.key, admin_system_reference_list_path(v.reference_list) %></td>
+              <td class="text-right whitespace-nowrap">
+                <%= link_to "Show",  admin_system_reference_value_path(v), class: "link link-primary mr-2" %>
+                <%= link_to "Edit",  edit_admin_system_reference_value_path(v), class: "link mr-2" %>
+                <%= link_to "Delete", admin_system_reference_value_path(v),
+                      data: { turbo_method: :delete, turbo_confirm: "Delete this value?" },
+                      class: "link link-error" %>
               </td>
             </tr>
+          <% end %>
+          <% if @values.empty? %>
+            <tr><td colspan="7" class="text-center opacity-70">No values.</td></tr>
           <% end %>
         </tbody>
       </table>

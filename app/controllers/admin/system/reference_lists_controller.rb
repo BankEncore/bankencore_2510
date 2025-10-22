@@ -33,6 +33,15 @@ class Admin::System::ReferenceListsController < Admin::BaseController
   end
 
   private
-  def set_list = @list = System::ReferenceList.find_by!(public_id: params[:id])
-  def list_params = params.require(:system_reference_list).permit(:key, :name, :description, :active)
+  def set_list
+    pid = params[:public_id] || params[:reference_list_public_id] || params[:id]
+    @list = System::ReferenceList.find_by!(public_id: pid)
+  end
+
+  def list_params
+    p = params.require(:system_reference_list)
+              .permit(:key, :name, :description, :schema_version, :visibility, :tags)
+    p[:tags] = p[:tags].to_s.split(",").map(&:strip).reject(&:blank?)
+    p
+  end
 end
