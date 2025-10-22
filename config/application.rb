@@ -28,5 +28,7 @@ module Bankencore
     config.active_record.default_timezone = :utc
     # config.eager_load_paths << Rails.root.join("app/lib")
     config.paths.add "app/lib", eager_load: true
+    config.autoload_paths  << Rails.root.join("app/lib")
+    config.eager_load_paths << Rails.root.join("app/lib")
   end
 end

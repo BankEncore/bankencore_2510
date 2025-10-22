@@ -1,6 +1,9 @@
-# app/controllers/admin/system/reference_lists_controller.rb
+# app/controllers/admin/system/country_currencies_controller.rb
 class Admin::System::CountryCurrenciesController < Admin::BaseController
   include Pagy::Backend
+  before_action :set_country_currency, only: %i[show edit update destroy]
+  before_action :load_collections,     only: %i[new edit create update]
+
 
   def index
     authorize ::System::CountryCurrency
@@ -15,32 +18,48 @@ class Admin::System::CountryCurrenciesController < Admin::BaseController
     @pagy, @country_currencies = pagy(scope.order(:country_id, :currency_id), items: (params[:items] || 50))
   end
 
-  def show; authorize @list; end
-  def new  ; @list = System::ReferenceList.new; authorize @list; end
+  def show    ; authorize @country_currency end
+  def new     ; @country_currency = ::System::CountryCurrency.new; authorize @country_currency end
+  def edit    ; authorize @country_currency end
 
   def create
-    @list = System::ReferenceList.new(list_params); authorize @list
-    if @list.save then redirect_to [ :admin, :system, @list ], notice: "Created"
-    else render :new, status: :unprocessable_entity
+    @country_currency = ::System::CountryCurrency.new(country_currency_params)
+    authorize @country_currency
+    if @country_currency.save
+      redirect_to admin_system_country_currencies_path, notice: "Created"
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
-  def edit; authorize @list; end
-
   def update
-    authorize @list
-    if @list.update(list_params) then redirect_to [ :admin, :system, @list ], notice: "Updated"
-    else render :edit, status: :unprocessable_entity
+    authorize @country_currency
+    if @country_currency.update(country_currency_params)
+      redirect_to admin_system_country_currencies_path, notice: "Updated"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    authorize @list
-    @list.destroy!
-    redirect_to [ :admin, :system, :reference_lists ], notice: "Deleted"
+    authorize @country_currency
+    @country_currency.destroy!
+    redirect_to admin_system_country_currencies_path, notice: "Deleted"
   end
 
   private
-  def set_list = @list = System::ReferenceList.find_by!(public_id: params[:id])
-  def list_params = params.require(:system_reference_list).permit(:key, :name, :description, :active)
+
+  def set_country_currency
+    id = params[:public_id] || params[:id]
+    @country_currency = ::System::CountryCurrency.find_by!(public_id: id)
+  end
+
+  def country_currency_params
+    params.require(:system_country_currency).permit(:country_id, :currency_id, :default_for_country, :valid_from, :valid_to)
+  end
+
+  def load_collections
+    @countries  = ::System::Country.order(:name).select(:id, :name)
+    @currencies = ::System::Currency.order(:code).select(:id, :code, :name)
+  end
 end

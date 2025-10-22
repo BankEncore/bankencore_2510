@@ -7,6 +7,10 @@ module HasPublicId
     validates :public_id, presence: true, uniqueness: true
   end
 
+  def to_param
+    public_id
+  end
+
   private
 
   def ensure_public_id

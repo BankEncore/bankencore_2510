@@ -1,23 +1,25 @@
-<%= form_with model: @country_currency, class: "space-y-4" do |f| %>
-  <% if @country_currency.errors.any? %>
-    <div class="alert alert-error">
-      <span><%= pluralize(@country_currency.errors.count, "error") %> prevented saving</span>
-    </div>
-  <% end %>
+<!-- app/views/admin/system/country_currencies/_form.html.erb -->
+<%= form_with model: @country_currency,
+              url: (@country_currency.persisted? ?
+                     admin_system_country_currency_path(@country_currency) :
+                     admin_system_country_currencies_path),
+              class: "space-y-4" do |f| %>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <label class="form-control">
       <div class="label"><span class="label-text">Country</span></div>
-      <%= select_tag :country_id,
-        options_from_collection_for_select(@countries || [], :id, :name, params[:country_id]),
-        include_blank: "All", class: "select select-bordered w-full" %>
+      <%= f.collection_select :country_id,
+            @countries, :id, :name,
+            { include_blank: "Select Country" },
+            class: "select select-bordered w-full" %>
     </label>
 
     <label class="form-control">
       <div class="label"><span class="label-text">Currency</span></div>
-      <%= select_tag :currency_id,
-        options_from_collection_for_select(@currencies || [], :id, ->(c){ "#{c.code} — #{c.name}" }, params[:currency_id]),
-        include_blank: "All", class: "select select-bordered w-full" %>
+      <%= f.collection_select :currency_id,
+            @currencies, :id, ->(c) { "#{c.code} — #{c.name}" },
+            { include_blank: "Select Currency" },
+            class: "select select-bordered w-full" %>
     </label>
 
     <label class="form-control">
@@ -38,6 +40,6 @@
 
   <div class="flex gap-2">
     <%= f.submit class: "btn btn-primary" %>
-    <%= link_to "Cancel", system_country_currencies_path, class: "btn btn-ghost" %>
+    <%= link_to "Cancel", admin_system_country_currencies_path, class: "btn btn-ghost" %>
   </div>
 <% end %>

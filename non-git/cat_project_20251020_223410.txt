@@ -8046,7 +8046,7 @@ end
       <span class="text-lg font-semibold">Country ↔ Currency</span>
     </div>
     <div class="flex-none">
-      <%= link_to "New", new_system_country_currency_path, class: "btn btn-primary btn-sm" %>
+      <%= link_to "New", new_admin_system_country_currency_path, class: "btn btn-primary btn-sm" %>
     </div>
   </div>
 
@@ -8100,7 +8100,7 @@ end
             <td><%= cc.valid_to&.to_s %></td>
             <td class="flex gap-2">
               <%= link_to "Show", system_country_currency_path(cc), class: "btn btn-sm" %>
-              <%= link_to "Edit", edit_system_country_currency_path(cc), class: "btn btn-sm btn-outline" %>
+              <%= link_to "Edit", edit_admin_system_country_currency_path(cc), class: "btn btn-sm btn-outline" %>
               <%= button_to "Delete", system_country_currency_path(cc), method: :delete,
                     data: { confirm: "Delete mapping?" }, class: "btn btn-sm btn-error" %>
             </td>
@@ -9733,7 +9733,7 @@ document.addEventListener("turbo:load", init);
       <span class="text-lg font-semibold">Country ↔ Currency</span>
     </div>
     <div class="flex-none">
-      <%= link_to "New", new_system_country_currency_path, class: "btn btn-primary btn-sm" %>
+      <%= link_to "New", new_admin_system_country_currency_path, class: "btn btn-primary btn-sm" %>
     </div>
   </div>
 
@@ -9787,7 +9787,7 @@ document.addEventListener("turbo:load", init);
             <td><%= cc.valid_to&.to_s %></td>
             <td class="flex gap-2">
               <%= link_to "Show", system_country_currency_path(cc), class: "btn btn-sm" %>
-              <%= link_to "Edit", edit_system_country_currency_path(cc), class: "btn btn-sm btn-outline" %>
+              <%= link_to "Edit", edit_admin_system_country_currency_path(cc), class: "btn btn-sm btn-outline" %>
               <%= button_to "Delete", system_country_currency_path(cc), method: :delete,
                     data: { confirm: "Delete mapping?" }, class: "btn btn-sm btn-error" %>
             </td>

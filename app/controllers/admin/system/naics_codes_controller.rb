@@ -20,6 +20,14 @@ class Admin::System::NaicsCodesController < Admin::BaseController
 
   def show
     authorize @naics
+    @ancestors = []
+    node = @naics
+    while node&.parent_code.present?
+      parent = ::System::NaicsCode.find_by(code: node.parent_code, year: node.year)
+      break unless parent
+      @ancestors.unshift(parent)
+      node = parent
+    end
   end
 
   def new
@@ -59,7 +67,14 @@ class Admin::System::NaicsCodesController < Admin::BaseController
   private
 
   def set_naics
-    @naics = ::System::NaicsCode.find_by!(public_id: params[:id])
+    key = params[:public_id] || params[:id]
+    @naics = ::System::NaicsCode.find_by(public_id: key)
+    if @naics.nil? && key.to_s =~ /\A\d+\z/
+      @naics = ::System::NaicsCode.find(key)
+      # canonicalize show URLs
+      redirect_to [ :admin, :system, @naics ], status: :moved_permanently and return if action_name == "show"
+    end
+    raise ActiveRecord::RecordNotFound unless @naics
   end
 
   def naics_params

@@ -1,6 +1,11 @@
 <!-- app/views/payments/ach_routings/index.html.erb -->
+<!-- app/views/payments/ach_routings/index.html.erb -->
 <div class="flex items-center justify-between mb-4">
-  <h1 class="text-xl font-semibold">ACH Routings</h1>
+  <h1 class="text-2xl font-semibold">ACH Routings</h1>
+
+  <% if current_user&.admin? %>
+    <%= link_to "Add", new_admin_payments_ach_routing_path, class: "btn btn-primary" %>
+  <% end %>
 </div>
 
 <%= form_with url: payments_ach_routings_path, method: :get, local: true,

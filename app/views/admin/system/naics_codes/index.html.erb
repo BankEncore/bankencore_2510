@@ -1,10 +1,10 @@
 <!-- app/views/system/naics_codes/index.html.erb -->
 <div class="flex items-center justify-between mb-4">
   <h1 class="text-xl font-semibold">NAICS</h1>
-  <%= link_to "New", new_system_naics_code_path, class: "btn btn-primary btn-sm" %>
+  <%= link_to "New", new_admin_system_naics_code_path, class: "btn btn-primary btn-sm" %>
 </div>
 
-<%= form_with url: system_naics_codes_path, method: :get, local: true,
+<%= form_with url: admin_system_naics_codes_path, method: :get, local: true,
   class: "mb-4 flex flex-wrap sm:flex-nowrap items-center gap-2" do |f| %>
 
   <label class="input input-bordered flex items-center gap-2 flex-1 min-w-[220px]">
@@ -40,7 +40,7 @@
       <% @naics_codes.each do |n| %>
         <tr>
           <td><%= n.year %></td>
-          <td class="font-mono"><%= link_to n.code, system_naics_code_path(n), class: "link link-primary" %></td>
+          <td class="font-mono"><%= link_to n.code, admin_system_naics_code_path(n), class: "link link-primary" %></td>
           <td>
             <span class="tooltip" data-tip="<%= n.title %>"><%= truncate(n.title, length: 70) %></span>
           </td>
@@ -55,8 +55,8 @@
             <% else %>-<% end %>
           </td>
           <td class="space-x-2">
-            <%= link_to "Edit", edit_system_naics_code_path(n), class: "btn btn-xs" %>
-            <%= link_to "Delete", system_naics_code_path(n),
+            <%= link_to "Edit", edit_admin_system_naics_code_path(n), class: "btn btn-xs" %>
+            <%= link_to "Delete", admin_system_naics_code_path(n),
                           class: "btn btn-error btn-xs",
                           data: { turbo_method: :delete, turbo_confirm: "Delete #{n.code}?" } %>
           </td>

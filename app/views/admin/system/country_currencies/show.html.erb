@@ -11,8 +11,13 @@
       </div>
 
       <div class="card-actions justify-end mt-4">
-        <%= link_to "Edit", edit_system_country_currency_path(@country_currency), class: "btn" %>
-        <%= link_to "Back", system_country_currencies_path, class: "btn btn-ghost" %>
+        <%= link_to "Edit",
+                    edit_admin_system_country_currency_path(@country_currency),
+                    class: "btn" %>
+
+        <%= link_to "Back",
+                    admin_system_country_currencies_path,
+                    class: "btn btn-ghost" %>
       </div>
     </div>
   </div>

@@ -1,5 +1,6 @@
 # app/models/system/naics_code.rb
 class System::NaicsCode < ApplicationRecord
+  include HasPublicId
   self.table_name = "system_naics_codes"
 
   validates :year, :code, :title, presence: true

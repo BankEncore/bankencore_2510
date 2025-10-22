@@ -13,6 +13,21 @@
       </label>
     </form>
 
+    <%# Pundit %>
+    <% if defined?(policy) && policy(:admin_dashboard).index? %>
+      <%= link_to "Admin", admin_root_path, class: "btn btn-ghost" %>
+    <% end %>
+
+    <%# CanCanCan
+    <%# if defined?(can?) && can?(:read, :admin_dashboard) %>
+    <%#   = link_to "Admin", admin_root_path, class: "btn btn-ghost" %>
+    <%# end %>
+
+    <%# Simple helper fallback
+    <%# if respond_to?(:can_access_admin?) && can_access_admin? %>
+    <%#   = link_to "Admin", admin_root_path, class: "btn btn-ghost" %>
+    <%# end %>
+
     <% if user_signed_in? %>
       <div class="dropdown dropdown-end">
         <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
@@ -24,11 +39,10 @@
           <li><%= link_to "Profile", "/profile" %></li>
           <li><%= link_to "Settings", "/settings" %></li>
           <li>
-            <li>
             <%= button_to "Sign out", destroy_user_session_path,
                   method: :delete,
                   form: { class: "contents" },
-                  class: "justify-start w-full text-left" %> 
+                  class: "justify-start w-full text-left" %>
           </li>
           <li><%= render "layouts/theme_switcher" %></li>
         </ul>

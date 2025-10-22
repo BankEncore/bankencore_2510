@@ -13,10 +13,17 @@ class System::NaicsCodesController < ApplicationController
     end
 
   def show
-    @parent         = @naics.parent
-    @ancestors      = @naics.ancestors.order(Arel.sql("char_length(code)"))
-    @lineage        = @ancestors.to_a + [ @naics ]
-    @expanded_codes = (@ancestors.pluck(:code) + [ @naics.code ])
+    @naics = System::NaicsCode.find_by!(public_id: params[:public_id] || params[:id])
+    @ancestors = []
+    node = @naics
+    while node&.parent_code.present?
+      parent = System::NaicsCode.find_by(code: node.parent_code, year: node.year)
+      break unless parent
+      @ancestors.unshift(parent)
+      node = parent
+    end
+    @lineage = @ancestors.dup
+    @parent  = @ancestors.last
   end
 
   def new
@@ -47,11 +54,17 @@ class System::NaicsCodesController < ApplicationController
     redirect_to system_naics_codes_path, notice: "NAICS code deleted."
   end
 
+  def legacy_redirect
+    record = System::NaicsCode.find(params[:id])
+    redirect_to system_naics_code_path(record.public_id), status: :moved_permanently
+  end
+
   private
 
-  def set_naics
-    @naics = System::NaicsCode.find(params[:id])
-  end
+def set_naics
+  key = params[:public_id] || params[:id]
+  @naics = ::System::NaicsCode.find_by!(public_id: key)
+end
 
   def naics_params
     params.require(:system_naics_code).permit(
