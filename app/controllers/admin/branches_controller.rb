@@ -1,58 +1,71 @@
 # app/controllers/admin/branches_controller.rb
-class Admin::BranchesController < ApplicationController
-  before_action :authenticate_user!
+class Admin::BranchesController < Admin::BaseController
   before_action :set_branch, only: %i[show edit update destroy]
 
   def index
-    @branches = policy_scope(Branch, policy_scope_class: Admin::BranchPolicy::Scope).order(:code)
-    authorize Branch, policy_class: Admin::BranchPolicy
+    @branches = policy_scope(Branch)
+    authorize Branch, :index?
   end
 
-  def show
-    authorize @branch, policy_class: Admin::BranchPolicy
-  end
+  def show; end
 
   def new
     @branch = Branch.new
-    authorize @branch, policy_class: Admin::BranchPolicy
+    authorize @branch
   end
 
   def create
     @branch = Branch.new(branch_params)
-    authorize @branch, policy_class: Admin::BranchPolicy
+    authorize @branch
     if @branch.save
-      redirect_to [ :admin, @branch ], notice: "Branch created."
+      redirect_to [ :admin, @branch ]
     else
       render :new, status: :unprocessable_entity
     end
   end
 
-  def edit
-    authorize @branch, policy_class: Admin::BranchPolicy
-  end
+  def edit; end
 
   def update
-    authorize @branch, policy_class: Admin::BranchPolicy
     if @branch.update(branch_params)
-      redirect_to [ :admin, @branch ], notice: "Branch updated."
+      redirect_to [ :admin, @branch ]
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    authorize @branch, policy_class: Admin::BranchPolicy
     @branch.destroy
-    redirect_to admin_branches_path, notice: "Branch deleted."
+    redirect_to admin_branches_path
   end
 
   private
 
   def set_branch
-    @branch = Branch.find_by!(public_id: params[:id]) rescue Branch.find(params[:id])
+    @branch = Branch.find_by!(public_id: params[:public_id])
+    authorize @branch
   end
 
   def branch_params
-    params.require(:branch).permit(:code, :name, :status)
+    permitted = params.require(:branch).permit(
+      :code, :name, :status, :time_zone,
+      :address_1, :address_2, :city, :region_code, :postal_code,
+      :country_alpha2, :phone, :fax, :email, :latitude, :longitude,
+      *Branch::DAYS.flat_map { |d| [ :"#{d}_open", :"#{d}_close" ] }
+    )
+
+    hours = {}
+    Branch::DAYS.each do |d|
+      o = permitted.delete(:"#{d}_open").to_s.strip
+      c = permitted.delete(:"#{d}_close").to_s.strip
+      if o.present? && c.present?
+        hours[d] = { "open" => o, "close" => c }
+      else
+        hours[d] = nil
+      end
+    end
+
+    permitted[:operating_hours] = hours
+    permitted
   end
 end

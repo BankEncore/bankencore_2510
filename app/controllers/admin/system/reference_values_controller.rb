@@ -1,79 +1,80 @@
 # app/controllers/admin/system/reference_values_controller.rb
-class Admin::System::ReferenceValuesController < ApplicationController
-  before_action :set_parent, only: %i[index new create]
-  before_action :set_value,  only: %i[show edit update destroy]
-  after_action  :verify_authorized
+class Admin::System::ReferenceValuesController < Admin::BaseController
+  include Pagy::Backend
+
+  before_action :set_list
+  before_action :set_value, only: %i[show edit update destroy]
 
   def index
-    @values = policy_scope(System::ReferenceValue)
-                .where(reference_list_id: @list.id).ordered
-    authorize System::ReferenceValue
+    authorize [ :admin, :system, System::ReferenceValue ]
+    scope = policy_scope(System::ReferenceValue)
+              .where(reference_list_id: @list.id)
+              .order(:sort_index, :code)
+
+    if (q = params[:q].to_s.strip.presence)
+      like = "%#{q}%"
+      scope = scope.where("code ILIKE ? OR name ILIKE ? OR short_name ILIKE ? OR description ILIKE ?",
+                          like, like, like, like)
+    end
+    unless params[:active].nil?
+      scope = scope.where(active: ActiveModel::Type::Boolean.new.cast(params[:active]))
+    end
+
+    @pagy, @reference_values = pagy(scope, items: (params[:items].presence || 50).to_i)
   end
 
   def show
-    authorize @value
+    authorize [ :admin, :system, @value ]
   end
 
   def new
-    @value = @list.reference_values.new(active: true, position: 0, metadata: {})
-    authorize @value
+    @value = System::ReferenceValue.new(reference_list: @list, sort_index: 50, active: true)
+    authorize [ :admin, :system, @value ]
   end
 
   def create
-    @value = @list.reference_values.new(value_params)
-    authorize @value
+    @value = System::ReferenceValue.new(permitted.merge(reference_list: @list))
+    authorize [ :admin, :system, @value ]
     if @value.save
-      redirect_to admin_system_reference_value_path(@value.public_id)
+      redirect_to admin_system_reference_list_reference_value_path(@list.key, @value.code), notice: "Created"
     else
       render :new, status: :unprocessable_entity
     end
   end
 
   def edit
-    authorize @value
+    authorize [ :admin, :system, @value ]
   end
 
   def update
-    authorize @value
-    if @value.update(value_params)
-      redirect_to admin_system_reference_value_path(@value.public_id)
+    authorize [ :admin, :system, @value ]
+    if @value.update(permitted)
+      redirect_to admin_system_reference_list_reference_value_path(@list.key, @value.code), notice: "Updated"
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    authorize @value
-    @value.destroy
-    redirect_to admin_system_reference_list_reference_values_path(@value.reference_list.public_id)
+    authorize [ :admin, :system, @value ]
+    @value.destroy!
+    redirect_to admin_system_reference_list_reference_values_path(@list.key), notice: "Deleted"
   end
 
   private
 
-  # For nested routes: /admin/system/reference_lists/:reference_list_public_id/reference_values
-  def set_parent
-    pid = params[:reference_list_public_id] || params[:public_id]
-    @list = System::ReferenceList.find_by!(public_id: pid)
+  def set_list
+    key = params[:reference_list_key] || params[:key]
+    @list = System::ReferenceList.find_by!(key: key.to_s)
   end
 
-  # For shallow routes: /admin/system/reference_values/:public_id
   def set_value
-    @value = System::ReferenceValue.find_by!(public_id: params[:public_id])
-    @list  = @value.reference_list
+    @value = @list.reference_values.find_by!(code: params[:code].to_s)
   end
 
-  def value_params
-    p = params.require(:system_reference_value).permit(
-      :reference_list_id, :parent_id, :key, :code, :label, :short_label,
-      :description, :position, :active, :effective_from, :effective_to,
-      :metadata_json
-    )
-    if p.key?(:metadata_json)
-      p[:metadata] = p.delete(:metadata_json).presence ? JSON.parse(p[:metadata_json]) : {}
-    end
-    p
-  rescue JSON::ParserError => e
-    (@value || System::ReferenceValue.new).errors.add(:metadata, "invalid JSON: #{e.message}")
-    p.except(:metadata) # prevent crash; validation will surface error
+  def permitted
+    params.require(:system_reference_value)
+          .permit(:code, :name, :short_name, :description, :sort_index, :active,
+                  :external_code, :valid_from, :valid_to, metadata: {})
   end
 end

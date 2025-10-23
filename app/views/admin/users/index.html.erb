@@ -1,34 +1,95 @@
-<h1>Admin · Users</h1>
+<!-- app/views/admin/users/index.html.erb -->
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-xl font-semibold">Admin · Users</h1>
+  <% if policy([:admin, User]).new? %>
+    <%= link_to "New User", new_admin_user_path, class: "btn btn-primary btn-sm" %>
+  <% end %>
+</div>
 
-<p><%= link_to "New User", new_admin_user_path %></p>
+<%= form_with url: admin_users_path, method: :get, local: true, class: "mb-4" do %>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+    <label class="input input-bordered flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4a6 6 0 104.472 10.03l3.75 3.75 1.415-1.414-3.75-3.75A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"/></svg>
+      <input type="text" name="q" placeholder="Search name or email" value="<%= params[:q] %>" class="grow">
+    </label>
 
-<table>
-  <thead>
-    <tr>
-      <th>Email</th>
-      <th>Name</th>
-      <th>Admin</th>
-      <th>Role</th>
-      <th>Status</th>
-      <th>Branches</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @users.each do |u| %>
+    <select name="role" class="select select-bordered">
+      <option value="">All roles</option>
+      <% Role.order(:name).pluck(:key,:name).each do |key,name| %>
+        <option value="<%= key %>" <%= "selected" if params[:role] == key %>><%= name %></option>
+      <% end %>
+    </select>
+
+    <select name="branch" class="select select-bordered">
+      <option value="">All branches</option>
+      <% Branch.order(:name).pluck(:public_id,:name).each do |pid,name| %>
+        <option value="<%= pid %>" <%= "selected" if params[:branch] == pid %>><%= name %></option>
+      <% end %>
+    </select>
+
+    <div class="flex gap-2">
+      <button class="btn btn-primary w-full md:w-auto">Filter</button>
+      <%= link_to "Reset", admin_users_path, class: "btn btn-ghost w-full md:w-auto" %>
+    </div>
+  </div>
+<% end %>
+
+<div class="overflow-x-auto">
+  <table class="table table-zebra">
+    <thead>
       <tr>
-        <td><%= link_to u.email, [:admin, u] %></td>
-        <td><%= u.name %></td>
-        <td><%= u.admin? %></td>
-        <td><%= u.respond_to?(:role_i) ? u.role_i : u.role %></td>
-        <td><%= u.status %></td>
-        <td><%= u.branches.order(:code).pluck(:code).join(", ") %></td>
-        <td>
-          <%= link_to "Edit", edit_admin_user_path(u) %> |
-          <%= link_to "Delete", [:admin, u],
-                data: { turbo_method: :delete, turbo_confirm: "Delete #{u.email}?" } %>
-        </td>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Roles</th>
+        <th>Branches</th>
+        <th>Status</th>
+        <th class="text-right">Actions</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @users.each do |u| %>
+        <tr>
+          <td><%= u.display_name.presence || "#{u.first_name} #{u.last_name}" %></td>
+          <td class="font-mono text-sm"><%= u.email %></td>
+          <td class="text-sm">
+            <% rs = u.roles.order(:name).pluck(:name) %>
+            <% rs.each do |r| %><span class="badge badge-ghost mr-1"><%= r %></span><% end %>
+          </td>
+          <td class="text-sm">
+            <% bs = (u.respond_to?(:branches) ? u.branches.order(:name).pluck(:name) : []) %>
+            <% bs.first(3).each do |b| %><span class="badge badge-outline mr-1"><%= b %></span><% end %>
+            <% if bs.size > 3 %><span class="badge badge-ghost">+<%= bs.size - 3 %></span><% end %>
+          </td>
+          <td>
+            <% confirmed = u.respond_to?(:confirmed_at) && u.confirmed_at.present? %>
+            <% locked    = u.respond_to?(:locked_at)    && u.locked_at.present? %>
+            <span class="badge <%= confirmed ? 'badge-success' : 'badge-warning' %>"><%= confirmed ? "Confirmed" : "Unconfirmed" %></span>
+            <% if locked %><span class="badge badge-error ml-1">Locked</span><% end %>
+          </td>
+          <td class="text-right space-x-1">
+            <%= link_to "Show", [:admin, u], class: "btn btn-ghost btn-xs" %>
+            <% if policy([:admin, u]).edit? %>
+              <%= link_to "Edit", [:edit, :admin, u], class: "btn btn-ghost btn-xs" %>
+            <% end %>
+            <% if policy([:admin, u]).destroy? %>
+              <%= link_to "Delete", [:admin, u],
+                    data: { turbo_method: :delete, turbo_confirm: "Delete #{u.email}?" },
+                    class: "btn btn-ghost btn-xs text-error" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <% if @users.empty? %>
+        <tr>
+          <td colspan="6">
+            <div class="alert"><span>No users match your filters.</span></div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<% if defined?(pagy_nav) && @pagy %>
+  <div class="mt-4"><%= pagy_nav(@pagy) %></div>
+<% end %>

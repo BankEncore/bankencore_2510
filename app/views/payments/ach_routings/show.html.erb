@@ -19,7 +19,7 @@
                   payments_ach_routings_path(request.query_parameters.except(:controller, :action, :public_id)),
                   class: "btn btn-ghost" %>
 
-      <% if current_user&.admin? %>
+  <% if current_user&.system_admin? %>
         <%= link_to "Edit",
                     edit_admin_payments_ach_routing_path(@ach_routing),
                     class: "btn btn-primary" %>

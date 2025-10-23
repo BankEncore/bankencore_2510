@@ -8,20 +8,20 @@
     </div>
   </div>
 
-  <%= form_with url: system_country_currencies_path, method: :get, local: true, class: "mb-4" do %>
+  <%= form_with url: admin_system_country_currencies_path, method: :get, local: true, class: "mb-4" do %>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-      <label class="form-control w-full">
+  <label class="form-control w-full">
         <div class="label"><span class="label-text">Country</span></div>
-        <%= select_tag :country_id,
-              options_from_collection_for_select(@countries, :id, :name, params[:country_id]),
-              include_blank: "All", class: "select select-bordered w-full" %>
+    <%= select_tag :country_alpha2,
+      options_from_collection_for_select(@countries, :alpha2, :iso_short_name, params[:country_alpha2]),
+      include_blank: "All", class: "select select-bordered w-full" %>
       </label>
 
       <label class="form-control w-full">
         <div class="label"><span class="label-text">Currency</span></div>
-        <%= select_tag :currency_id,
-              options_from_collection_for_select(@currencies, :id, ->(c) { "#{c.code} — #{c.name}" }, params[:currency_id]),
-              include_blank: "All", class: "select select-bordered w-full" %>
+    <%= select_tag :currency_code,
+      options_from_collection_for_select(@currencies, :code, ->(c) { "#{c.code} — #{c.name}" }, params[:currency_code]),
+      include_blank: "All", class: "select select-bordered w-full" %>
       </label>
 
       <div class="flex items-end">
@@ -45,10 +45,10 @@
       <tbody>
         <% @country_currencies.each do |cc| %>
           <tr>
-            <td><%= cc.country.name %></td>
+            <td><%= cc.country.iso_short_name %></td>
             <td><%= "#{cc.currency.code} — #{cc.currency.name}" %></td>
             <td>
-              <% if cc.default_for_country %>
+              <% if cc.is_primary %>
                 <span class="badge badge-primary">Default</span>
               <% else %>
                 <span class="badge">No</span>
@@ -57,10 +57,10 @@
             <td><%= cc.valid_from&.to_s %></td>
             <td><%= cc.valid_to&.to_s %></td>
             <td class="flex gap-2">
-              <%= link_to "Show", system_country_currency_path(cc), class: "btn btn-sm" %>
-              <%= link_to "Edit", edit_admin_system_country_currency_path(cc), class: "btn btn-sm btn-outline" %>
-              <%= button_to "Delete",
-                  admin_system_country_currency_path(cc),
+              <%= link_to "Show", admin_system_country_currency_path(country_alpha2: cc.country_alpha2, currency_code: cc.currency_code), class: "btn btn-sm" %>
+              <%= link_to "Edit", admin_system_edit_country_currency_path(country_alpha2: cc.country_alpha2, currency_code: cc.currency_code), class: "btn btn-sm btn-outline" %>
+        <%= button_to "Delete",
+          admin_system_country_currency_path(country_alpha2: cc.country_alpha2, currency_code: cc.currency_code),
                   method: :delete,
                   form: { data: { turbo_confirm: "Delete this mapping?" }, class: "inline" },
                   class: "btn btn-error btn-sm" %>

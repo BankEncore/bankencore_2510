@@ -1,35 +1,58 @@
 # app/controllers/payments/ach_routings_controller.rb
-module Payments
-  class AchRoutingsController < ApplicationController
-    include Pagy::Backend
-    helper Payments::AchRoutingsHelper
+# new
+class Payments::AchRoutingsController < ApplicationController
+  include Pagy::Backend
+  before_action :set_row, only: :show
 
-    def index
-      @q      = params[:q].to_s.strip
-      @state  = params[:state].presence
-      @states = Payments::AchRouting.distinct.order(:state_code).pluck(:state_code)
+  # GET /payments/ach_routings
+  # Filters:
+  #   q=term                 # routing_number, name, city, state
+  #   state=PA               # 2-letter
+  #   office=O               # 1 char
+  #   type=0                 # record_type_code
+  #   status=1               # institution_status_code
+  #   view=1                 # data_view_code
+  #   items=50               # per-page
+  def index
+    authorize Payments::AchRouting
 
-      scope = Payments::AchRouting.order(:routing_number)
-      scope = scope.where("routing_number ILIKE :q OR customer_name ILIKE :q", q: "%#{@q}%") if @q.present?
-      scope = scope.where(state_code: @state) if @state
+    scope = policy_scope(Payments::AchRouting).order(:routing_number)
 
-      @pagy, @ach_routings = pagy(scope, items: (params[:items].presence || 50).to_i)
+    # UI helpers
+    @q = params[:q].to_s.presence
+    @state = params[:state].to_s.upcase.presence
+    # collect available state codes from the scoped data (or global if none)
+    @states = policy_scope(Payments::AchRouting).distinct.order(:state_code).pluck(:state_code).compact.map(&:upcase).uniq.sort
+
+    if (q = params[:q].to_s.strip.presence)
+      like = "%#{q}%"
+      scope = scope.where(
+        "routing_number ILIKE ? OR customer_name ILIKE ? OR city ILIKE ? OR state_code ILIKE ?",
+        like, like, like, like
+      )
     end
+    scope = scope.where(state_code: params[:state].to_s.upcase) if params[:state].present?
+    scope = scope.where(office_code: params[:office].to_s[0])   if params[:office].present?
+    scope = scope.where(record_type_code: params[:type].to_s[0]) if params[:type].present?
+    scope = scope.where(institution_status_code: params[:status].to_s[0]) if params[:status].present?
+    scope = scope.where(data_view_code: params[:view].to_s[0]) if params[:view].present?
 
-    def show
-      @ach_routing =
-        Payments::AchRouting.find_by!(public_id: params[:public_id] || params[:id])
+    @pagy, @ach_routings = pagy(scope, items: (params[:items].presence || 50).to_i)
+  end
 
-      respond_to do |format|
-        format.html
-        format.json { render json: @ach_routing.as_json }
-      end
-    end
+  # GET /payments/ach_routings/:public_id
+  def show
+    authorize @ach_routing
+  end
 
-    # /payments/ach_routings/:id where :id was legacy numeric
-    def legacy_redirect
-      record = Payments::AchRouting.find(params[:id])
-      redirect_to payments_ach_routing_path(record.public_id), status: :moved_permanently
+  private
+
+  def set_row
+    pid = params[:public_id].to_s
+    @ach_routing = Payments::AchRouting.find_by!(public_id: pid)
+    # canonicalize if param differs from stored UUID
+    if pid != @ach_routing.public_id
+      redirect_to payments_ach_routing_path(@ach_routing.public_id), status: :moved_permanently
     end
   end
 end

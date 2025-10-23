@@ -1,12 +1,18 @@
-# app/policies/system/reference_list_policy.rb
-class System::CountryCurrencyPolicy < ApplicationPolicy
-  def index? = user&.system_admin?
-  def show?  = user&.system_admin?
-  def create? = user&.system_admin?
-  def update? = user&.system_admin?
-  def destroy? = user&.system_admin?
-  class Scope < Scope
-    def resolve = scope.all
+module System
+  class CountryCurrencyPolicy < ::ApplicationPolicy
+    # reads require system.read, writes require system.write
+    def index?  = can?("system.read")
+    def show?   = can?("system.read")
+    def create? = can?("system.write")
+    def update? = can?("system.write")
+    def destroy? = can?("system.write")
+    def new?    = create?
+    def edit?   = update?
+
+    class Scope < Scope
+      def resolve
+        can?("system.read") ? @scope.all : @scope.none
+      end
+    end
   end
 end
-# duplicate pattern for ReferenceValue, NaicsCode, CountryCurrency

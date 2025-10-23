@@ -1,21 +1,175 @@
-<%= form_with model: [:admin, @branch] do |f| %>
-  <div>
-    <%= f.label :code %><br>
-    <%= f.text_field :code, required: true, autofocus: true %>
+<!-- app/views/admin/branches/_form.html.erb -->
+<%= form_with model: [:admin, @branch], class: "space-y-6" do |f| %>
+  <% if @branch.errors.any? %>
+    <div class="alert alert-error">
+      <span><strong><%= pluralize(@branch.errors.count, "error") %></strong> prevented saving.</span>
+    </div>
+    <ul class="list-disc list-inside text-sm text-error">
+      <% @branch.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+    </ul>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Identity -->
+    <div class="card bg-base-100 shadow">
+      <div class="card-body space-y-4">
+        <h2 class="card-title">Identity</h2>
+
+        <div class="form-control">
+          <%= f.label :code, class: "label" %>
+          <%= f.text_field :code, maxlength: 16, required: true, class: "input input-bordered w-full" %>
+          <label class="label"><span class="label-text-alt">Unique code. 16 chars max.</span></label>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :name, class: "label" %>
+          <%= f.text_field :name, maxlength: 120, required: true, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :status, class: "label" %>
+          <%= f.select :status,
+                Branch.statuses.keys.map { |k| [k.humanize, k] },
+                {}, class: "select select-bordered w-full", required: true %>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :time_zone, class: "label" %>
+          <%= f.time_zone_select :time_zone, nil, {}, class: "select select-bordered w-full", required: true %>
+          <label class="label"><span class="label-text-alt">e.g. America/New_York</span></label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="card bg-base-100 shadow">
+      <div class="card-body space-y-4">
+        <h2 class="card-title">Contact</h2>
+
+        <div class="form-control">
+          <%= f.label :phone, class: "label" %>
+          <%= f.telephone_field :phone, maxlength: 32, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :fax, class: "label" %>
+          <%= f.telephone_field :fax, maxlength: 32, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :email, class: "label" %>
+          <%= f.email_field :email, class: "input input-bordered w-full" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Location -->
+    <div class="card bg-base-100 shadow md:col-span-2">
+      <div class="card-body space-y-4">
+        <h2 class="card-title">Location</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div class="form-control">
+            <%= f.label :address_1, class: "label" %>
+            <%= f.text_field :address_1, class: "input input-bordered w-full" %>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :address_2, class: "label" %>
+            <%= f.text_field :address_2, class: "input input-bordered w-full" %>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :city, class: "label" %>
+            <%= f.text_field :city, class: "input input-bordered w-full" %>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :region_code, "Region/State", class: "label" %>
+            <%= f.text_field :region_code, maxlength: 10, class: "input input-bordered w-full" %>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :postal_code, class: "label" %>
+            <%= f.text_field :postal_code, maxlength: 16, class: "input input-bordered w-full" %>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :country_alpha2, "Country", class: "label" %>
+            <%= f.collection_select :country_alpha2,
+                  System::Country.where(active: true).order(:alpha2), :alpha2, :label,
+                  {}, class: "select select-bordered w-full", required: true %>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :latitude, class: "label" %>
+            <%= f.number_field :latitude, step: "0.000001", class: "input input-bordered w-full" %>
+            <label class="label"><span class="label-text-alt">Precision 6 decimals.</span></label>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :longitude, class: "label" %>
+            <%= f.number_field :longitude, step: "0.000001", class: "input input-bordered w-full" %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Operating hours -->
+    <% days = {mon:"Mon", tue:"Tue", wed:"Wed", thu:"Thu", fri:"Fri", sat:"Sat", sun:"Sun"} %>
+    <div class="card bg-base-100 shadow md:col-span-2">
+      <div class="card-body space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="card-title">Operating hours</h2>
+          <div class="badge badge-ghost">Local time</div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Open</th>
+                <th>Close</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% days.each do |key, label| %>
+                <tr>
+                  <td class="font-medium"><%= label %></td>
+                  <td>
+                    <input type="time"
+                           name="branch[<%= key %>_open]"
+                           value="<%= @branch.hour_value(key.to_s, 'open') %>"
+                           class="input input-bordered w-40" />
+                  </td>
+                  <td>
+                    <input type="time"
+                           name="branch[<%= key %>_close]"
+                           value="<%= @branch.hour_value(key.to_s, 'close') %>"
+                           class="input input-bordered w-40" />
+                  </td>
+                  <td>
+                    <% closed = @branch.hours_for(key.to_s).nil? %>
+                    <span class="badge <%= closed ? 'badge-ghost' : 'badge-success' %>">
+                      <%= closed ? 'Closed' : 'Open' %>
+                    </span>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <div class="text-xs opacity-70 mt-2">
+            Leave both times blank to mark a day as closed.
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <%= f.label :name %><br>
-    <%= f.text_field :name, required: true %>
-  </div>
-
-  <div>
-    <%= f.label :status %><br>
-    <%= f.select :status, Branch::STATUSES, {}, required: true %>
-  </div>
-
-  <div style="margin-top:1rem">
-    <%= f.submit %>
-    <%= link_to "Cancel", @branch.persisted? ? [:admin, @branch] : admin_branches_path %>
+  <div class="flex items-center gap-3">
+    <%= f.submit(@branch.persisted? ? "Update Branch" : "Create Branch", class: "btn btn-primary") %>
+    <%= link_to "Cancel", admin_branches_path, class: "btn btn-ghost" %>
   </div>
 <% end %>

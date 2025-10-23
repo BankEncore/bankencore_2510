@@ -1,4 +1,5 @@
 # app/controllers/admin/dashboard_controller.rb
+# new
 module Admin
   class Admin::DashboardController < Admin::BaseController
     def index
@@ -11,6 +12,8 @@ module Admin
         users:              ::User.count,
         branches:           ::Branch.count
       }
+      # Latest NAICS version for links that require a version param
+      @latest_naics_version = ::System::NaicsCode.distinct.order(version: :desc).limit(1).pluck(:version).first
     end
   end
 end

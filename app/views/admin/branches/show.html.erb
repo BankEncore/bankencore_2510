@@ -1,6 +1,203 @@
-<h1 class="text-xl font-semibold mb-2"><%= @branch.code %> — <%= @branch.name %></h1>
-<p>Status: <%= @branch.status %></p>
-<p class="mt-4">
-  <%= link_to "Edit", edit_admin_branch_path(@branch), class: "btn btn-sm" %>
-  <%= link_to "Back", admin_branches_path, class: "btn btn-sm" %>
-</p>
+<!-- app/views/admin/branches/show.html.erb -->
+<div class="breadcrumbs text-sm mb-4">
+  <ul>
+    <li><%= link_to "Branches", admin_branches_path, class: "badge badge-ghost" %></li>
+    <li><span class="badge badge-primary"><%= @branch.name %></span></li>
+  </ul>
+</div>
+
+<div class="flex items-start justify-between gap-4 mb-6">
+  <div>
+    <h1 class="text-2xl font-semibold">
+      <%= @branch.name %>
+      <span class="badge badge-outline align-middle ml-2 font-mono"><%= @branch.code %></span>
+    </h1>
+    <p class="text-sm opacity-70 mt-1">
+      <% country = System::Country.find_by(alpha2: @branch.country_alpha2) %>
+      <%= country&.label || @branch.country_alpha2 %>
+      <% if @branch.region_code.present? %>• <%= @branch.region_code %><% end %>
+      <% if @branch.city.present? %>• <%= @branch.city %><% end %>
+    </p>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <span class="badge <%= @branch.active? ? 'badge-success' : 'badge-ghost' %> capitalize"><%= @branch.status %></span>
+    <%= link_to "Back", admin_branches_path, class: "btn btn-sm btn-ghost" %>
+    <% if policy(@branch).update? %>
+      <%= link_to "Edit", [:edit, :admin, @branch], class: "btn btn-sm btn-primary" %>
+    <% end %>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Overview -->
+  <div class="lg:col-span-2">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body space-y-4">
+        <h2 class="card-title">Overview</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <div class="label"><span class="label-text">Code</span></div>
+            <div class="font-mono"><%= @branch.code %></div>
+          </div>
+
+          <div>
+            <div class="label"><span class="label-text">Time zone</span></div>
+            <div class="font-mono"><%= @branch.time_zone %></div>
+          </div>
+
+          <div class="md:col-span-2">
+            <div class="label"><span class="label-text">Address</span></div>
+            <div>
+              <%= [@branch.address_1, @branch.address_2].reject(&:blank?).join(", ") %><br>
+              <%= [@branch.city, @branch.region_code, @branch.postal_code].reject(&:blank?).join(", ") %><br>
+              <%= @branch.country_alpha2 %>
+            </div>
+          </div>
+
+          <div>
+            <div class="label"><span class="label-text">Phone</span></div>
+            <div>
+            <% if @branch.phone.present? %>
+              <%= link_to @branch.phone_display, "tel:#{@branch.phone_e164}", class: "link" %>
+            <% else %>
+              —
+            <% end %>
+            </div>
+          </div>
+
+          <div>
+            <div class="label"><span class="label-text">Fax</span></div>
+            <div><%= @branch.fax.present? ? @branch.fax_display : "—" %></div>
+          </div>
+
+          <div class="md:col-span-2">
+            <div class="label"><span class="label-text">Email</span></div>
+            <div><%= @branch.email.presence || "—" %></div>
+          </div>
+
+          <div>
+            <div class="label"><span class="label-text">Latitude</span></div>
+            <div class="font-mono"><%= @branch.latitude || "—" %></div>
+          </div>
+
+          <div>
+            <div class="label"><span class="label-text">Longitude</span></div>
+            <div class="font-mono"><%= @branch.longitude || "—" %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Operating hours -->
+  <% hours = branch_hours_rows(@branch) %>
+  <div class="lg:col-span-3">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body space-y-4">
+        <div class="flex items-center justify-between">
+          <h2 class="card-title">Operating hours</h2>
+          <div class="badge badge-ghost"><%= @branch.time_zone %></div>
+        </div>
+
+        <% if hours[:today] %>
+          <div class="alert <%= hours[:today][:text] == 'Closed' ? 'alert-warning' : 'alert-info' %>">
+            <span>
+              Today: <strong><%= hours[:today][:text] %></strong>
+              <% if hours[:today][:open_now] %>
+                <span class="badge badge-success ml-2">Open now</span>
+              <% end %>
+            </span>
+          </div>
+        <% end %>
+
+        <div class="overflow-x-auto">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Day</th>
+                <th>Hours</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% hours[:rows].each do |r| %>
+                <tr class="<%= r[:today] ? 'bg-base-200' : '' %>">
+                  <td class="font-medium"><%= r[:label] %></td>
+                  <td><%= r[:text] %></td>
+                  <td>
+                    <% if r[:today] && r[:open_now] %>
+                      <span class="badge badge-success">Open now</span>
+                    <% elsif r[:today] && r[:text] == 'Closed' %>
+                      <span class="badge badge-ghost">Closed</span>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <div class="text-xs opacity-70 mt-2">Times shown in <%= @branch.time_zone %>.</div>
+        </div>
+
+        <%# Optional: raw JSON for debugging %>
+        <%# <details class="mt-2"><summary class="cursor-pointer">Raw JSON</summary>
+            <pre class="mockup-code text-xs whitespace-pre-wrap"><code><%= JSON.pretty_generate(@branch.operating_hours || {}) %></code></pre>
+          </details>
+      </div>
+    </div>
+  </div>
+
+  <!-- Members -->
+  <div class="lg:col-span-3">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <div class="flex items-center justify-between">
+          <h2 class="card-title">Members</h2>
+          <% member_count = (@branch.respond_to?(:users) ? @branch.users.count : 0) %>
+          <div class="badge"><%= pluralize(member_count, "user") %></div>
+        </div>
+
+        <% members = @branch.respond_to?(:users) ? @branch.users.order(:last_name, :first_name).limit(50) : [] %>
+        <% if members.any? %>
+          <div class="overflow-x-auto">
+            <table class="table table-zebra">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Email</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% members.each do |m| %>
+                  <tr>
+                    <td><%= m.display_name.presence || "#{m.first_name} #{m.last_name}" %></td>
+                    <td class="font-mono"><%= m.email %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="alert">
+            <span>No users assigned.</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metadata -->
+  <div>
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Metadata</h2>
+        <ul class="text-sm space-y-2">
+          <li><span class="opacity-70">Public ID:</span> <span class="font-mono"><%= @branch.public_id %></span></li>
+          <li><span class="opacity-70">Created:</span> <span class="font-mono"><%= l(@branch.created_at, format: :short) %></span></li>
+          <li><span class="opacity-70">Updated:</span> <span class="font-mono"><%= l(@branch.updated_at, format: :short) %></span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

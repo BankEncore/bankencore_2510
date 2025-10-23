@@ -21,7 +21,7 @@
     <%= link_to "Back", system_naics_codes_path, class: "btn btn-ghost btn-sm" %>
 
     <%# optional: show admin edit only to admins %>
-    <% if current_user&.admin? %>
+  <% if current_user&.system_admin? %>
       <%= link_to "Edit", edit_admin_system_naics_code_path(@naics), class: "btn btn-sm" %>
     <% end %>
   </div>

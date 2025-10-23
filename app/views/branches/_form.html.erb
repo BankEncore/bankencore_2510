@@ -2,8 +2,8 @@
   <div><%= f.label :code %><%= f.text_field :code, class: "input input-bordered w-full" %></div>
   <div><%= f.label :name %><%= f.text_field :name, class: "input input-bordered w-full" %></div>
   <div>
-    <%= f.label :status %>
-    <%= f.select :status, Branch::STATUSES, {}, class: "select select-bordered w-full" %>
+    <%= f.label :status %><br>
+    <%= f.select :status, Branch.statuses.keys.map { |k| [k.humanize, k] }, {}, required: true %>
   </div>
   <div class="flex gap-2">
     <%= f.submit class: "btn btn-primary" %>

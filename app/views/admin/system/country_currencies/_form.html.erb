@@ -1,25 +1,25 @@
 <!-- app/views/admin/system/country_currencies/_form.html.erb -->
 <%= form_with model: @country_currency,
-              url: (@country_currency.persisted? ?
-                     admin_system_country_currency_path(@country_currency) :
-                     admin_system_country_currencies_path),
+    url: (@country_currency.persisted? ?
+      admin_system_country_currency_path(country_alpha2: @country_currency.country_alpha2, currency_code: @country_currency.currency_code) :
+      admin_system_country_currencies_path),
               class: "space-y-4" do |f| %>
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <label class="form-control">
       <div class="label"><span class="label-text">Country</span></div>
-      <%= f.collection_select :country_id,
-            @countries, :id, :name,
-            { include_blank: "Select Country" },
-            class: "select select-bordered w-full" %>
+  <%= f.select :country_alpha2,
+    options_from_collection_for_select(@countries, :alpha2, :iso_short_name, @country_currency.country_alpha2),
+    { include_blank: "Select Country" },
+    class: "select select-bordered w-full" %>
     </label>
 
     <label class="form-control">
       <div class="label"><span class="label-text">Currency</span></div>
-      <%= f.collection_select :currency_id,
-            @currencies, :id, ->(c) { "#{c.code} — #{c.name}" },
-            { include_blank: "Select Currency" },
-            class: "select select-bordered w-full" %>
+  <%= f.select :currency_code,
+    options_from_collection_for_select(@currencies, :code, ->(c) { "#{c.code} — #{c.name}" }, @country_currency.currency_code),
+    { include_blank: "Select Currency" },
+    class: "select select-bordered w-full" %>
     </label>
 
     <label class="form-control">
@@ -34,7 +34,7 @@
 
     <label class="label cursor-pointer col-span-1 md:col-span-2">
       <span class="label-text mr-4">Default for country</span>
-      <%= f.check_box :default_for_country, class: "toggle" %>
+      <%= f.check_box :is_primary, class: "toggle" %>
     </label>
   </div>
 

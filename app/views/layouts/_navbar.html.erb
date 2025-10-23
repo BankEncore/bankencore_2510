@@ -1,8 +1,8 @@
 <header class="navbar bg-base-100 shadow">
   <div class="flex-1">
     <%= link_to "BankEncore",
-            (user_signed_in? ? authenticated_root_path : new_user_session_path),
-            class: "btn btn-ghost text-xl" %>
+      (user_signed_in? ? root_path : new_user_session_path),
+      class: "btn btn-ghost text-xl" %>
   </div>
 
   <div class="flex-none flex items-center gap-3">
@@ -14,9 +14,10 @@
     </form>
 
     <%# Pundit %>
-    <% if defined?(policy) && policy(:admin_dashboard).index? %>
-      <%= link_to "Admin", admin_root_path, class: "btn btn-ghost" %>
+    <% if policy(:admin_dashboard).index? %>
+      <%= link_to "Admin", admin_root_path %>
     <% end %>
+
 
     <%# CanCanCan
     <%# if defined?(can?) && can?(:read, :admin_dashboard) %>

@@ -3,7 +3,7 @@
 <div class="flex items-center justify-between mb-4">
   <h1 class="text-2xl font-semibold">ACH Routings</h1>
 
-  <% if current_user&.admin? %>
+  <% if current_user&.system_admin? %>
     <%= link_to "Add", new_admin_payments_ach_routing_path, class: "btn btn-primary" %>
   <% end %>
 </div>

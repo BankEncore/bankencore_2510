@@ -1,26 +1,67 @@
 # app/models/system/currency.rb
+# new
 class System::Currency < ApplicationRecord
-  include HasPublicId
+  audited if respond_to?(:audited)
+
   self.table_name = "system_currencies"
 
-  has_many :country_currencies,
+  # Associations
+  has_many :country_links,
            class_name: "System::CountryCurrency",
-           foreign_key: :currency_id,
-           dependent: :destroy
+           foreign_key: :currency_code,
+           primary_key: :code,
+           inverse_of: :currency,
+           dependent: :restrict_with_exception
 
-  # existing validations are fine; keep money-gem data authoritative
-end
+  # Normalization
+  before_validation do
+    self.code    = code&.upcase&.strip
+    self.numeric = numeric&.strip
+    self.numeric = "%03d" % numeric.to_i if numeric&.match?(/\A\d+\z/) && numeric.length != 3
+  end
 
-# app/models/system/country_currency.rb
-class System::CountryCurrency < ApplicationRecord
-  include HasPublicId
-  self.table_name = "system_country_currencies"
+  # Validations
+  validates :code,
+           presence: true,
+           length: { is: 3 },
+           format: { with: /\A[A-Z]{3}\z/ },
+           uniqueness: { case_sensitive: false }
 
-  belongs_to :country,  class_name: "System::Country", foreign_key: :country_id
-  belongs_to :currency, class_name: "System::Currency"
+  validates :numeric,
+           presence: true,
+           length: { is: 3 },
+           format: { with: /\A[0-9]{3}\z/ },
+           uniqueness: true
 
-  scope :active_on, ->(date) {
-    where("valid_from IS NULL OR valid_from <= ?", date)
-      .where("valid_to   IS NULL OR valid_to   >= ?", date)
-  }
+  validates :name, presence: true
+  validates :minor_units, presence: true, inclusion: { in: [ 0, 1, 2, 3 ] }
+
+  validates :public_id, presence: true, uniqueness: true, if: -> { has_attribute?(:public_id) }
+
+  # Optional fields
+  validates :symbol, length: { maximum: 8 }, allow_nil: true
+  validates :unicode_codepoint, numericality: { greater_than: 0, less_than: 0x110000 }, allow_nil: true
+
+  # Scopes
+  scope :active, -> { where(active: true) }
+  scope :by_code, ->(c) { where(code: c.to_s.upcase) }
+  scope :by_numeric, ->(n) { where(numeric: n.to_s.rjust(3, "0")) }
+
+  # Convenience
+  def unicode_hex
+    return nil unless unicode_codepoint
+    "U+%04X" % unicode_codepoint
+  end
+
+  def display_name
+    [ name, "(#{code})" ].join(" ")
+  end
+
+  # Serialization defaults
+  def as_json(options = {})
+    super({ only: %i[code numeric name full_name minor_units symbol unicode_codepoint active],
+            methods: %i[unicode_hex],
+            include: {}
+            }.merge(options || {}))
+  end
 end
