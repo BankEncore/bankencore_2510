@@ -1,3 +1,91 @@
+# 2025-10-23 .. 2025-10-25
+### CHANGELOG (auth + RBAC + admin integration)
+
+#### **Added**
+
+* **Authentication / Users**
+
+  * Devise integration with confirmable, lockable, trackable.
+  * Scoped user views under `users/*`.
+  * Flash UX helper and improved `_flash` partial.
+  * Development mailer using Letter Opener; dotenv boot order fixed.
+  * `User` model fields: `name`, `time_zone`, `role`, `status`, MFA flags, terms accepted.
+  * Indexes on `role`, `status`, `last_active_at`.
+
+* **Authorization / RBAC**
+
+  * Pundit policies for users, branches, system models.
+  * `SystemAdminPolicy#access?` gate; uniform 403 handling.
+  * Role and branch membership joins (`UserRole`, `BranchMembership`).
+  * Policy scopes and permitted-attribute filtering in controllers.
+  * Admin UI gating with `policy([:admin, model])`.
+
+* **Admin Area**
+
+  * `/admin` namespace with dashboard.
+  * Full CRUD for Users and Branches (admin-only).
+  * `/admin/system` CRUD for ReferenceLists, ReferenceValues, NaicsCodes, CountryCurrencies.
+  * Pagy-based indexes and filters.
+  * `public_id` stable IDs for admin models.
+  * DaisyUI layouts and cards with policy visibility.
+
+* **Models**
+
+  * `Branch` model with status enum, contact/location fields, hours helpers, phone normalization.
+  * `HasPublicId` concern and `to_param` support.
+  * Updated System models for country/currency links and metadata validation.
+
+* **Frontend**
+
+  * `tom-select` integration for multi-select inputs.
+  * Updated views for admin and public system resources.
+  * Breadcrumbs and badges in NAICS pages.
+
+* **Routing**
+
+  * `resources :users, param: :public_id` in admin.
+  * Admin/public namespaces for system resources.
+  * Versioned NAICS paths (`system_naics_version_path`).
+
+* **Seeds / Schema**
+
+  * Consolidated `db/seeds/000_seeds.rb`; removed legacy files.
+  * Ensured `system_admin` role grants `users.*`, `branches.*`, `admin.access`.
+  * Refreshed schema and ACH routings columns.
+
+* **Testing**
+
+  * Updated factories for users, branches, roles, system lookups.
+  * Request specs with Warden helpers and policy coverage.
+  * Model specs for ACH routings and NAICS validations.
+  * System specs use `driven_by(:rack_test)`.
+
+#### **Changed**
+
+* Unified 403 redirect for Pundit authorization failures.
+* Controllers use policy scopes and strong params from policies.
+* Cleaned autoload paths and config.
+* Dashboard and navbar show admin links only when authorized.
+
+#### **Removed / Breaking**
+
+* Non-admin NAICS and CountryCurrency views deleted.
+* `Payments::FrbDirectory` removed.
+* Routes moved to admin namespace (endpoints changed).
+* Deprecated AdminPolicy and old factories/specs pruned.
+
+#### **Security / Ops**
+
+* All admin areas require `admin.access`.
+* Parameter tampering on roles/branches blocked via scoped assignments.
+* Run `bin/rails db:migrate` then `bin/rails db:seed` to refresh roles and permissions.
+* Ensure `phonelib` initializer present for phone helpers.
+
+#### **Result**
+
+Authentication, RBAC, and admin management are fully functional; model and request specs pass; admin UI and policies consistent.
+
+
 # 2025-10-21 … 2025-10-22
 
 ## Authentication and RBAC
