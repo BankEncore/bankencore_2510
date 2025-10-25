@@ -53,11 +53,12 @@ gem "countries"                # ISO 3166 data for country validation
 # AuthZ / AuthN (pick one stack)
 gem "pundit"                   # authorization (RBAC policies)
 # gem "cancancan"              # alternative to Pundit
-# gem "devise"                 # authentication if you want turnkey
+gem "devise"                 # authentication if you want turnkey
 # gem "sorcery"                # lighter auth alternative
 
 # Auditing and trails
-gem "paper_trail"              # versioning for compliance
+# gem "paper_trail"              # versioning for compliance
+gem "audited", "~> 5.0"                   # audit logging of model changes
 
 # CSS
 gem "tailwindcss-rails"        # Tailwind CSS via Propshaft
@@ -86,6 +87,7 @@ group :development do
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
   gem "foreman", require: false
+  gem "letter_opener_web"
 end
 
 group :test do
@@ -104,3 +106,4 @@ group :tools do
 end
 
 gem "roo", "~> 3.0"
+gem "dotenv-rails", groups: [ :development, :test ]

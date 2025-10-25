@@ -1,10 +1,14 @@
 <% flash.each do |type, message| %>
-  <% klass =
-      case type.to_s
-      when "notice" then "alert-info"
-      when "alert"  then "alert-warning"
-      when "error"  then "alert-error"
-      else               "alert-success"
-      end %>
-  <div class="alert <%= klass %> mb-4"><span><%= message %></span></div>
+  <% Array(message).each do |msg| %>
+    <div class="alert <%= flash_klass(type) %> mb-4"
+         role="<%= flash_role(type) %>" aria-live="polite">
+      <span><%= msg %></span>
+      <button type="button" class="btn btn-ghost btn-sm ml-auto"
+              onclick="this.closest('.alert').remove()">✕</button>
+    </div>
+  <% end %>
 <% end %>
+<% flash.discard %>
+<script>
+  setTimeout(() => { const n = document.getElementById("flash"); if(n) n.remove(); }, 4000);
+</script>

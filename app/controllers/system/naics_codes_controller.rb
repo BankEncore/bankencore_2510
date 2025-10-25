@@ -1,61 +1,60 @@
 # app/controllers/system/naics_codes_controller.rb
+# new
 class System::NaicsCodesController < ApplicationController
   include Pagy::Backend
-  before_action :set_naics, only: %i[show edit update destroy]
+  before_action :load_version
+  before_action :set_naics, only: :show
 
-    def index
-    @q = params[:q].to_s.strip
-    @level = params[:level].presence
-    scope = System::NaicsCode.order(:year, :code)
-    scope = scope.where("code ILIKE ? OR title ILIKE ?", "%#{@q}%", "%#{@q}%") if @q.present?
-    scope = scope.where(level: @level.to_i) if @level
+  # GET /system/naics/:version
+  # Params: q (code/title search), items
+  def index
+    @version = params[:version]
+    authorize ::System::NaicsCode
+
+    @versions = ::System::NaicsCode.distinct.order(version: :desc).pluck(:version)
+    if @version.blank?
+      latest = @versions.first
+      redirect_to system_naics_version_path(version: latest) and return
+    end
+
+    scope = policy_scope(::System::NaicsCode).where(version: @version).order(:code)
+    if (q = params[:q].to_s.strip.presence)
+      like = "%#{q}%"
+      scope = scope.where("code ILIKE ? OR title ILIKE ?", like, like)
+    end
+
     @pagy, @naics_codes = pagy(scope, items: (params[:items].presence || 50).to_i)
-    end
+  end
 
+  # GET /system/naics/:version/:code
   def show
-    @parent         = @naics.parent
-    @ancestors      = @naics.ancestors.order(Arel.sql("char_length(code)"))
-    @lineage        = @ancestors.to_a + [ @naics ]
-    @expanded_codes = (@ancestors.pluck(:code) + [ @naics.code ])
-  end
+    @naics = ::System::NaicsCode.find_by!(               # ADD
+      version: params[:version], code: params[:code]
+    )
+    authorize @naics                                     # MOVE authorize after @naics is set
 
-  def new
-    @naics = System::NaicsCode.new(year: "2022")
-  end
-
-  def edit; end
-
-  def create
-    @naics = System::NaicsCode.new(naics_params)
-    if @naics.save
-      redirect_to system_naics_code_path(@naics), notice: "NAICS code created."
-    else
-      render :new, status: :unprocessable_entity
+    @ancestors = []
+    node = @naics
+    while node&.parent_code.present?
+      parent = ::System::NaicsCode.find_by(version: node.version, code: node.parent_code)
+      break unless parent
+      @ancestors.unshift(parent)
+      node = parent
     end
-  end
-
-  def update
-    if @naics.update(naics_params)
-      redirect_to system_naics_code_path(@naics), notice: "NAICS code updated."
-    else
-      render :edit, status: :unprocessable_entity
-    end
-  end
-
-  def destroy
-    @naics.destroy
-    redirect_to system_naics_codes_path, notice: "NAICS code deleted."
   end
 
   private
 
-  def set_naics
-    @naics = System::NaicsCode.find(params[:id])
+  def load_version
+    @version = params[:version].to_s.presence
   end
 
-  def naics_params
-    params.require(:system_naics_code).permit(
-      params.require(:system_naics_code).permit(:year, :code, :title, :sector, :parent_code, :level, :description, :active)
-    )
+  def set_naics
+    code = params[:code].to_s.strip
+    @naics = ::System::NaicsCode.find_by!(version: @version, code: code)
+    # canonicalize code casing
+    if params[:code] != @naics.code
+      redirect_to system_naics_code_path(version: @naics.version, code: @naics.code), status: :moved_permanently
+    end
   end
 end

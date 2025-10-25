@@ -1,44 +1,37 @@
-<div class="flex items-center justify-between mb-4">
-  <h1 class="text-2xl font-semibold">Reference Lists</h1>
-  <%= link_to "New List", new_system_reference_list_path, class: "btn btn-primary" %>
-</div>
+<%# app/views/system/reference_values/index.html.erb %>
+<%# If nested under a list: params[:reference_list_public_id] will be present and @list is loaded in controller. %>
+
+<h1 class="text-xl font-semibold mb-4">
+  Reference Values<%= @list ? " · #{h @list.key}" : "" %>
+</h1>
 
 <div class="card bg-base-100 shadow">
-  <div class="card-body gap-4">
-    <%= form_with url: system_reference_lists_path, method: :get, local: true, class: "flex gap-2" do %>
-      <input type="text" name="q" value="<%= h params[:q] %>" placeholder="Search key or name" class="input input-bordered w-full max-w-md" />
-      <button class="btn">Search</button>
-    <% end %>
-
+  <div class="card-body p-0">
     <div class="overflow-x-auto">
-      <table class="table">
+      <table class="table table-zebra">
         <thead>
           <tr>
+            <th>Pos</th>
+            <th>Code</th>
             <th>Key</th>
-            <th>Name</th>
-            <th>Visibility</th>
-            <th>Tags</th>
+            <th>Label</th>
+            <th>Effective</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <% @lists.each do |l| %>
+          <% @values.each do |v| %>
             <tr>
-              <td><code class="badge badge-ghost"><%= l.key %></code></td>
-              <td><%= link_to l.name, system_reference_list_path(public_id: l.public_id), class: "link link-primary" %></td>
-              <td><span class="badge badge-outline"><%= l.visibility %></span></td>
-              <td>
-                <% Array(l.tags).each do |t| %>
-                  <span class="badge badge-neutral mr-1"><%= t %></span>
-                <% end %>
-              </td>
-              <td class="text-right">
-                <%= link_to "Edit", edit_system_reference_list_path(public_id: l.public_id), class: "btn btn-xs" %>
-                <%= link_to "Delete", system_reference_list_path(public_id: l.public_id),
-                      data: { turbo_method: :delete, turbo_confirm: "Delete list?" },
-                      class: "btn btn-xs btn-error ml-2" %>
-              </td>
+              <td><%= v.position %></td>
+              <td class="font-mono"><%= v.code.presence || "—" %></td>
+              <td class="font-mono"><%= v.key %></td>
+              <td><%= v.label %></td>
+              <td class="text-xs"><%= v.effective_from&.to_s || "—" %> → <%= v.effective_to&.to_s || "—" %></td>
+              <td class="text-right"><%= link_to "Show", system_reference_value_path(v), class: "link link-primary" %></td>
             </tr>
+          <% end %>
+          <% if @values.empty? %>
+            <tr><td colspan="6" class="text-center opacity-70">No values.</td></tr>
           <% end %>
         </tbody>
       </table>

@@ -1,29 +1,60 @@
 <!-- app/views/admin/dashboard/index.html.erb -->
-<h1 class="text-2xl font-semibold mb-6">Administrator</h1>
+<h1 class="text-2xl font-semibold mb-6">Administrator Dashboard</h1>
+
+  <div class="grid gap-4 md:grid-cols-3">
+    <% if policy(Branch).index? %>
+      <%= link_to admin_branches_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+        <div class="text-sm text-base-content/70">Admin</div>
+        <div class="text-xl font-medium">Branches</div>
+        <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:branches]) %> branches</div>
+      <% end %>
+    <% end %>
+
+    <% if policy([:admin, User]).index? %>
+      <%= link_to admin_users_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+        <div class="text-sm text-base-content/70">Admin</div>
+        <div class="text-xl font-medium">Users</div>
+        <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:users]) %> users</div>
+      <% end %>
+</div>
+
+<div class="flex w-full flex-col">
+  <div class="divider">System</div>
+</div>
 
 <div class="grid gap-4 md:grid-cols-3">
-  <%= link_to payments_ach_routings_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+    <% if policy(:system_admin).access? %>
+      <%= link_to admin_system_country_currencies_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+        <div class="text-sm text-base-content/70">System • Admin</div>
+        <div class="text-xl font-medium">Country Currencies</div>
+        <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:country_currencies]) %> records</div>
+      <% end %>
+
+    <% if @latest_naics_version.present? %>
+      <%= link_to admin_system_naics_codes_path(version: @latest_naics_version), class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+      <% end %>
+      <div class="text-sm text-base-content/70">System • Admin</div>
+      <div class="text-xl font-medium">NAICS Codes</div>
+      <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:naics_codes]) %> records</div>
+    <% end %>
+
+    <%= link_to admin_system_reference_lists_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+      <div class="text-sm text-base-content/70">System • Admin</div>
+      <div class="text-xl font-medium">Reference Lists</div>
+      <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:reference_lists]) %> lists</div>
+    <% end %>
+</div>
+    <div class="flex w-full flex-col">
+      <div class="divider">Payments</div>
+  </div>
+<div class="grid gap-4 md:grid-cols-3">
+  <%= link_to admin_payments_ach_routings_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
     <div class="text-sm text-base-content/70">Payments</div>
     <div class="text-xl font-medium">ACH Routings</div>
     <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:ach_routings]) %> records</div>
   <% end %>
+</div>
 
-  <%= link_to system_country_currencies_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
-    <div class="text-sm text-base-content/70">System</div>
-    <div class="text-xl font-medium">Country Currencies</div>
-    <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:country_currencies]) %> records</div>
+    <% end %>
   <% end %>
-
-  <%= link_to system_naics_codes_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
-    <div class="text-sm text-base-content/70">System</div>
-    <div class="text-xl font-medium">NAICS Codes</div>
-    <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:naics_codes]) %> records</div>
-  <% end %>
-
-  <%= link_to system_reference_lists_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
-    <div class="text-sm text-base-content/70">System</div>
-    <div class="text-xl font-medium">Reference Lists</div>
-    <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:reference_lists]) %> lists</div>
-  <% end %>
-
 </div>

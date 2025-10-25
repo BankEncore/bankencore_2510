@@ -1,0 +1,788 @@
+﻿Code,Title,Description
+11,"Agriculture, Forestry, Fishing and HuntingT","The Sector as a Whole
+
+The Agriculture, Forestry, Fishing and Hunting sector comprises establishments primarily engaged in growing crops, raising animals, harvesting timber, and harvesting fish and other animals from a farm, ranch, or their natural habitats.
+
+The establishments in this sector are often described as farms, ranches, dairies, greenhouses, nurseries, orchards, or hatcheries.  A farm may consist of a single tract of land or a number of separate tracts which may be held under different tenures.  For example, one tract may be owned by the farm operator and another rented.  It may be operated by the operator alone or with the assistance of members of the household or hired employees, or it may be operated by a partnership, corporation, or other type of organization. When a landowner has one or more tenants, renters, croppers, or managers, the land operated by each is considered a farm.
+
+The sector distinguishes two basic activities: agricultural production and agricultural support activities.  Agricultural production includes establishments performing the complete farm or ranch operation, such as farm owner-operators and tenant farm operators.  Agricultural support activities include establishments that perform one or more activities associated with farm operation, such as soil preparation, planting, harvesting, and management, on a contract or fee basis.
+
+Excluded from the Agriculture, Forestry, Fishing and Hunting sector are establishments primarily engaged in agricultural research (e.g., experimental farms) and government establishments primarily engaged in administering programs for regulating and conserving land, mineral, wildlife, and forest use.  These establishments are classified in Industry 54171, Research and Development in the Physical, Engineering, and Life Sciences; and Industry 92412, Administration of Conservation Programs, respectively.
+"
+111,Crop ProductionT,"Industries in the Crop Production subsector grow crops mainly for food and fiber.  The subsector comprises establishments, such as farms, orchards, groves, greenhouses, and nurseries, primarily engaged in growing crops, plants, vines, or trees and their seeds.
+
+The industries in this subsector are grouped by similarity of production activity, including biological and physiological characteristics and economic requirements, the length of growing season, degree of crop rotation, extent of input specialization, labor requirements, and capital demands.  The production process is typically completed when the raw product or commodity grown reaches the ""farm gate"" for market, that is, at the point of first sale or price determination.
+
+Establishments are classified in the Crop Production subsector when crop production (i.e., value of crops for market) accounts for one-half or more of the establishment's total agricultural production.  Within the subsector, establishments are classified in a specific industry when a product or industry family of products (i.e., oilseed and grain farming, vegetable and melon farming, fruit and tree nut farming) account for one-half or more of the establishment's agricultural production.  Establishments with one-half or more crop production with no one product or family of products of an industry accounting for one-half of the establishment's agricultural production are treated as general combination crop farming and are classified in Industry 11199, All Other Crop Farming.
+
+Industries in the Crop Production subsector include establishments that own, operate, and manage and those that operate and manage.  Those that manage only are classified in Subsector 115, Support Activities for Agriculture and Forestry.  Establishments that raise aquatic plants in controlled or selected aquatic environments are classified in Subsector 112, Animal Production and Aquaculture.
+"
+1111,Oilseed and Grain FarmingT,"This industry group comprises establishments primarily engaged in (1) growing oilseed and/or grain crops and/or (2) producing oilseed and grain seeds.  These crops have an annual life cycle and are typically grown in open fields.
+"
+11111,Soybean FarmingT,See industry description for 111110.
+111110,Soybean Farming,"This industry comprises establishments primarily engaged in growing soybeans and/or producing soybean seeds.
+
+Cross-References."
+11112,Oilseed (except Soybean) FarmingT,See industry description for 111120.
+111120,Oilseed (except Soybean) Farming,"This industry comprises establishments primarily engaged in growing fibrous oilseed producing plants and/or producing oilseed seeds, such as sunflower, safflower, flax, rape, canola, and sesame.
+
+Cross-References. Establishments primarily engaged in--"
+11113,Dry Pea and Bean FarmingT,See industry description for 111130.
+111130,Dry Pea and Bean Farming,"This industry comprises establishments primarily engaged in growing dry peas, beans, and/or lentils.
+
+Cross-References."
+11114,Wheat FarmingT,See industry description for 111140.
+111140,Wheat Farming,"This industry comprises establishments primarily engaged in growing wheat and/or producing wheat seeds.
+
+Cross-References."
+11115,Corn FarmingT,See industry description for 111150.
+111150,Corn Farming,"This industry comprises establishments primarily engaged in growing corn (except sweet corn) and/or producing corn seeds.
+
+Cross-References. Establishments primarily engaged in--"
+11116,Rice FarmingT,See industry description for 111160.
+111160,Rice Farming,"This industry comprises establishments primarily engaged in growing rice (except wild rice) and/or producing rice seeds.
+
+Cross-References. Establishments primarily engaged in--"
+11119,Other Grain FarmingT,"This industry comprises establishments primarily engaged in (1) growing grain(s) and/or producing grain seeds (except wheat, corn, and rice) or (2) growing a combination of grain(s) and oilseed(s) with no one grain (or family of grains) or oilseed (or family of oilseeds) accounting for one-half of the establishment's agricultural production (i.e., value of crops for market).  Combination grain(s) and oilseed(s) establishments may produce oilseed(s) and grain(s) seeds and/or grow oilseed(s) and grain(s).
+
+Illustrative Examples:
+
+Barley farming
+Rye farming
+Milo farming
+Sorghum farming
+Oat farming
+Wild rice farming
+Oilseed and grain combination farming
+
+
+Cross-References. Establishments primarily engaged in--"
+111191,Oilseed and Grain Combination Farming,"This U.S. industry comprises establishments engaged in growing a combination of oilseed(s) and grain(s) with no one oilseed (or family of oilseeds) or grain (or family of grains) accounting for one-half of the establishment's agricultural production (value of crops for market).  These establishments may produce oilseed(s) and grain(s) seeds and/or grow oilseed(s) and grain(s).
+
+Cross-References."
+111199,All Other Grain Farming,"This U.S. industry comprises establishments primarily engaged in growing grains and/or producing grain(s) seeds (except wheat, corn, rice, and oilseed(s) and grain(s) combinations).
+
+Illustrative Examples:
+
+Barley farming
+Sorghum farming
+Oat farming
+Wild rice farming
+Rye farming
+
+
+Cross-References. Establishments primarily engaged in--"
+1112,Vegetable and Melon FarmingT,NULL
+11121,Vegetable and Melon FarmingT,"This industry comprises establishments primarily engaged in one or more of the following: (1) growing vegetable and/or melon crops; (2) producing vegetable and/or melon seeds; and (3) growing vegetable and/or melon bedding plants.  The crops included in this industry have an annual growth cycle and are grown in open fields.  Climate and cultural practices limit producing areas but often permit the growing of a combination of crops in a year.
+
+Cross-References. Establishments primarily engaged in--"
+111211,Potato Farming,"This U.S. industry comprises establishments primarily engaged in growing potatoes and/or producing seed potatoes.
+
+Cross-References."
+111219,Other Vegetable (except Potato) and Melon Farming,"This U.S. industry comprises establishments primarily engaged in one or more of the following: (1) growing melons and/or vegetables (except potatoes; dry peas; dry beans; field, silage, or seed corn; and sugar beets); (2) producing vegetable and/or melon seeds; and (3) growing vegetable and/or melon bedding plants.
+
+Illustrative Examples:
+
+Carrot farming
+Squash farming
+Green bean farming
+Tomato farming
+Watermelon farming 
+Melon farming (e.g., cantaloupe, casaba, honeydew, watermelon)
+Vegetable (except potato) farming
+Pepper farming (e.g., bell, chili, green, red, sweet peppers)
+
+
+Cross-References. Establishments primarily engaged in--"
+1113,Fruit and Tree Nut FarmingT,"This industry group comprises establishments primarily engaged in growing fruit and/or tree nut crops.  The crops included in this industry group are generally not grown from seeds and have a perennial life cycle.
+"
+11131,Orange GrovesT,See industry description for 111310.
+111310,Orange Groves,This industry comprises establishments primarily engaged in growing oranges.
+11132,Citrus (except Orange) GrovesT,See industry description for 111320.
+111320,Citrus (except Orange) Groves,"This industry comprises establishments primarily engaged in growing citrus fruits (except oranges).
+
+Illustrative Examples:
+
+Citrus groves (except oranges)
+Mandarin groves
+Grapefruit groves	
+Tangelo groves
+Lemon groves
+Tangerine groves
+
+
+Cross-References."
+11133,Noncitrus Fruit and Tree Nut FarmingT,"This industry comprises establishments primarily engaged in one or more of the following: (1) growing noncitrus fruits (e.g., apples, grapes, berries, peaches); (2) growing tree nuts (e.g., pecans, almonds, pistachios); or (3) growing a combination of fruit(s) and tree nut(s) with no one fruit (or family of fruit) or family of tree nuts accounting for one-half of the establishment's agricultural production (i.e., value of crops for market).
+
+Cross-References. Establishments primarily engaged in--"
+111331,Apple Orchards,"This U.S. industry comprises establishments primarily engaged in growing apples.
+
+Cross-References. Establishments primarily engaged in--"
+111332,Grape Vineyards,"This U.S. industry comprises establishments primarily engaged in growing grapes and/or growing grapes to sun dry into raisins.
+
+Cross-References. Establishments primarily engaged in--"
+111333,Strawberry Farming,"This U.S. industry comprises establishments primarily engaged in growing strawberries.
+
+Cross-References."
+111334,Berry (except Strawberry) Farming,"This U.S. industry comprises establishments primarily engaged in growing berries.
+
+Illustrative Examples:
+
+Berry (except strawberries) farming	
+Cranberry farming
+Blackberry farming
+Currant farming
+Blueberry farming
+Raspberry farming
+
+
+Cross-References. Establishments primarily engaged in--"
+111335,Tree Nut Farming,"This U.S. industry comprises establishments primarily engaged in growing tree nuts.
+
+Illustrative Examples:
+
+Almond farming
+Pistachio farming
+Filbert farming
+Tree nut farming
+Macadamia farming
+Walnut farming
+Pecan farming
+
+
+Cross-References. Establishments primarily engaged in--"
+111336,Fruit and Tree Nut Combination Farming,"This U.S. industry comprises establishments primarily engaged in growing a combination of fruit(s) and tree nut(s) with no one fruit (or family of fruit) or family of tree nuts accounting for one-half of the establishment's agricultural production (i.e., value of crops for market).
+
+Cross-References."
+111339,Other Noncitrus Fruit Farming,"This U.S. industry comprises establishments primarily engaged in growing noncitrus fruits (except apples, grapes, berries, and fruit(s) and tree nut(s) combinations).
+
+Illustrative Examples:
+
+Apricot farming
+Fig farming
+Banana farming
+Noncitrus fruit farming
+Cherry farming
+Peach farming
+Coffee farming
+Pineapple farming
+Date farming
+Prune farming
+
+
+Cross-References. Establishments primarily engaged in--"
+1114,"Greenhouse, Nursery, and Floriculture ProductionT","This industry group comprises establishments primarily engaged in growing crops of any kind under cover and/or growing nursery stock and flowers.  ""Under cover"" is generally defined as greenhouses, cold frames, cloth houses, and lath houses.  The crops grown are removed at various stages of maturity and have annual and perennial life cycles.  The nursery stock includes short rotation woody crops that have growth cycles of 10 years or less.
+"
+11141,Food Crops Grown Under CoverT,"This industry comprises establishments primarily engaged in growing food crops (e.g., fruits, melons, tomatoes) under glass or protective cover.
+
+Cross-References."
+111411,Mushroom Production,"This U.S. industry comprises establishments primarily engaged in growing mushrooms under cover in mines underground, or in other controlled environments.
+"
+111419,Other Food Crops Grown Under Cover,"This U.S. industry comprises establishments primarily engaged in growing food crops (except mushrooms) under glass or protective cover.
+
+Illustrative Examples:
+
+Alfalfa sprout farming, grown under cover
+Melon farming, grown under cover
+Vegetable farming, grown under cover
+Hydroponic crop farming
+Fruit farming, grown under cover
+
+
+Cross-References."
+11142,Nursery and Floriculture ProductionT,"This industry comprises establishments primarily engaged in (1) growing nursery and floriculture products (e.g., nursery stock, shrubbery, cut flowers, flower seeds, foliage plants) under cover or in open fields and/or (2) growing short rotation woody trees with a growing and harvesting cycle of 10 years or less for pulp or tree stock (e.g., cut Christmas trees, cottonwoods).
+
+Cross-References. Establishments primarily engaged in--"
+111421,Nursery and Tree Production,"This U.S. industry comprises establishments primarily engaged in (1) growing nursery products, nursery stock, shrubbery, bulbs, fruit stock, sod, and so forth, under cover or in open fields and/or (2) growing short rotation woody trees with a growth and harvest cycle of 10 years or less for pulp or tree stock.
+
+Cross-References. Establishments primarily engaged in--"
+111422,Floriculture Production,"This U.S. industry comprises establishments primarily engaged in growing and/or producing floriculture products (e.g., cut flowers and roses, cut cultivated greens, potted flowering and foliage plants, and flower seeds) under cover and in open fields.
+
+Cross-References."
+1119,Other Crop FarmingT,"This industry group comprises establishments primarily engaged in (1) growing crops (except oilseed and/or grain; vegetable and/or melon; fruit and tree nut; and greenhouse, nursery, and/or floriculture products), such as tobacco, cotton, sugarcane, hay, sugar beets, peanuts, agave, herbs and spices, and hay and grass seeds, or (2) growing a combination of crops (except a combination of oilseed(s) and grain(s) and a combination of fruit(s) and tree nut(s)).
+"
+11191,Tobacco FarmingT,See industry description for 111910.
+111910,Tobacco Farming,This industry comprises establishments primarily engaged in growing tobacco.
+11192,Cotton FarmingT,See industry description for 111920.
+111920,Cotton Farming,"This industry comprises establishments primarily engaged in growing cotton.
+
+Cross-References."
+11193,Sugarcane FarmingT,See industry description for 111930.
+111930,Sugarcane Farming,This industry comprises establishments primarily engaged in growing sugarcane.
+11194,Hay FarmingT,See industry description for 111940.
+111940,Hay Farming,"This industry comprises establishments primarily engaged in growing hay, alfalfa, clover, and/or mixed hay.
+
+Cross-References. Establishments primarily engaged in--"
+11199,All Other Crop FarmingT,"This industry comprises establishments primarily engaged in (1) growing crops (except oilseeds and/or grains; vegetables and/or melons; fruits and/or tree nuts; greenhouse, nursery, and/or floriculture products; tobacco; cotton; sugarcane; or hay) or (2) growing a combination of crops (except a combination of oilseed(s) and grain(s); and a combination of fruit(s) and tree nut(s)) with no one crop or family of crops accounting for one-half of the establishment's agricultural production (i.e., value of crops for market).
+
+Illustrative Examples:
+
+Agave farming
+Spice farming
+General combination crop farming (except oilseed and grain; vegetables and melons; fruit and nut combinations)
+Tea farming
+Hay seed farming
+Maple sap gathering
+Peanut farming
+Sugar beet farming
+Grass seed farming
+
+
+Cross-References. Establishments primarily engaged in--"
+111991,Sugar Beet Farming,"This U.S. industry comprises establishments primarily engaged in growing sugar beets.
+
+Cross-References."
+111992,Peanut Farming,This U.S. industry comprises establishments primarily engaged in growing peanuts.
+111998,All Other Miscellaneous Crop Farming,"This U.S. industry comprises establishments primarily engaged in one of the following: (1) growing crops (except oilseeds and/or grains; vegetables and/or melons; fruits and/or tree nuts; greenhouse, nursery, and/or floriculture products; tobacco; cotton; sugarcane; hay; sugar beets; or peanuts); (2) growing a combination of crops (except a combination of oilseed(s) and grain(s); and a combination of fruit(s) and tree nut(s)) with no one crop or family of crops accounting for one-half of the establishment's agricultural production (i.e., value of crops for market); or (3) gathering tea or maple sap.
+
+Illustrative Examples:
+
+Agave farming
+Mint farming
+General combination crop farming (except oilseed and grain; vegetables and melons; fruit and tree nut combinations)
+Hay seed farming
+Grass seed farming
+Hop farming
+Spice farming
+
+
+Cross-References. Establishments primarily engaged in--"
+112,Animal Production and AquacultureT,"Industries in the Animal Production and Aquaculture subsector raise or fatten animals for the sale of animals or animal products and/or raise aquatic plants and animals in controlled or selected aquatic environments for the sale of aquatic plants, animals, or their products.  The subsector includes establishments, such as ranches, farms, and feedlots, primarily engaged in keeping, grazing, breeding, or feeding animals.  These animals are kept for the products they produce or for eventual sale.  The animals are generally raised in various environments, from total confinement or captivity to feeding on an open range pasture.
+
+The industries in this subsector are grouped by important factors, such as suitable grazing or pasture land, specialized buildings, type of equipment, and the amount and types of labor required.  Establishments are classified in the Animal Production and Aquaculture subsector when animal production (i.e., value of animals for market) accounts for one-half or more of the establishment's total agricultural production.  Establishments with one-half or more animal production with no one animal product or family of animal products of an industry accounting for one-half of the establishment's agricultural production are treated as combination animal farming classified in Industry 11299, All Other Animal Production.
+"
+1121,Cattle Ranching and FarmingT,"This industry group comprises establishments primarily engaged in raising cattle, milking dairy cattle, or feeding cattle for fattening.
+"
+11211,"Beef Cattle Ranching and Farming, including FeedlotsT","This industry comprises establishments primarily engaged in raising cattle (including cattle for dairy herd replacements), or feeding cattle for fattening.
+
+Cross-References. Establishments primarily engaged in--"
+112111,Beef Cattle Ranching and Farming,"This U.S. industry comprises establishments primarily engaged in raising cattle (including cattle for dairy herd replacements).
+
+Cross-References."
+112112,Cattle Feedlots,"This U.S. industry comprises establishments primarily engaged in feeding cattle for fattening.
+
+Cross-References."
+11212,Dairy Cattle and Milk ProductionT,See industry description for 112120.
+112120,Dairy Cattle and Milk Production,"This industry comprises establishments primarily engaged in milking dairy cattle.
+
+Cross-References. Establishments primarily engaged in--"
+11213,Dual-Purpose Cattle Ranching and FarmingT,See industry description for 112130.
+112130,Dual-Purpose Cattle Ranching and Farming,"This industry comprises establishments primarily engaged in raising cattle for both milking and meat production.
+
+Cross-References. Establishments primarily engaged in--"
+1122,Hog and Pig FarmingT,NULL
+11221,Hog and Pig FarmingT,See industry description for 112210.
+112210,Hog and Pig Farming,"This industry comprises establishments primarily engaged in raising hogs and pigs.  These establishments may include farming activities, such as breeding, farrowing, and the raising of weanling pigs, feeder pigs, or market size hogs.
+
+Cross-References."
+1123,Poultry and Egg ProductionT,"This industry group comprises establishments primarily engaged in breeding, hatching, and raising poultry for meat or egg production.
+"
+11231,Chicken Egg ProductionT,See industry description for 112310.
+112310,Chicken Egg Production,"This industry comprises establishments primarily engaged in raising chickens for egg production.  The eggs produced may be for use as table eggs or hatching eggs.
+
+Cross-References."
+11232,Broilers and Other Meat Type Chicken ProductionT,See industry description for 112320.
+112320,Broilers and Other Meat Type Chicken Production,"This industry comprises establishments primarily engaged in raising broilers, fryers, roasters, and other meat type chickens.
+
+Cross-References."
+11233,Turkey ProductionT,See industry description for 112330.
+112330,Turkey Production,This industry comprises establishments primarily engaged in raising turkeys for meat or egg production.
+11234,Poultry HatcheriesT,See industry description for 112340.
+112340,Poultry Hatcheries,This industry comprises establishments primarily engaged in hatching poultry of any kind.
+11239,Other Poultry ProductionT,See industry description for 112390.
+112390,Other Poultry Production,"This industry comprises establishments primarily engaged in raising poultry (except chickens for meat or egg production and turkeys).
+
+Illustrative Examples:
+
+Duck production
+Ostrich production
+Emu production
+Pheasant production
+Geese production
+Quail production
+
+
+Cross-References. Establishments primarily engaged in--"
+1124,Sheep and Goat FarmingT,"This industry group comprises establishments primarily engaged in raising sheep, lambs, and goats, or feeding lambs for fattening.
+"
+11241,Sheep FarmingT,See industry description for 112410.
+112410,Sheep Farming,"This industry comprises establishments primarily engaged in raising sheep and lambs, or feeding lambs for fattening.  The sheep or lambs may be raised for sale or wool production.
+
+Cross-References."
+11242,Goat FarmingT,See industry description for 112420.
+112420,Goat Farming,This industry comprises establishments primarily engaged in raising goats.
+1125,AquacultureT,NULL
+11251,AquacultureT,"This industry comprises establishments primarily engaged in the farm raising and production of aquatic animals or plants in controlled or selected aquatic environments.  These establishments use some form of intervention in the rearing process to enhance production, such as holding in captivity, regular stocking, feeding, and protecting from predators, pests, and disease.
+
+Cross-References."
+112511,Finfish Farming and Fish Hatcheries,"This U.S. industry comprises establishments primarily engaged in (1) farm raising finfish (e.g., catfish, trout, goldfish, tropical fish, minnows) and/or (2) hatching fish of any kind.
+
+Cross-References."
+112512,Shellfish Farming,"This U.S. industry comprises establishments primarily engaged in farm raising shellfish (e.g., crayfish, shrimp, oysters, clams, mollusks).
+
+Cross-References."
+112519,Other Aquaculture,"This U.S. industry comprises establishments primarily engaged in (1) farm raising of aquatic animals (except finfish and shellfish) and/or (2) farm raising of aquatic plants.  Alligator, algae, frog, seaweed, or turtle production is included in this industry.
+
+Cross-References. Establishments primarily engaged in--"
+1129,Other Animal ProductionT,"This industry group comprises establishments primarily engaged in raising animals and insects (except cattle, hogs and pigs, poultry, sheep and goats, and aquaculture) for sale or product production.  These establishments are primarily engaged in raising one of the following: bees, horses and other equines, rabbits and other fur-bearing animals, and so forth, and producing products, such as honey and other bee products.  Establishments primarily engaged in raising a combination of animals with no one animal or family of animals accounting for one-half of the establishment's agricultural production (i.e., value of animals for market) are included in this industry group.
+"
+11291,ApicultureT,See industry description for 112910.
+112910,Apiculture,"This industry comprises establishments primarily engaged in raising bees.  These establishments may collect and gather honey; and/or sell queen bees, packages of bees, royal jelly, bees' wax, propolis, venom, pollen, and/or other bee products.
+"
+11292,Horses and Other Equine ProductionT,See industry description for 112920.
+112920,Horses and Other Equine Production,"This industry comprises establishments primarily engaged in raising horses, mules, donkeys, and other equines.
+
+Cross-References."
+11293,Fur-Bearing Animal and Rabbit ProductionT,See industry description for 112930.
+112930,Fur-Bearing Animal and Rabbit Production,"This industry comprises establishments primarily engaged in raising fur-bearing animals including rabbits.  These animals may be raised for sale or for their pelt production.
+
+Cross-References."
+11299,All Other Animal ProductionT,See industry description for 112990.
+112990,All Other Animal Production,"This industry comprises establishments primarily engaged in (1) raising animals (except cattle, hogs and pigs, poultry, sheep and goats, aquaculture, apiculture, horses and other equines; and fur-bearing animals including rabbits) or (2) raising a combination of animals, with no one animal or family of animals accounting for one-half of the establishment's agricultural production (i.e., value of animals for market).
+
+Illustrative Examples:
+
+Bird production (e.g., canaries, parakeets, parrots)
+Laboratory animal production (e.g., rats, mice, guinea pigs)
+Deer production
+Combination animal farming (except dairy, poultry)
+Companion animals production (e.g., cats, dogs)
+Worm production
+Llama production
+
+
+Cross-References. Establishments primarily engaged in--"
+113,Forestry and LoggingT,"Industries in the Forestry and Logging subsector grow and harvest timber on a long production cycle (i.e., of 10 years or more).  Long production cycles use different production processes than short production cycles, which require more horticultural interventions prior to harvest, resulting in processes more similar to those found in the Crop Production subsector.  Consequently, Christmas tree production and other production involving production cycles of less than 10 years, are classified in the Crop Production subsector.
+
+Industries in this subsector specialize in different stages of the production cycle.  Reforestation requires production of seedlings in specialized nurseries.  Timber production requires natural forest or suitable areas of land that are available for a long duration.  The maturation time for timber depends upon the species of tree, the climatic conditions of the region, and the intended purpose of the timber.  The harvesting of timber (except when done on an extremely small scale) requires specialized machinery unique to the industry.  Establishments gathering forest products, such as gums, barks, balsam needles, rhizomes, fibers, Spanish moss, and ginseng and truffles, are also included in this subsector.
+"
+1131,Timber Tract OperationsT,NULL
+11311,Timber Tract OperationsT,See industry description for 113110.
+113110,Timber Tract Operations,"This industry comprises establishments primarily engaged in the operation of timber tracts for the purpose of selling standing timber.
+
+Cross-References. Establishments primarily engaged in--"
+1132,Forest Nurseries and Gathering of Forest ProductsT,NULL
+11321,Forest Nurseries and Gathering of Forest ProductsT,See industry description for 113210.
+113210,Forest Nurseries and Gathering of Forest Products,"This industry comprises establishments primarily engaged in (1) growing trees for reforestation and/or (2) gathering forest products, such as gums, barks, balsam needles, rhizomes, fibers, Spanish moss, ginseng, and truffles.
+
+Cross-References. Establishments primarily engaged in--"
+1133,LoggingT,NULL
+11331,LoggingT,See industry description for 113310.
+113310,Logging,"This industry comprises establishments primarily engaged in one or more of the following: (1) cutting timber; (2) cutting and transporting timber; and (3) producing wood chips in the field.
+
+Cross-References. Establishments primarily engaged in--"
+114,"Fishing, Hunting and TrappingT","Industries in the Fishing, Hunting and Trapping subsector harvest fish and other wild animals from their natural habitats and are dependent upon a continued supply of the natural resource.  The harvesting of fish is the predominant economic activity of this subsector and it usually requires specialized vessels that, by the nature of their size, configuration and equipment, are not suitable for any other type of production, such as transportation. 
+
+Hunting and trapping activities utilize a wide variety of production processes and are classified in the same subsector as fishing because the availability of resources and the constraints imposed, such as conservation requirements and proper habitat maintenance, are similar.
+"
+1141,FishingT,NULL
+11411,FishingT,"This industry comprises establishments primarily engaged in the commercial catching or taking of finfish, shellfish, or miscellaneous marine products from a natural habitat, such as the catching of bluefish, eels, salmon, tuna, clams, crabs, lobsters, mussels, oysters, shrimp, frogs, sea urchins, and turtles.
+
+Cross-References. Establishments primarily engaged in--"
+114111,Finfish Fishing,"This U.S. industry comprises establishments primarily engaged in the commercial catching or taking of finfish (e.g., bluefish, salmon, trout, tuna) from their natural habitat.
+
+Cross-References. Establishments primarily engaged in--"
+114112,Shellfish Fishing,"This U.S. industry comprises establishments primarily engaged in the commercial catching or taking of shellfish (e.g., clams, crabs, lobsters, mussels, oysters, sea urchins, shrimp) from their natural habitat.
+
+Cross-References."
+114119,Other Marine Fishing,"This U.S. industry comprises establishments primarily engaged in the commercial catching or taking of marine animals (except finfish and shellfish).
+
+Cross-References. Establishments primarily engaged in--"
+1142,Hunting and TrappingT,NULL
+11421,Hunting and TrappingT,See industry description for 114210.
+114210,Hunting and Trapping,"This industry comprises establishments primarily engaged in one or more of the following: (1) commercial hunting and trapping; (2) operating commercial game preserves, such as game retreats; and (3) operating hunting preserves.
+
+Cross-References. Establishments primarily engaged in--"
+115,Support Activities for Agriculture and ForestryT,"Industries in the Support Activities for Agriculture and Forestry subsector provide support services that are an essential part of agricultural and forestry production.  These support activities may be performed by the agriculture or forestry producing establishment or conducted independently as an alternative source of inputs required for the production process for a given crop, animal, or forestry industry.  Establishments that primarily perform these activities independent of the agriculture or forestry producing establishment are in this subsector.
+"
+1151,Support Activities for Crop ProductionT,NULL
+11511,Support Activities for Crop ProductionT,"This industry comprises establishments primarily engaged in providing support activities for growing crops.
+
+Illustrative Examples:
+
+Aerial crop dusting or spraying (i.e., using specialized or dedicated aircraft)
+Farm management services
+Cotton ginning
+Planting crops
+Cultivating services
+Vineyard cultivation services
+
+
+Cross-References. Establishments primarily engaged in--"
+115111,Cotton Ginning,This U.S. industry comprises establishments primarily engaged in ginning cotton.
+115112,"Soil Preparation, Planting, and Cultivating","This U.S. industry comprises establishments primarily engaged in performing a soil preparation activity or crop production service, such as plowing, fertilizing, seed bed preparation, planting, cultivating, and crop protecting services.
+
+Cross-References. Establishments primarily engaged in--"
+115113,"Crop Harvesting, Primarily by Machine","This U.S. industry comprises establishments primarily engaged in mechanical harvesting, picking, and combining of crops, and related activities.  The machinery used is provided by the servicing establishment.
+
+Cross-References. Establishments primarily engaged in--"
+115114,Postharvest Crop Activities (except Cotton Ginning),"This U.S. industry comprises establishments primarily engaged in performing services on crops, subsequent to their harvest, with the intent of preparing them for market or further processing.  These establishments provide postharvest activities, such as crop cleaning, sun drying, shelling, fumigating, curing, sorting, grading, packing, and cooling.
+
+Cross-References. Establishments primarily engaged in--"
+115115,Farm Labor Contractors and Crew Leaders,"This U.S. industry comprises establishments primarily engaged in supplying labor for agricultural production or harvesting.
+
+Cross-References. Establishments primarily engaged in--"
+115116,Farm Management Services,"This U.S. industry comprises establishments primarily engaged in providing farm management services on a contract or fee basis usually to citrus groves, orchards, or vineyards.  These establishments always provide management and may arrange or contract for the partial or the complete operations of the farm establishment(s) they manage.  Operational activities may include cultivating, harvesting, and/or other specialized agricultural support activities.
+
+Cross-References."
+1152,Support Activities for Animal ProductionT,NULL
+11521,Support Activities for Animal ProductionT,See industry description for 115210.
+115210,Support Activities for Animal Production,"This industry comprises establishments primarily engaged in performing support activities related to raising livestock (e.g., cattle, goats, hogs, horses, poultry, sheep).  These establishments may perform one or more of the following: (1) breeding services for animals, including companion animals (e.g., cats, dogs, pet birds); (2) pedigree record services; (3) boarding horses; (4) dairy herd improvement activities; (5) livestock spraying; and (6) sheep dipping and shearing.
+
+Cross-References."
+1153,Support Activities for ForestryT,NULL
+11531,Support Activities for ForestryT,See industry description for 115310.
+115310,Support Activities for Forestry,"This industry comprises establishments primarily engaged in performing particular support activities related to timber production, wood technology, forestry economics and marketing, and forest protection.  These establishments may provide support activities for forestry, such as estimating timber, forest firefighting, forest pest control, treating burned forests from the air for reforestation or on an emergency basis, and consulting on wood attributes and reforestation.
+
+Cross-References. Establishments primarily engaged in--"
+21,"Mining, Quarrying, and Oil and Gas ExtractionT","The Sector as a Whole
+
+The Mining, Quarrying, and Oil and Gas Extraction sector comprises establishments that extract naturally occurring mineral solids, such as coal and ores; liquid minerals, such as crude petroleum; and gases, such as natural gas.  The term ""mining"" is used in the broad sense to include quarrying, well operations, beneficiating (e.g., crushing, screening, washing, and flotation), and other preparation customarily performed at the mine site, or as a part of mining activity.
+
+The Mining, Quarrying, and Oil and Gas Extraction sector distinguishes two basic activities: mine operation and mining support activities.  Mine operation includes establishments operating mines, quarries, or oil and gas wells on their own account or for others on a contract or fee basis.  Mining support activities include establishments that perform exploration (except geophysical surveying and mapping) on a contract or fee basis and/or other mining services on a contract or fee basis (except mine site preparation, construction, and transportation activities).
+
+Establishments in the Mining, Quarrying, and Oil and Gas Extraction sector are grouped and classified according to the natural resource mined or to be mined.  Industries include establishments that develop and/or operate the mine site, extract the natural resources, beneficiate (i.e., prepare) the mineral mined, or provide mining support activities.  Beneficiation is the process whereby the extracted material is reduced to particles that can be separated into mineral and waste, the former suitable for further processing or direct use.  The operations that take place in beneficiation are primarily mechanical, such as grinding, washing, magnetic separation, and centrifugal separation.  In contrast, manufacturing operations primarily use chemical and electrochemical processes, such as electrolysis and distillation.  However, some treatments, such as heat treatments, take place in both the beneficiation and the manufacturing (i.e., smelting/refining) stages.  The range of preparation activities varies by mineral and the purity of any given ore deposit.  While some minerals, such as petroleum and natural gas, require little or no preparation, others are washed and screened, while yet others, such as gold and silver, can be transformed into bullion before leaving the mine site.
+
+Mining, beneficiating, and manufacturing activities often occur in a single location.  Separate receipts will be collected for these activities whenever possible.  When receipts cannot be broken out between mining and manufacturing, establishments that mine or quarry nonmetallic minerals, and then beneficiate the nonmetallic minerals into more finished manufactured products are classified based on the primary activity of the establishment.  A mine that manufactures a small amount of finished products will be classified in Sector 21, Mining, Quarrying, and Oil and Gas Extraction.  An establishment that mines whose primary output is a more finished manufactured product will be classified in Sector 31-33, Manufacturing.
+"
+211,Oil and Gas ExtractionT,"Industries in the Oil and Gas Extraction subsector operate and/or develop oil and gas field properties.  Operation and development activities include exploration for crude petroleum and natural gas; drilling, completing, and equipping wells; operating separators, emulsion breakers, desilting equipment, and field gathering lines for crude petroleum and natural gas; and all other activities in the preparation of oil and gas up to the point of shipment from the producing property.  This subsector includes the production of crude petroleum, the mining and extraction of oil from oil shale and oil sands, the production of natural gas, sulfur recovery from natural gas, and recovery of hydrocarbon liquids.
+
+Establishments in this subsector include those that operate oil and gas wells on their own account or for others on a contract or fee basis.  Establishments primarily engaged in providing support services, on a contract or fee basis, required for the drilling or operation of oil and gas wells (except geophysical surveying and mapping, mine site preparation, construction of oil/gas pipelines, and transportation activities) are classified in Subsector 213, Support Activities for Mining.
+"
+2111,Oil and Gas ExtractionT,NULL
+21112,Crude Petroleum Extraction,See industry description for 211120.
+211120,Crude Petroleum Extraction,"This industry comprises establishments primarily engaged in (1) the exploration, development, and/or the production of petroleum from wells in which the hydrocarbons will initially flow or can be produced using normal or enhanced drilling and extraction techniques or (2) the production of crude petroleum from surface shales or tar sands or from reservoirs in which the hydrocarbons are semisolids.  Establishments in this industry operate oil wells on their own account or for others on a contract or fee basis.
+
+Cross-References. Establishments primarily engaged in--"
+21113,Natural Gas Extraction,See industry description for 211130.
+211130,Natural Gas Extraction,"This industry comprises establishments primarily engaged in (1) the exploration, development, and/or the production of natural gas from wells in which the hydrocarbons will initially flow or can be produced using normal or enhanced drilling and extraction techniques or (2) the recovery of liquid hydrocarbons from oil and gas field gases.  Establishments primarily engaged in sulfur recovery from natural gas are included in this industry.
+
+Cross-References. Establishments primarily engaged in--"
+212,Mining (except Oil and Gas)T,"Industries in the Mining (except Oil and Gas) subsector primarily engage in mining, mine site development, and beneficiating (i.e., preparing) metallic minerals and nonmetallic minerals, including coal.  The term ""mining"" is used in the broad sense to include ore extraction, quarrying, and beneficiating (e.g., crushing, screening, washing, sizing, concentrating, and flotation), customarily done at the mine site.
+
+Beneficiation is the process whereby the extracted material is reduced to particles which can be separated into mineral and waste, the former suitable for further processing or direct use.  The operations that take place in beneficiation are primarily mechanical, such as grinding, washing, magnetic separation, centrifugal separation, and so on. In contrast, manufacturing operations primarily use chemical and electrochemical processes, such as electrolysis, distillation, and so on.  However, some treatments, such as heat treatments, take place in both stages: the beneficiation and the manufacturing (i.e., smelting/refining) stages.  The range of preparation activities varies by mineral and the purity of any given ore deposit.  While some minerals, such as petroleum and natural gas, require little or no preparation, others are washed and screened, while yet others, such as gold and silver, can be transformed into bullion before leaving the mine site.
+
+Establishments in the Mining (except Oil and Gas) subsector include those that have complete responsibility for operating mines and quarries (except oil and gas wells) and those that operate mines and quarries (except oil and gas wells) for others on a contract or fee basis.  Establishments primarily engaged in providing support services, on a contract or fee basis (except geophysical surveying and mapping, mine site preparation, construction, and transportation activities), required for the mining and quarrying of minerals are classified in Subsector 213, Support Activities for Mining.
+"
+2121,Coal MiningT,NULL
+21211,Coal MiningT,"This industry comprises establishments primarily engaged in one or more of the following: (1) mining bituminous coal, anthracite coal, and lignite by underground mining, auger mining, strip mining, culm bank mining, and other surface mining; (2) developing coal mine sites; and (3) beneficiating (i.e., preparing) coal (e.g., cleaning, washing, screening, and sizing).
+
+Cross-References. Establishments primarily engaged in--"
+212114,Surface Coal Mining,"This U.S. industry comprises establishments primarily engaged in one or more of the following: (1) surface mining of bituminous coal, lignite, and anthracite coal; (2) developing bituminous coal, lignite, and anthracite coal surface mine sites; (3) surface mining and beneficiating (e.g., cleaning, washing, screening, and sizing) of bituminous coal, lignite, and anthracite coal; or (4) beneficiating (e.g., cleaning, washing, screening, and sizing), but not mining, bituminous coal, lignite, and anthracite coal.
+
+Cross-References. Establishments primarily engaged in--"
+212115,Underground Coal Mining,"This U.S. industry comprises establishments primarily engaged in one or more of the following: (1) underground mining of bituminous and anthracite coal; (2) developing bituminous and anthracite coal underground mine sites; and (3) underground mining and beneficiating (e.g., cleaning, washing, screening, and sizing) of bituminous and anthracite coal.
+
+Cross-References. Establishments primarily engaged in--"
+2122,Metal Ore MiningT,"This industry group comprises establishments primarily engaged in developing mine sites or mining metallic minerals, and establishments primarily engaged in ore dressing and beneficiating (i.e., preparing) operations, such as crushing, grinding, washing, drying, sintering, concentrating, calcining, and leaching.  Beneficiating may be performed at mills operated in conjunction with the mines served or at mills, such as custom mills, operated separately.
+"
+21221,Iron Ore MiningT,See industry description for 212210.
+212210,Iron Ore Mining,"This industry comprises establishments primarily engaged in (1) developing mine sites, mining, and/or beneficiating (i.e., preparing) iron ores and manganiferous ores valued chiefly for their iron content and/or (2) producing sinter iron ore (except iron ore produced in iron and steel mills) and other iron ore agglomerates.
+
+Cross-References."
+21222,Gold Ore and Silver Ore MiningT,See industry description for 212220.
+212220,Gold Ore and Silver Ore Mining,"This industry comprises establishments primarily engaged in developing the mine site, mining, and/or beneficiating (i.e., preparing) ores valued chiefly for their gold and/or silver content.  Establishments primarily engaged in the transformation of the gold and silver into bullion or dore bar in combination with mining activities are included in this industry.
+
+Cross-References."
+21223,"Copper, Nickel, Lead, and Zinc MiningT",See industry description for 212230.
+212230,"Copper, Nickel, Lead, and Zinc Mining","This industry comprises establishments primarily engaged in developing the mine site, mining, and/or beneficiating (i.e., preparing) ores valued chiefly for their copper, nickel, lead, or zinc content.  Beneficiating includes the transformation of ores into concentrates.  Establishments primarily engaged in recovering copper concentrates by the precipitation, leaching, or electrowinning of copper ore are included in this industry.
+
+Cross-References. Establishments primarily engaged in--"
+21229,Other Metal Ore MiningT,See industry description for 212290.
+212290,Other Metal Ore Mining,"This industry comprises establishments primarily engaged in developing the mine site, mining, and/or beneficiating (i.e., preparing) metal ores (except iron and manganiferous ores valued for their iron content, gold ore, silver ore, copper, nickel, lead, and zinc ore).
+
+Illustrative Examples:
+
+Antimony ores mining and/or beneficiating
+Tantalum ores mining and/or beneficiating
+Columbite ores mining and/or beneficiating
+Tungsten ores mining and/or beneficiating
+Ilmenite ores mining and/or beneficiating
+Uranium-radium-vanadium ores mining and/or beneficiating
+Molybdenum ores mining and/or beneficiating
+
+
+Cross-References. Establishments primarily engaged in--"
+2123,Nonmetallic Mineral Mining and QuarryingT,"This industry group comprises establishments primarily engaged in developing mine sites, or in mining or quarrying nonmetallic minerals (except fuels).  Also included are certain well and brine operations, and preparation plants primarily engaged in beneficiating (e.g., crushing, grinding, washing, and concentrating) nonmetallic minerals.
+
+Beneficiation is the process whereby the extracted material is reduced to particles which can be separated into mineral and waste, the former suitable for further processing or direct use.  The operations that take place in beneficiation are primarily mechanical, such as grinding, washing, magnetic separation, and centrifugal separation.  In contrast, manufacturing operations primarily use chemical and electrochemical processes, such as electrolysis and distillation.  However, some treatments, such as heat treatments, take place in both the beneficiation and the manufacturing (i.e., smelting/refining) stages.  The range of preparation activities varies by mineral and the purity of any given ore deposit.  While some minerals, such as petroleum and natural gas, require little or no preparation, others are washed and screened, while yet others, such as gold and silver, can be transformed into bullion before leaving the mine site.
+"
+21231,Stone Mining and QuarryingT,"This industry comprises (1) establishments primarily engaged in developing the mine site, mining or quarrying dimension stone (i.e., rough blocks and/or slabs of stone), or mining and quarrying crushed and broken stone and/or (2) preparation plants primarily engaged in beneficiating stone (e.g., crushing, grinding, washing, screening, pulverizing, and sizing).
+
+Cross-References. Establishments primarily engaged in--"
+212311,Dimension Stone Mining and Quarrying,"This U.S. industry comprises establishments primarily engaged in developing the mine site and/or mining or quarrying dimension stone (i.e., rough blocks and/or slabs of stone).
+
+Cross-References."
+212312,Crushed and Broken Limestone Mining and Quarrying,"This U.S. industry comprises (1) establishments primarily engaged in developing the mine site, mining or quarrying crushed and broken limestone (including related rocks, such as dolomite, cement rock, marl, travertine, and calcareous tufa) and (2) preparation plants primarily engaged in beneficiating limestone (e.g., grinding or pulverizing).
+
+Cross-References. Establishments primarily engaged in--"
+212313,Crushed and Broken Granite Mining and Quarrying,"This U.S. industry comprises (1) establishments primarily engaged in developing the mine site, and/or mining or quarrying crushed and broken granite (including related rocks, such as gneiss, syenite (except nepheline), and diorite) and (2) preparation plants primarily engaged in beneficiating granite (e.g., grinding or pulverizing).
+"
+212319,Other Crushed and Broken Stone Mining and Quarrying,"This U.S. industry comprises: (1) establishments primarily engaged in developing the mine site and/or mining or quarrying crushed and broken stone (except limestone and granite); (2) preparation plants primarily engaged in beneficiating (e.g., grinding and pulverizing) stone (except limestone and granite); and (3) establishments primarily engaged in mining or quarrying bituminous limestone and bituminous sandstone.
+
+Illustrative Examples:
+
+Bituminous limestone mining and/or beneficiating
+Marble crushed and broken stone mining and/or beneficiating
+Bituminous sandstone mining and/or beneficiating
+Sandstone crushed and broken stone mining and/or beneficiating
+
+
+Cross-References. Establishments primarily engaged in--"
+21232,"Sand, Gravel, Clay, and Ceramic and Refractory Minerals Mining and QuarryingT","This industry comprises (1) establishments primarily engaged in developing the mine site and/or mining, quarrying, dredging for sand and gravel, or mining clay (e.g., china clay, paper clay and slip clay) or ceramic and refractory minerals and (2) preparation plants primarily engaged in beneficiating (e.g., washing, screening, and grinding) sand and gravel, clay, and ceramic and refractory minerals.
+
+Cross-References. Establishments primarily engaged in--"
+212321,Construction Sand and Gravel Mining,"This U.S. industry comprises establishments primarily engaged in one or more of the following: (1) operating commercial grade (i.e., construction) sand and gravel pits; (2) dredging for commercial grade sand and gravel; and (3) washing, screening, or otherwise preparing commercial grade sand and gravel.
+
+Cross-References. Establishments primarily engaged in--"
+212322,Industrial Sand Mining,"This U.S. industry comprises establishments primarily engaged in one or more of the following: (1) operating industrial grade sand pits; (2) dredging for industrial grade sand; and (3) washing, screening, or otherwise preparing industrial grade sand.
+
+Cross-References. Establishments primarily engaged in--"
+212323,"Kaolin, Clay, and Ceramic and Refractory Minerals Mining","This U.S. industry comprises (1) establishments primarily engaged in developing the mine site and/or mining clay (e.g., china clay, paper clay and slip clay) or ceramic and refractory minerals and (2) establishments primarily engaged in beneficiating (i.e., preparing) clay or ceramic and refractory minerals.
+
+Illustrative Examples:
+
+Bentonite mining and/or beneficiating
+Fuller's earth mining and/or beneficiating
+Common clay mining and/or beneficiating
+Kaolin mining and/or beneficiating
+Feldspar mining and/or beneficiating
+Ball clay mining and/or beneficiating
+Fire clay mining and/or beneficiating
+Shale (except oil shale) mining and/or beneficiating
+
+
+Cross-References. Establishments primarily engaged in--"
+21239,Other Nonmetallic Mineral Mining and QuarryingT,See industry description for 212390.
+212390,Other Nonmetallic Mineral Mining and Quarrying,"This industry comprises establishments primarily engaged in developing the mine site, mining, and/or milling or otherwise beneficiating (i.e., preparing) nonmetallic minerals (except coal, stone, sand, gravel, clay, and ceramic and refractory minerals).  Drylake brine operations are included in this industry, as well as establishments engaged in producing the specified minerals from underground and open pit mines.
+
+Illustrative Examples:
+
+Barite mining and/or beneficiating
+Phosphate rock mining and/or beneficiating
+Borate, natural, mining and/or beneficiating
+Potash mining and/or beneficiating
+Peat mining and/or beneficiating
+Rock salt mining and/or beneficiating
+
+
+Cross-References. Establishments primarily engaged in--"
+213,Support Activities for MiningT,"Industries in the Support Activities for Mining subsector group establishments primarily providing support services, on a contract or fee basis (except geophysical surveying and mapping, mine site preparation, construction, and transportation activities), required for the mining and quarrying of minerals and for the extraction of oil and gas.  Establishments performing exploration for minerals, on a contract or fee basis, are included in this subsector.  Exploration services include traditional prospecting methods, such as taking core samples and making geological observations at prospective sites.
+
+The activities performed on a contract or fee basis by establishments in the Support Activities for Mining subsector are also often performed in-house by mining operators.  These activities include taking core samples, making geological observations at prospective sites, excavating slush pits and cellars, and such oil and gas operations as spudding in, drilling in, redrilling, directional drilling, and well surveying; running, cutting, and pulling casings, tubes, and rods; cementing and shooting wells; perforating well casings; acidizing and chemically treating wells; cleaning out, bailing, and swabbing wells; and operating oil and gas field gathering lines.
+
+Establishments primarily engaged in providing site preparation and related construction activities on a contract or fee basis are classified in Sector 23, Construction.  Establishments primarily engaged in providing transportation activities in support of mining, quarrying, or oil and gas extraction are classified in Sector 48-49, Transportation and Warehousing, based on the primary activity.
+"
+2131,Support Activities for MiningT,NULL
+21311,Support Activities for MiningT,"This industry comprises establishments primarily engaged in providing support services, on a contract or fee basis (except geophysical surveying and mapping, mine site preparation, construction, and transportation activities), required for the mining and quarrying of minerals and for the extraction of oil and gas.  Drilling, taking core samples, and making geological observations at prospective sites for minerals, on a contract or fee basis, are included in this industry.
+
+Cross-References. Establishments primarily engaged in--"
+213111,Drilling Oil and Gas Wells,"This U.S. industry comprises establishments primarily engaged in drilling oil and gas wells for others on a contract or fee basis.  This industry includes contractors that specialize in spudding in, drilling in, redrilling, and directional drilling.
+
+Cross-References. Establishments primarily engaged in--"
+213112,Support Activities for Oil and Gas Operations,"This U.S. industry comprises establishments primarily engaged in performing support activities, on a contract or fee basis, for oil and gas operations (except geophysical surveying and mapping, site preparation, construction, and transportation activities).  Services included are exploration; excavating slush pits and cellars, well surveying; running, cutting, and pulling casings, tubes, and rods; cementing wells, shooting wells; perforating well casings; acidizing and chemically treating wells; and cleaning out, bailing, and swabbing wells.
+
+Cross-References. Establishments primarily engaged in--"
+213113,Support Activities for Coal Mining,"This U.S. industry comprises establishments primarily engaged in providing support activities for coal mining (except geophysical surveying and mapping, site preparation, construction, and transportation activities) on a contract or fee basis.  Exploration for coal is included in this industry.  Exploration services include traditional prospecting methods, such as taking core samples and making geological observations at prospective sites.
+
+Cross-References. Establishments primarily engaged in--"
+213114,Support Activities for Metal Mining,"This U.S. industry comprises establishments primarily engaged in providing support activities (except geophysical surveying and mapping, site preparation, construction, and transportation activities), on a contract or fee basis, for the mining and quarrying of metallic minerals and for the extraction of metal ores.  Exploration for these minerals is included in this industry.  Exploration services include traditional prospecting methods, such as taking core samples and making geological observations at prospective sites.
+
+Cross-References. Establishments primarily engaged in--"
+213115,Support Activities for Nonmetallic Minerals (except Fuels) Mining,"This U.S. industry comprises establishments primarily engaged in providing support activities, on a contract or fee basis, for the mining and quarrying of nonmetallic minerals (except fuel) and for the extraction of nonmetallic minerals (except geophysical surveying and mapping, site preparation, construction, and transportation activities).  Exploration for these minerals is included in this industry.  Exploration services include traditional prospecting methods, such as taking core samples and making geological observations at prospective sites.
+
+Cross-References. Establishments primarily engaged in--"
+22,UtilitiesT,"The Sector as a Whole
+
+The Utilities sector comprises establishments engaged in the provision of the following utility services: electric power, natural gas, steam supply, water supply, and sewage treatment and disposal.  Within this sector, the specific activities associated with the utility services provided vary by utility: electric power includes generation, transmission, and distribution; natural gas includes distribution; steam supply includes provision and/or distribution; water supply includes treatment and distribution; and sewage removal includes collection, treatment, and disposal of waste through sewer systems and sewage treatment facilities.
+
+Excluded from this sector are establishments primarily engaged in waste management services classified in Subsector 562, Waste Management and Remediation Services.  These establishments also collect, treat, and dispose of waste materials; however, they do not use sewer systems or sewage treatment facilities.
+"
+221,UtilitiesT,"Industries in the Utilities subsector provide electric power, natural gas, steam supply, water supply, and sewage treatment and disposal through a permanent infrastructure of lines, mains, and pipes.  Establishments are grouped together based on the utility service provided and the particular system or facilities required to perform the service.
+"
+2211,"Electric Power Generation, Transmission and DistributionT","This industry group comprises establishments primarily engaged in generating, transmitting, and/or distributing electric power.  Establishments in this industry group may perform one or more of the following activities: (1) operate generation facilities that produce electric energy; (2) operate transmission systems that convey the electricity from the generation facility to the distribution system; and (3) operate distribution systems that convey electric power received from the generation facility or the transmission system to the final consumer.
+"
+22111,Electric Power GenerationT,"This industry comprises establishments primarily engaged in operating electric power generation facilities.  These facilities convert other forms of energy, such as water power (i.e., hydroelectric), fossil fuels, nuclear power, and solar power, into electrical energy.  The establishments in this industry produce electric energy and provide electricity to transmission systems or to electric power distribution systems.
+
+Cross-References. Establishments primarily engaged in--"
+221111,Hydroelectric Power Generation,"This U.S. industry comprises establishments primarily engaged in operating hydroelectric power generation facilities.  These facilities use water power to drive a turbine and produce electric energy.  The electric energy produced in these establishments is provided to electric power transmission systems or to electric power distribution systems.
+"
+221112,Fossil Fuel Electric Power Generation,"This U.S. industry comprises establishments primarily engaged in operating fossil fuel powered electric power generation facilities.  These facilities use fossil fuels, such as coal, oil, or gas, in internal combustion or combustion turbine conventional steam process to produce electric energy.  The electric energy produced in these establishments is provided to electric power transmission systems or to electric power distribution systems.
+"
+221113,Nuclear Electric Power Generation,"This U.S. industry comprises establishments primarily engaged in operating nuclear electric power generation facilities.  These facilities use nuclear power to produce electric energy.  The electric energy produced in these establishments is provided to electric power transmission systems or to electric power distribution systems.
+"
+221114,Solar Electric Power Generation,"This U.S. industry comprises establishments primarily engaged in operating solar electric power generation facilities.  These facilities use energy from the sun to produce electric energy.  The electric energy produced in these establishments is provided to electric power transmission systems or to electric power distribution systems.
+
+Cross-References."
+221115,Wind Electric Power Generation,"This U.S. industry comprises establishments primarily engaged in operating wind electric power generation facilities.  These facilities use wind power to drive a turbine and produce electric energy.  The electric energy produced in these establishments is provided to electric power transmission systems or to electric power distribution systems.
+"
+221116,Geothermal Electric Power Generation,"This U.S. industry comprises establishments primarily engaged in operating geothermal electric power generation facilities.  These facilities use heat derived from the Earth to produce electric energy.  The electric energy produced in these establishments is provided to electric power transmission systems or to electric power distribution systems.
+"
+221117,Biomass Electric Power Generation,"This U.S. industry comprises establishments primarily engaged in operating biomass electric power generation facilities.  These facilities use biomass (e.g., wood, waste, alcohol fuels) to produce electric energy.  The electric energy produced in these establishments is provided to electric power transmission systems or to electric power distribution systems.
+
+Cross-References."
+221118,Other Electric Power Generation,"This U.S. industry comprises establishments primarily engaged in operating electric power generation facilities (except hydroelectric, fossil fuel, nuclear, solar, wind, geothermal, biomass).  These facilities convert other forms of energy, such as tidal power, into electric energy.  The electric energy produced in these establishments is provided to electric power transmission systems or to electric power distribution systems.
+
+Cross-References. Establishments primarily engaged in--"
+22112,"Electric Power Transmission, Control, and DistributionT","This industry comprises establishments primarily engaged in operating electric power transmission systems, controlling (i.e., regulating voltages) the transmission of electricity, and/or distributing electricity.  The transmission system includes lines and transformer stations.  These establishments arrange, facilitate, or coordinate the transmission of electricity from the generating source to the distribution centers, other electric utilities, or final consumers.  The distribution system consists of lines, poles, meters, and wiring that deliver the electricity to final consumers.
+
+Cross-References."
+221121,Electric Bulk Power Transmission and Control,"This U.S. industry comprises establishments primarily engaged in operating electric power transmission systems and/or controlling (i.e., regulating voltages) the transmission of electricity from the generating source to distribution centers or other electric utilities.  The transmission system includes lines and transformer stations.
+
+Cross-References. Establishments primarily engaged in--"
+221122,Electric Power Distribution,"This U.S. industry comprises electric power establishments primarily engaged in either (1) operating electric power distribution systems (i.e., consisting of lines, poles, meters, and wiring) or (2) operating as electric power brokers or agents that arrange the sale of electricity via power distribution systems operated by others.
+
+Cross-References. Establishments primarily engaged in--"
+2212,Natural Gas DistributionT,NULL
+22121,Natural Gas DistributionT,See industry description for 221210.
+221210,Natural Gas Distribution,"This industry comprises: (1) establishments primarily engaged in operating gas distribution systems (e.g., mains, meters); (2) establishments known as gas marketers that buy gas from the well and sell it to a distribution system; (3) establishments known as gas brokers or agents that arrange the sale of gas over gas distribution systems operated by others; and (4) establishments primarily engaged in transmitting and distributing gas to final consumers.
+
+Cross-References. Establishments primarily engaged in--"
+2213,"Water, Sewage and Other SystemsT","This industry group comprises establishments primarily engaged in: (1) operating water treatment plants and/or water supply systems; (2) operating sewer systems or sewage treatment facilities; or (3) providing steam, heated air, or cooled air.
+"
+22131,Water Supply and Irrigation Systems,See industry description for 221310.
+221310,Water Supply and Irrigation Systems,"This industry comprises establishments primarily engaged in operating water treatment plants and/or operating water supply systems.  The water supply system may include pumping stations, aqueducts, and/or distribution mains.  The water may be used for drinking, irrigation, or other uses.
+
+Cross-References."
+22132,Sewage Treatment Facilities,See industry description for 221320.
+221320,Sewage Treatment Facilities,"This industry comprises establishments primarily engaged in operating sewer systems or sewage treatment facilities that collect, treat, and dispose of waste.
+
+Cross-References. Establishments primarily engaged in--"
+22133,Steam and Air-Conditioning Supply,See industry description for 221330.
+221330,Steam and Air-Conditioning Supply,"This industry comprises establishments primarily engaged in providing steam, heated air, or cooled air.  The steam distribution may be through mains.
+
+Cross-References. Establishments primarily engaged in--"
+23,ConstructionT,"The Sector as a Whole
+
+The Construction sector comprises establishments primarily engaged in the construction of buildings or engineering projects (e.g., highways and utility systems).  Establishments primarily engaged in the preparation of sites for new construction and establishments primarily engaged in subdividing land for sale as building sites also are included in this sector.
+
+Construction work done may include new work, additions, alterations, or maintenance and repairs.  Activities of these establishments generally are managed at a fixed place of business, but they usually perform construction activities at multiple project sites.  Production responsibilities for establishments in this sector are usually specified in (1) contracts with the owners of construction projects (prime contracts) or (2) contracts with other construction establishments (subcontracts).
+
+Establishments primarily engaged in contracts that include responsibility for all aspects of individual construction projects are commonly known as general contractors, but also may be known as design-builders, construction managers, turnkey contractors, or (in cases where two or more establishments jointly secure a general contract) joint-venture contractors.  Construction managers that provide oversight and scheduling only (i.e., agency) as well as construction managers that are responsible for the entire project (i.e., at risk) are included as general contractor type establishments.  Establishments of the ""general contractor type"" frequently arrange construction of separate parts of their projects through subcontracts with other construction establishments.
+
+Establishments primarily engaged in activities to produce a specific component (e.g., masonry, painting, and electrical work) of a construction project are commonly known as specialty trade contractors.  Activities of specialty trade contractors are usually subcontracted from other construction establishments, but especially in remodeling and repair construction, the work may be done directly for the owner of the property.
+
+Establishments primarily engaged in activities to construct buildings to be sold on sites that they own are known as for-sale builders, but also may be known as speculative builders or merchant builders.  For-sale builders produce buildings in a manner similar to general contractors, but their production processes also include site acquisition and securing of financial backing.  For-sale builders are most often associated with the construction of residential buildings.  Like general contractors, they may subcontract all or part of the actual construction work on their buildings.
+
+There are substantial differences in the types of equipment, work force skills, and other inputs required by establishments in this sector.  To highlight these differences and variations in the underlying production functions, this sector is divided into three subsectors.
+
+Subsector 236, Construction of Buildings, comprises establishments of the general contractor type and for-sale builders involved in the construction of buildings.  Subsector 237, Heavy and Civil Engineering Construction, comprises establishments involved in the construction of engineering projects.  Subsector 238, Specialty Trade Contractors, comprises establishments engaged in specialty trade activities generally needed in the construction of all types of buildings.
+
+Force account construction is construction work performed by an enterprise primarily engaged in some business other than construction for its own account, using employees of the enterprise.  This activity is not included in the construction sector unless the construction work performed is the primary activity of a separate establishment of the enterprise.  The installation and the ongoing repair and maintenance of telecommunications and utility networks is excluded from construction when the establishments performing the work are not independent contractors.  Although a growing proportion of this work is subcontracted to independent contractors in the Construction sector, the operating units of telecommunications and utility companies performing this work are included with the telecommunications or utility activities.
+"
+236,Construction of BuildingsT,"The Construction of Buildings subsector comprises establishments primarily responsible for the construction of buildings.  The work performed may include new work, additions, alterations, or maintenance and repairs.  The on-site assembly of precut, panelized, and prefabricated buildings and construction of temporary buildings are included in this subsector.  Part or all of the production work for which the establishments in this subsector have responsibility may be subcontracted to other construction establishments--usually specialty trade contractors.
+
+Establishments in this subsector are classified based on the types of buildings they construct.  This classification reflects variations in the requirements of the underlying production processes.
+"
+2361,Residential Building ConstructionT,NULL
+23611,Residential Building ConstructionT,"This industry comprises establishments primarily responsible for the construction or remodeling and renovation of single-family and multifamily residential buildings.  Included in this industry are residential housing general contractors (i.e., new construction, remodeling, or renovating existing residential structures), for-sale builders and remodelers of residential structures, residential project construction management firms, and residential design-build firms.
+
+Cross-References. Establishments primarily engaged in--"
+236115,New Single-Family Housing Construction (except For-Sale Builders),"This U.S. industry comprises general contractor establishments primarily responsible for the entire construction of new single-family housing, such as single-family detached houses and town houses or row houses where each housing unit (1) is separated from its neighbors by a ground-to-roof wall and (2) has no housing units constructed above or below.  This industry includes general contractors responsible for the on-site assembly of modular and prefabricated houses.  Single-family housing design-build firms and single-family construction management firms acting as general contractors are included in this industry.
+
+Cross-References. Establishments primarily engaged in--"
+236116,New Multifamily Housing Construction (except For-Sale Builders),"This U.S. industry comprises general contractor establishments primarily responsible for the construction of new multifamily residential housing units (e.g., high-rise, garden, town house apartments, and condominiums where each unit is not separated from its neighbors by a ground-to-roof wall).  Multifamily design-build firms and multifamily housing construction management firms acting as general contractors are included in this industry.
+
+Cross-References. Establishments primarily engaged in--"
+236117,New Housing For-Sale Builders,"This U.S. industry comprises establishments primarily engaged in building new homes on land that is owned or controlled by the builder rather than the homebuyer or investor.  The land is included with the sale of the home.  Establishments in this industry build single-family and/or multifamily homes.  These establishments are often referred to as merchant builders, but are also known as production or for-sale builders.
+
+Cross-References. Establishments primarily engaged in--"
+236118,Residential Remodelers,"This U.S. industry comprises establishments primarily responsible for the remodeling construction (including additions, alterations, reconstruction, maintenance, and repairs) of houses and other residential buildings, single-family and multifamily.  Included in this industry are remodeling general contractors, for-sale remodelers, remodeling design-build firms, and remodeling project construction management firms.
+
+Cross-References. Establishments primarily engaged in--"
+2362,Nonresidential Building ConstructionT,"This industry group comprises establishments primarily responsible for the construction (including new work, additions, alterations, maintenance, and repairs) of nonresidential buildings.  This industry group includes nonresidential general contractors, nonresidential for-sale builders, nonresidential design-build firms, and nonresidential project construction management firms.
+"
+23621,Industrial Building ConstructionT,See industry description for 236210.
+236210,Industrial Building Construction,"This industry comprises establishments primarily responsible for the construction (including new work, additions, alterations, maintenance, and repairs) of industrial buildings (except warehouses).  The construction of selected additional structures, whose production processes are similar to those for industrial buildings (e.g., incinerators, cement plants, blast furnaces, and similar nonbuilding structures), is included in this industry.  Included in this industry are industrial building general contractors, industrial building for-sale builders, industrial building design-build firms, and industrial building construction management firms.
+
+Illustrative Examples:
+
+Assembly plant construction
+Furnace, industrial plant, construction
+Cannery construction
+Mine loading and discharging station construction
+Cement plant construction
+Paper or pulp mill construction
+Steel mill construction
+Chemical plant (except petrochemical) construction
+Pharmaceutical manufacturing plant construction
+Factory construction
+Food processing plant construction
+Waste disposal plant (except sewage treatment) construction
+
+
+Cross-References. Establishments primarily engaged in--"
+23622,Commercial and Institutional Building ConstructionT,See industry description for 236220.
+236220,Commercial and Institutional Building Construction,"This industry comprises establishments primarily responsible for the construction (including new work, additions, alterations, maintenance, and repairs) of commercial and institutional buildings and related structures, such as stadiums, grain elevators, and indoor swimming facilities.  This industry includes establishments responsible for the on-site assembly of modular or prefabricated commercial and institutional buildings.  Included in this industry are commercial and institutional building general contractors, commercial and institutional building for-sale builders, commercial and institutional building design-build firms, and commercial and institutional building project construction management firms.
+
+Illustrative Examples:
+
+Airport building construction
+Office building construction
+Arena construction
+Parking garage construction
+Barrack construction
+Prison construction
+Farm building construction
+Radio and television broadcast studio construction
+Fire station construction
+Grain elevator or bin construction
+Data center construction
+Religious building (e.g., church, synagogue, mosque, temple) construction
+Restaurant construction
+Hospital construction
+School building construction
+Hotel construction
+Shopping mall construction
+Indoor swimming facility construction
+Warehouse construction (e.g., commercial, industrial, manufacturing, private)
+
+
+Cross-References. Establishments primarily engaged in--"
+237,Heavy and Civil Engineering ConstructionT,"The Heavy and Civil Engineering Construction subsector comprises establishments whose primary activity is the construction of entire engineering projects (e.g., highways and dams), and specialty trade contractors, whose primary activity is the production of a specific component for such projects.  Specialty trade contractors in the Heavy and Civil Engineering Construction subsector generally are performing activities that are specific to heavy and civil engineering construction projects and are not normally performed on buildings.  The work performed may include new work, additions, alterations, or maintenance and repairs. 
+
+Specialty trade activities are classified in this subsector if the skills and equipment present are specific to heavy or civil engineering construction projects.  For example, specialized equipment is needed to paint lines on highways.  This equipment is not normally used in building applications so the activity is classified in this subsector.  Traffic signal installation, while specific to highways, uses much of the same skills and equipment that are needed for electrical work in building projects and is therefore classified in Subsector 238, Specialty Trade Contractors.
+
+Construction projects involving water resources (e.g., dredging and land drainage) and projects involving open space improvement (e.g., parks and trails) are included in this subsector.  Establishments whose primary activity is the subdivision of land into individual building lots usually perform various additional site-improvement activities (e.g., road building and utility line installation) and are included in this subsector. 
+
+Establishments in this subsector are classified based on the types of structures that they construct.  This classification reflects variations in the requirements of the underlying production processes.
+"
+2371,Utility System ConstructionT,"This industry group comprises establishments primarily engaged in the construction of distribution lines and related buildings and structures for utilities (i.e., water, sewer, petroleum, gas, power, and communication).  All structures (including buildings) that are integral parts of utility systems (e.g., storage tanks, pumping stations, power plants, and refineries) are included in this industry group.
+"
+23711,Water and Sewer Line and Related Structures ConstructionT,See industry description for 237110.
+237110,Water and Sewer Line and Related Structures Construction,"This industry comprises establishments primarily engaged in the construction of water and sewer lines, mains, pumping stations, treatment plants, and storage tanks.  The work performed may include new work, reconstruction, rehabilitation, and repairs.  Specialty trade contractors are included in this industry if they are engaged in activities primarily related to water, sewer line, and related structures construction.  All structures (including buildings) that are integral parts of water and sewer networks (e.g., storage tanks, pumping stations, water treatment plants, and sewage treatment plants) are included in this industry.
+
+Illustrative Examples:
+
+Distribution line, sewer and water, construction
+Sewer main, pipe and connection, construction
+Fire hydrant installation
+Storm sewer construction
+Irrigation systems construction
+Water main and line construction
+Sewage disposal plant construction
+Water treatment plant construction
+Pumping station, water and sewage system, construction
+Water system storage tank and tower construction
+Reservoir construction
+Water well drilling, digging, boring, or sinking (except water intake wells in oil and gas fields)
+
+
+Cross-References. Establishments primarily engaged in--"
+23712,Oil and Gas Pipeline and Related Structures ConstructionT,See industry description for 237120.
+237120,Oil and Gas Pipeline and Related Structures Construction,"This industry comprises establishments primarily engaged in the construction of oil and gas lines, mains, refineries, and storage tanks.  The work performed may include new work, reconstruction, rehabilitation, and repairs.  Specialty trade contractors are included in this industry if they are engaged in activities primarily related to oil and gas pipeline and related structures construction.  All structures (including buildings) that are integral parts of oil and gas networks (e.g., storage tanks, pumping stations, and refineries) are included in this industry.
+
+Illustrative Examples:
+
+Distribution line, gas and oil, construction
+Oil refinery construction
+Gas main construction
+Petrochemical plant construction
+Gathering line, gas and oil field, construction
+Natural gas pipeline construction
+Pumping station, gas and oil transmission, construction
+Storage tank, natural gas or oil, tank farm or field, construction
+Natural gas processing plant construction
+
+
+Cross-References. Establishments primarily engaged in--"

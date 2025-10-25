@@ -1,10 +1,10 @@
 <!-- app/views/system/naics_codes/index.html.erb -->
+
 <div class="flex items-center justify-between mb-4">
-  <h1 class="text-xl font-semibold">NAICS</h1>
-  <%= link_to "New", new_system_naics_code_path, class: "btn btn-primary btn-sm" %>
+  <h1 class="text-xl font-semibold">NAICS <%= @version %></h1>
 </div>
 
-<%= form_with url: system_naics_codes_path, method: :get, local: true,
+<%= form_with url: system_naics_version_path(version: @version), method: :get, local: true,
   class: "mb-4 flex flex-wrap sm:flex-nowrap items-center gap-2" do |f| %>
 
   <label class="input input-bordered flex items-center gap-2 flex-1 min-w-[220px]">
@@ -15,7 +15,7 @@
   <select name="level" class="select select-bordered select-sm shrink-0">
     <option value="" <%= "selected" if @level.blank? %>>All levels</option>
     <% (2..6).each do |lvl| %>
-      <option value="<%= lvl %>" <%= "selected" if @level.to_s==lvl.to_s %>>Level <%= lvl %></option>
+      <option value="<%= lvl %>" <%= "selected" if @level.to_s == lvl.to_s %>>Level <%= lvl %></option>
     <% end %>
   </select>
 
@@ -28,19 +28,28 @@
   <%= f.submit "Apply", class: "btn btn-sm shrink-0" %>
 <% end %>
 
-
 <div class="overflow-x-auto">
   <table class="table table-zebra table-sm">
     <thead class="sticky top-0 bg-base-100 z-10">
       <tr>
-        <th>Year</th><th>Code</th><th>Title</th><th>Sector</th><th>Parent</th><th>Lvl</th><th>Active</th><th></th>
+        <th>Version</th>
+        <th>Code</th>
+        <th>Title</th>
+        <th>Sector</th>
+        <th>Parent</th>
+        <th>Lvl</th>
+        <th>Active</th>
       </tr>
     </thead>
     <tbody>
       <% @naics_codes.each do |n| %>
         <tr>
-          <td><%= n.year %></td>
-          <td class="font-mono"><%= link_to n.code, system_naics_code_path(n), class: "link link-primary" %></td>
+          <td><%= n.version %></td>
+          <td class="font-mono">
+            <%= link_to n.code,
+            system_naics_code_path(version: n.version, code: n.code),
+            class: "link link-primary" %>
+          </td>
           <td>
             <span class="tooltip" data-tip="<%= n.title %>"><%= truncate(n.title, length: 70) %></span>
           </td>
@@ -52,13 +61,9 @@
               <span class="badge badge-success">Active</span>
             <% elsif n.respond_to?(:active) %>
               <span class="badge badge-ghost">Inactive</span>
-            <% else %>-<% end %>
-          </td>
-          <td class="space-x-2">
-            <%= link_to "Edit", edit_system_naics_code_path(n), class: "btn btn-xs" %>
-            <%= link_to "Delete", system_naics_code_path(n),
-                          class: "btn btn-error btn-xs",
-                          data: { turbo_method: :delete, turbo_confirm: "Delete #{n.code}?" } %>
+            <% else %>
+              -
+            <% end %>
           </td>
         </tr>
       <% end %>
@@ -66,36 +71,35 @@
   </table>
 </div>
 
-    <% if @pagy.pages > 1 %>
-    <% base = params.permit(:q, :items, :level).to_h %>
-    <div class="mt-4 flex items-center justify-between">
-        <div class="text-sm opacity-70">
-        Page <%= @pagy.page %> of <%= @pagy.pages %>
-        </div>
-
-        <nav class="join">
-        <% if @pagy.prev %>
-            <%= link_to "«", url_for(base.merge(page: @pagy.prev)), class: "join-item btn btn-sm", rel: "prev" %>
-        <% else %>
-            <span class="join-item btn btn-sm btn-disabled">«</span>
-        <% end %>
-
-        <% @pagy.series.each do |item| %>
-            <% if item == :gap %>
-            <span class="join-item btn btn-sm btn-disabled">…</span>
-            <% elsif item == @pagy.page %>
-            <span class="join-item btn btn-sm btn-active"><%= item %></span>
-            <% else %>
-            <%= link_to item, url_for(base.merge(page: item)), class: "join-item btn btn-sm" %>
-            <% end %>
-        <% end %>
-
-        <% if @pagy.next %>
-            <%= link_to "»", url_for(base.merge(page: @pagy.next)), class: "join-item btn btn-sm", rel: "next" %>
-        <% else %>
-            <span class="join-item btn btn-sm btn-disabled">»</span>
-        <% end %>
-        </nav>
+<% if @pagy.pages > 1 %>
+  <% base = params.permit(:q, :items, :level).to_h %>
+  <div class="mt-4 flex items-center justify-between">
+    <div class="text-sm opacity-70">
+      Page <%= @pagy.page %> of <%= @pagy.pages %>
     </div>
-    <% end %>
-</div>
+
+    <nav class="join">
+      <% if @pagy.prev %>
+        <%= link_to "«", url_for(base.merge(page: @pagy.prev)), class: "join-item btn btn-sm", rel: "prev" %>
+      <% else %>
+        <span class="join-item btn btn-sm btn-disabled">«</span>
+      <% end %>
+
+      <% @pagy.series.each do |item| %>
+        <% if item == :gap %>
+          <span class="join-item btn btn-sm btn-disabled">…</span>
+        <% elsif item == @pagy.page %>
+          <span class="join-item btn btn-sm btn-active"><%= item %></span>
+        <% else %>
+          <%= link_to item, url_for(base.merge(page: item)), class: "join-item btn btn-sm" %>
+        <% end %>
+      <% end %>
+
+      <% if @pagy.next %>
+        <%= link_to "»", url_for(base.merge(page: @pagy.next)), class: "join-item btn btn-sm", rel: "next" %>
+      <% else %>
+        <span class="join-item btn btn-sm btn-disabled">»</span>
+      <% end %>
+    </nav>
+  </div>
+<% end %>

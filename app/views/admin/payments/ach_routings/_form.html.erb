@@ -1,0 +1,113 @@
+<!-- app/views/admin/payments/ach_routings/_form.html.erb -->
+
+<% ar = local_assigns[:ach_routing] || @ach_routing %>
+
+<%= form_with model: ar,
+              url: (ar.persisted? ? admin_payments_ach_routing_path(ar)
+                                  : admin_payments_ach_routings_path),
+              class: "space-y-4" do |f| %>
+  <% if ar.errors.any? %>
+    <div class="alert alert-error">
+      <span><%= pluralize(ar.errors.count, "error") %> prevented saving.</span>
+    </div>
+  <% end %>
+
+  <div class="grid md:grid-cols-2 gap-4">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Institution</h2>
+
+        <label class="form-control">
+          <div class="label"><span class="label-text">Routing number</span></div>
+          <%= f.text_field :routing_number, class: "input input-bordered font-mono", maxlength: 9 %>
+        </label>
+
+        <label class="form-control">
+          <div class="label"><span class="label-text">New routing number</span></div>
+          <%= f.text_field :new_routing_number, class: "input input-bordered font-mono", maxlength: 9, placeholder: "000000000 if unchanged" %>
+        </label>
+
+        <label class="form-control">
+          <div class="label"><span class="label-text">Institution name</span></div>
+          <%= f.text_field :customer_name, class: "input input-bordered" %>
+        </label>
+
+        <label class="form-control">
+          <div class="label"><span class="label-text">Street address</span></div>
+          <%= f.text_field :address, class: "input input-bordered w-full", placeholder: "123 Main St" %>
+        </label>
+
+        <div class="grid grid-cols-2 gap-3">
+          <label class="form-control">
+            <div class="label"><span class="label-text">City</span></div>
+            <%= f.text_field :city, class: "input input-bordered" %>
+          </label>
+
+          <label class="form-control">
+            <div class="label"><span class="label-text">State</span></div>
+            <%= f.select :state_code,
+                         options_for_select(Payments::AchRoutingsHelper::US_STATES, ar.state_code),
+                         { include_blank: true },
+                         class: "select select-bordered" %>
+          </label>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <label class="form-control">
+            <div class="label"><span class="label-text">ZIP</span></div>
+            <%= f.text_field :zip_code, class: "input input-bordered" %>
+          </label>
+
+          <label class="form-control">
+            <div class="label"><span class="label-text">Phone</span></div>
+            <%= f.telephone_field :phone_number, class: "input input-bordered font-mono" %>
+          </label>
+        </div>
+
+        <label class="form-control">
+          <div class="label"><span class="label-text">Servicing FRB</span></div>
+          <%= f.select :servicing_frb_number,
+                      options_for_select(@frb_options || [], ar.servicing_frb_number),
+                      { include_blank: true },
+                      class: "select select-bordered w-full" %>
+        </label>
+      </div>
+    </div>
+
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Flags & Notes</h2>
+
+        <div class="grid grid-cols-2 gap-2">
+          <label class="label cursor-pointer justify-start gap-3">
+            <%= f.check_box :us_treasury, class: "checkbox" %><span>U.S. Treasury</span>
+          </label>
+          <label class="label cursor-pointer justify-start gap-3">
+            <%= f.check_box :us_postal_service, class: "checkbox" %><span>USPS Money Order</span>
+          </label>
+          <label class="label cursor-pointer justify-start gap-3">
+            <%= f.check_box :federal_reserve_bank, class: "checkbox" %><span>Federal Reserve Bank</span>
+          </label>
+          <label class="label cursor-pointer justify-start gap-3">
+            <%= f.check_box :on_us, class: "checkbox" %><span>On Us</span>
+          </label>
+          <label class="label cursor-pointer justify-start gap-3">
+            <%= f.check_box :special_handling, class: "checkbox" %><span>Special Handling</span>
+          </label>
+        </div>
+
+        <label class="form-control">
+          <div class="label"><span class="label-text">Notes</span></div>
+          <%= f.text_area :notes, rows: 6, class: "textarea textarea-bordered" %>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-2">
+    <%= f.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel",
+                (ar.persisted? ? admin_payments_ach_routing_path(ar) : admin_payments_ach_routings_path),
+                class: "btn btn-ghost" %>
+  </div>
+<% end %>

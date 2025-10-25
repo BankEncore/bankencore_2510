@@ -5,6 +5,8 @@ require File.expand_path("../config/environment", __dir__)
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 
 require "rspec/rails"
+require "factory_bot_rails"   # ← add
+require "devise"              # optional but harmless
 
 # Maintain test schema
 begin
@@ -20,15 +22,15 @@ RSpec.configure do |config|
   # FactoryBot
   config.include FactoryBot::Syntax::Methods
 
-  # Use transactional DB tests
+  # Devise helpers
+  # config.include Devise::Test::IntegrationHelpers, type: :request
+  # config.include Devise::Test::IntegrationHelpers, type: :system
+  config.include Devise::Test::ControllerHelpers,  type: :controller
+  config.include Devise::Test::ControllerHelpers,  type: :view
+
   config.use_transactional_fixtures = true
-
-  # Infer spec type from file location (models, requests, etc.)
   config.infer_spec_type_from_file_location!
-
-  # Cleaner backtraces
   config.filter_rails_from_backtrace!
-  # config.filter_gems_from_backtrace("gem name") # add as needed
 end
 
 # Shoulda Matchers
@@ -37,4 +39,9 @@ Shoulda::Matchers.configure do |c|
     with.test_framework :rspec
     with.library :rails
   end
+end
+
+RSpec.describe "System NAICS routing", type: :routing do
+  it { expect(get: "/system/naics/2022").to route_to("system/naics_codes#index", version: "2022") }
+  it { expect(get: "/system/naics/2022/311").to route_to("system/naics_codes#show", version: "2022", code: "311") }
 end

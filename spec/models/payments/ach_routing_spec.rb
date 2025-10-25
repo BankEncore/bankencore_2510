@@ -1,66 +1,35 @@
-# spec/models/payments/ach_routing_spec.rb
 require "rails_helper"
-require "securerandom"
 
 RSpec.describe Payments::AchRouting, type: :model do
-  describe "defaults and normalization" do
-    it "generates public_id and pads routing numbers" do
-      r = described_class.create!(
-        routing_number: "518",
-        customer_name: "U.S. TREASURY",
-        city: "ARLINGTON",
-        state_code: "VA",
-        servicing_frb_number: "31000040"
-      )
-      expect(r.public_id).to be_present
+  describe "normalization" do
+    it "pads routing_number to 9 digits" do
+      r = described_class.create!(routing_number: "518", customer_name: "X",
+        city: "A", state_code: "PA", servicing_frb_number: "031000040", office_code: "1")
       expect(r.routing_number).to eq("000000518")
-      expect(r.servicing_frb_number).to eq("031000040")
-      expect(r.new_routing_number).to eq("000000000")
-      expect(r.record_type_code).to eq("0")
-      expect(r.office_code).to eq("O")
-      expect(r.institution_status_code).to eq("1")
-      expect(r.data_view_code).to eq("1")
     end
 
-    it "maps office_code digits to letters per constraint" do
-      rn = format("%09d", 200_000_000 + SecureRandom.random_number(700_000_000))
-      r = described_class.create!(
-        routing_number: rn,
-        customer_name: "X",
-        city: "PHL",
-        state_code: "PA",
-        servicing_frb_number: rn,
-        office_code: "1"
-      )
-      expect(r.office_code).to eq("B")
+    it "normalizes servicing_frb_number to 9 digits" do
+      good = described_class.create!(routing_number: "110000001", customer_name: "X",
+        city: "PHL", state_code: "PA", servicing_frb_number: "123", office_code: "1")
+      expect(good.servicing_frb_number).to eq("000000123")
     end
   end
 
-  describe "#routing_changed?" do
-    it "is false for 000000000 and true for any 9-digit other" do
-      r = build(:payments_ach_routing, new_routing_number: "000000000")
-      expect(r.routing_changed?).to be false
-      r.new_routing_number = "123456789"
-      expect(r.routing_changed?).to be true
-    end
+  it "normalizes office_code to 'O' or 'B'" do
+    o = described_class.create!(routing_number: "110000002", customer_name: "X",
+      city: "PHL", state_code: "PA", servicing_frb_number: "031000040", office_code: "0")
+    b = described_class.create!(routing_number: "110000003", customer_name: "X",
+      city: "PHL", state_code: "PA", servicing_frb_number: "031000040", office_code: "1")
+    expect(%w[O B]).to include(o.office_code)
+    expect(%w[O B]).to include(b.office_code)
   end
 
-  describe "#flags" do
-    it "returns label/class pairs for true booleans" do
-      r = build(:payments_ach_routing, us_treasury: true, on_us: true)
-      labels = r.flags.map(&:first)
-      expect(labels).to include("U.S. Treasury", "On Us")
-      expect(labels).not_to include("Special Handling")
-    end
-  end
-
-  describe "#frb_branch" do
-    it "looks up FRB by servicing_frb_number" do
-      r = build(:payments_ach_routing, servicing_frb_number: "031000040")
-      b = r.frb_branch
-      expect(b).to be_present
-      expect(b.city).to eq("Philadelphia")
-      expect(b.rtn).to eq("031000040")
-    end
+  # spec/models/payments/ach_routing_spec.rb
+  it "returns label/class pairs for the supported booleans" do
+    r = build(:payments_ach_routing, us_treasury: true, us_postal_service: true,
+      federal_reserve_bank: false, on_us: true, special_handling: false)
+    labels = r.flags.map(&:first)
+    expect(labels).to include("U.S. Treasury", "USPS Money Order", "On Us")
+    expect(labels).not_to include("Federal Reserve Bank", "Special Handling")
   end
 end

@@ -1,0 +1,114 @@
+<!-- app/views/admin/users/_form.html.erb -->
+<%= form_with model: [:admin, @user], class: "space-y-6" do |f| %>
+  <% if @user.errors.any? %>
+    <div class="alert alert-error">
+      <span><strong><%= pluralize(@user.errors.count, "error") %></strong> prevented saving.</span>
+    </div>
+    <ul class="list-disc list-inside text-sm text-error">
+      <% @user.errors.full_messages.each do |m| %><li><%= m %></li><% end %>
+    </ul>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- Identity -->
+    <div class="card bg-base-100 shadow">
+      <div class="card-body space-y-4">
+        <h2 class="card-title">Identity</h2>
+
+        <div class="form-control">
+          <%= f.label :first_name, class: "label" %>
+          <%= f.text_field :first_name, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :last_name, class: "label" %>
+          <%= f.text_field :last_name, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :display_name, class: "label" %>
+          <%= f.text_field :display_name, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :email, class: "label" %>
+          <%= f.email_field :email, required: true, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="form-control">
+            <%= f.label :time_zone, class: "label" %>
+            <%= f.time_zone_select :time_zone, nil, {}, class: "select select-bordered w-full" %>
+          </div>
+          <div class="form-control">
+            <%= f.label :locale, class: "label" %>
+            <%= f.select :locale, I18n.available_locales.map { |l| [l.to_s, l.to_s] },
+                         {}, class: "select select-bordered w-full" %>
+          </div>
+        </div>
+
+        <div class="form-control">
+          <%= f.label :password, class: "label" %>
+          <%= f.password_field :password, class: "input input-bordered w-full",
+                               placeholder: (@user.persisted? ? "Leave blank to keep current" : nil) %>
+        </div>
+        <div class="form-control">
+          <%= f.label :password_confirmation, class: "label" %>
+          <%= f.password_field :password_confirmation, class: "input input-bordered w-full" %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Access -->
+    <div class="card bg-base-100 shadow">
+      <div class="card-body space-y-6">
+        <h2 class="card-title">Access</h2>
+
+        <!-- Roles as checkboxes -->
+        <div>
+          <label class="label"><span class="label-text">Roles</span></label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2">
+            <%= f.collection_check_boxes :role_ids, (defined?(@roles) && @roles.present? ? Role.where(id: @roles.map(&:last)) : Role.order(:name)),
+                                         :id, :name do |b| %>
+              <label class="label cursor-pointer justify-start gap-2 p-2 rounded hover:bg-base-200">
+                <%= b.check_box(class: "checkbox") %>
+                <span><%= b.text %></span>
+              </label>
+            <% end %>
+          </div>
+          <label class="label"><span class="label-text-alt">Select one or more.</span></label>
+        </div>
+
+        <!-- Branches as checkboxes -->
+        <div>
+          <label class="label"><span class="label-text">Branches</span></label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 max-h-64 overflow-auto p-1">
+            <%= f.collection_check_boxes :branch_ids, (defined?(@branches) && @branches.present? ? Branch.where(id: @branches.map(&:last)) : Branch.order(:name)),
+                                         :id, :name do |b| %>
+              <label class="label cursor-pointer justify-start gap-2 p-2 rounded hover:bg-base-200">
+                <%= b.check_box(class: "checkbox") %>
+                <span><%= b.text %></span>
+              </label>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 text-sm">
+          <div>
+            <span class="opacity-70">Confirmed:</span>
+            <%= @user.confirmed_at.present? ? content_tag(:span, "Yes", class: "badge badge-success") : content_tag(:span, "No", class: "badge") %>
+          </div>
+          <div>
+            <span class="opacity-70">Locked:</span>
+            <%= @user.locked_at.present? ? content_tag(:span, "Locked", class: "badge badge-error") : content_tag(:span, "OK", class: "badge badge-success") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-3">
+    <%= f.submit(@user.persisted? ? "Update User" : "Create User", class: "btn btn-primary") %>
+    <%= link_to "Cancel", admin_users_path, class: "btn btn-ghost" %>
+  </div>
+<% end %>

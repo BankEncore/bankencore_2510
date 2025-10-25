@@ -1,0 +1,93 @@
+<!-- app/views/admin/users/show.html.erb -->
+<div class="breadcrumbs text-sm mb-4">
+  <ul>
+    <li><%= link_to "Users", admin_users_path, class: "badge badge-ghost" %></li>
+    <li><span class="badge badge-primary"><%= @user.display_name.presence || @user.email %></span></li>
+  </ul>
+</div>
+
+<div class="flex items-start justify-between gap-4 mb-6">
+  <div>
+    <h1 class="text-2xl font-semibold"><%= @user.display_name.presence || "#{@user.first_name} #{@user.last_name}" %></h1>
+    <p class="text-sm opacity-70 mt-1 font-mono"><%= @user.email %></p>
+  </div>
+  <div class="flex items-center gap-2">
+    <% if policy([:admin, @user]).edit? %>
+      <%= link_to "Edit", [:edit, :admin, @user], class: "btn btn-sm btn-primary" %>
+    <% end %>
+    <%= link_to "Back", admin_users_path, class: "btn btn-sm btn-ghost" %>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <div class="lg:col-span-2">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Profile</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <div class="label"><span class="label-text">First name</span></div>
+            <div><%= @user.first_name.presence || "—" %></div>
+          </div>
+          <div>
+            <div class="label"><span class="label-text">Last name</span></div>
+            <div><%= @user.last_name.presence || "—" %></div>
+          </div>
+          <div class="md:col-span-2">
+            <div class="label"><span class="label-text">Display name</span></div>
+            <div><%= @user.display_name.presence || "—" %></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card bg-base-100 shadow mt-6">
+      <div class="card-body">
+        <h2 class="card-title">Branches</h2>
+        <% bs = ( @user.respond_to?(:branches) ? @user.branches.order(:name) : [] ) %>
+        <% if bs.any? %>
+          <div class="flex flex-wrap gap-2">
+            <% bs.each do |b| %>
+              <%= link_to b.name, [:admin, b], class: "badge badge-outline" %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="alert"><span>No branches assigned.</span></div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Access</h2>
+        <div class="mb-3">
+          <% confirmed = @user.confirmed_at.present? %>
+          <% locked    = @user.locked_at.present? %>
+          <span class="badge <%= confirmed ? 'badge-success' : 'badge-warning' %> mr-1"><%= confirmed ? "Confirmed" : "Unconfirmed" %></span>
+          <% if locked %><span class="badge badge-error">Locked</span><% end %>
+        </div>
+
+        <div class="mb-2 text-sm opacity-70">Roles</div>
+        <% rs = @user.roles.order(:name) %>
+        <% if rs.any? %>
+          <ul class="text-sm space-y-1">
+            <% rs.each { |r| %><li><span class="badge badge-ghost"><%= r.name %></span></li><% } %>
+          </ul>
+        <% else %>
+          <div class="alert"><span>No roles assigned.</span></div>
+        <% end %>
+
+        <div class="divider"></div>
+        <ul class="text-sm space-y-2">
+          <li><span class="opacity-70">Created:</span> <span class="font-mono"><%= l(@user.created_at, format: :short) %></span></li>
+          <li><span class="opacity-70">Updated:</span> <span class="font-mono"><%= l(@user.updated_at, format: :short) %></span></li>
+          <% if @user.last_sign_in_at %>
+            <li><span class="opacity-70">Last sign-in:</span> <span class="font-mono"><%= l(@user.last_sign_in_at, format: :short) %></span></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

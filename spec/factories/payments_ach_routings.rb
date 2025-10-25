@@ -3,7 +3,7 @@ FactoryBot.define do
   sequence(:ach_rn) { |n| format("%09d", 200_000_000 + n) }
 
   factory :payments_ach_routing, class: "Payments::AchRouting" do
-    routing_number        { generate(:ach_rn) }   # defined once
+    sequence(:routing_number) { |n| format("%09d", 110000000 + n) }
     customer_name         { "X" }
     city                  { "PHL" }
     state_code            { "PA" }

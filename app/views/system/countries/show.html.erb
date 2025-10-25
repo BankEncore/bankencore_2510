@@ -1,0 +1,167 @@
+<!-- app/views/system/countries/show.html.erb -->
+<div class="breadcrumbs text-sm mb-4">
+  <ul>
+    <li><%= link_to "Countries", system_countries_path, class: "badge badge-ghost" %></li>
+    <li><span class="badge badge-primary"><%= @country.label %></span></li>
+  </ul>
+</div>
+
+<div class="flex items-start justify-between gap-4 mb-6">
+  <div>
+    <h1 class="text-2xl font-semibold">
+      <%= @country.label %>
+      <span class="badge badge-outline align-middle ml-2"><%= @country.alpha2 %></span>
+    </h1>
+    <% if @country.respond_to?(:official_name) && @country.official_name.present? %>
+      <p class="text-sm opacity-70 mt-1"><%= @country.official_name %></p>
+    <% end %>
+  </div>
+
+  <div class="flex items-center gap-2">
+    <% if defined?(policy) && policy(@country).try(:update?) %>
+      <%= link_to "Edit", [:edit, :system, @country], class: "btn btn-sm btn-primary" %>
+    <% end %>
+    <%= link_to "Back", system_countries_path, class: "btn btn-sm btn-ghost" %>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+  <!-- Basics -->
+  <div class="lg:col-span-2">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Basics</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <div class="label"><span class="label-text">Alpha-2</span></div>
+            <div class="font-mono"><%= @country.alpha2 %></div>
+          </div>
+
+          <% if @country.respond_to?(:alpha3) && @country.alpha3.present? %>
+            <div>
+              <div class="label"><span class="label-text">Alpha-3</span></div>
+              <div class="font-mono"><%= @country.alpha3 %></div>
+            </div>
+          <% end %>
+
+          <% if @country.respond_to?(:numeric_code) && @country.numeric_code.present? %>
+            <div>
+              <div class="label"><span class="label-text">Numeric Code</span></div>
+              <div class="font-mono"><%= @country.numeric_code %></div>
+            </div>
+          <% end %>
+
+          <% if @country.respond_to?(:short_name) && @country.short_name.present? %>
+            <div>
+              <div class="label"><span class="label-text">Short Name</span></div>
+              <div><%= @country.short_name %></div>
+            </div>
+          <% end %>
+
+          <% if @country.respond_to?(:region) && @country.region.present? %>
+            <div>
+              <div class="label"><span class="label-text">Region</span></div>
+              <div><%= @country.region %></div>
+            </div>
+          <% end %>
+
+          <% if @country.respond_to?(:subregion) && @country.subregion.present? %>
+            <div>
+              <div class="label"><span class="label-text">Subregion</span></div>
+              <div><%= @country.subregion %></div>
+            </div>
+          <% end %>
+
+          <% if @country.respond_to?(:flag_emoji) && @country.flag_emoji.present? %>
+            <div>
+              <div class="label"><span class="label-text">Flag</span></div>
+              <div class="text-2xl"><%= @country.flag_emoji %></div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Metadata -->
+  <div>
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <h2 class="card-title">Metadata</h2>
+        <ul class="text-sm space-y-2">
+          <li>
+            <span class="opacity-70">Created:</span>
+            <span class="font-mono"><%= l(@country.created_at, format: :short) %></span>
+          </li>
+          <li>
+            <span class="opacity-70">Updated:</span>
+            <span class="font-mono"><%= l(@country.updated_at, format: :short) %></span>
+          </li>
+          <% if @country.respond_to?(:active) %>
+            <li>
+              <span class="opacity-70">Status:</span>
+              <% if @country.active? %>
+                <span class="badge badge-success">Active</span>
+              <% else %>
+                <span class="badge badge-ghost">Inactive</span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Branches in country -->
+  <div class="lg:col-span-3">
+    <div class="card bg-base-100 shadow">
+      <div class="card-body">
+        <div class="flex items-center justify-between">
+          <h2 class="card-title">Branches</h2>
+          <% count = Branch.where(country_alpha2: @country.alpha2).count %>
+          <div class="badge"><%= pluralize(count, "branch") %></div>
+        </div>
+
+        <% branches = Branch.where(country_alpha2: @country.alpha2).order(:name).limit(25) %>
+        <% if branches.any? %>
+          <div class="overflow-x-auto">
+            <table class="table table-zebra">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Code</th>
+                  <th>Status</th>
+                  <th class="text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% branches.each do |b| %>
+                  <tr>
+                    <td><%= b.name %></td>
+                    <td class="font-mono"><%= b.code %></td>
+                    <td>
+                      <span class="badge <%= b.active? ? 'badge-success' : (b.respond_to?(:archived?) && b.archived? ? 'badge-ghost' : 'badge-outline') %>">
+                        <%= b.status %>
+                      </span>
+                    </td>
+                    <td class="text-right space-x-2">
+                      <%= link_to "View", [:admin, b], class: "btn btn-xs btn-ghost" %>
+                      <% if defined?(policy) && policy(b).try(:update?) %>
+                        <%= link_to "Edit", [:edit, :admin, b], class: "btn btn-xs btn-primary" %>
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% else %>
+          <div class="alert">
+            <span>No branches for <%= @country.alpha2 %> yet.</span>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

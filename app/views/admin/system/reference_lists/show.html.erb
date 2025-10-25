@@ -1,0 +1,72 @@
+<%# app/views/admin/system/reference_lists/show.html.erb %>
+
+<%# Breadcrumbs %>
+<nav class="breadcrumbs text-sm mb-4">
+  <ul>
+    <li><%= link_to "Admin", admin_root_path, class: "badge badge-ghost" %></li>
+    <li><%= link_to "Reference Lists", admin_system_reference_lists_path, class: "badge badge-ghost" %></li>
+    <li><span class="badge badge-primary"><%= @list.key %></span></li>
+  </ul>
+</nav>
+
+<%# Actions %>
+<div class="flex gap-2 mb-4">
+  <%= link_to "Edit", edit_admin_system_reference_list_path(@list), class: "btn btn-primary btn-sm" %>
+  <%= link_to "New Value", new_admin_system_reference_list_reference_value_path(@list), class: "btn btn-secondary btn-sm" %>
+  <%= link_to "Delete",
+              admin_system_reference_list_path(@list),
+              data: { turbo_method: :delete, turbo_confirm: "Delete this list? Values will be blocked by FK." },
+              class: "btn btn-error btn-outline btn-sm" %>
+  <%= link_to "Back", admin_system_reference_lists_path, class: "btn btn-ghost btn-sm" %>
+</div>
+
+<%= render "shared/reference_lists/summary", list: @list, show_api: true %>
+
+<%# Values table %>
+<div class="card bg-base-100 shadow mt-6">
+  <div class="card-body">
+    <div class="flex items-center justify-between">
+      <h2 class="card-title">Values (<%= @list.reference_values.count %>)</h2>
+      <%= link_to "New Value", new_admin_system_reference_list_reference_value_path(@list), class: "btn btn-secondary btn-sm" %>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="table table-zebra">
+        <thead>
+          <tr>
+            <th>Pos</th>
+            <th>Code</th>
+            <th>Key</th>
+            <th>Label</th>
+            <th>Active</th>
+            <th>Effective</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @list.reference_values.ordered.each do |v| %>
+            <tr>
+              <td class="whitespace-nowrap"><%= v.position %></td>
+              <td class="font-mono"><%= v.code.presence || "—" %></td>
+              <td class="font-mono"><%= v.key %></td>
+              <td><%= v.label %></td>
+              <td><%= v.active ? "yes" : "no" %></td>
+              <td class="text-xs"><%= v.effective_from&.to_s || "—" %> → <%= v.effective_to&.to_s || "—" %></td>
+              <td class="text-right whitespace-nowrap">
+                <%= link_to "Show", admin_system_reference_value_path(v), class: "link link-primary mr-2" %>
+                <%= link_to "Edit", edit_admin_system_reference_value_path(v), class: "link mr-2" %>
+                <%= link_to "Delete",
+                            admin_system_reference_value_path(v),
+                            data: { turbo_method: :delete, turbo_confirm: "Delete this value?" },
+                            class: "link link-error" %>
+              </td>
+            </tr>
+          <% end %>
+          <% if @list.reference_values.empty? %>
+            <tr><td colspan="7" class="text-center opacity-70">No values yet.</td></tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

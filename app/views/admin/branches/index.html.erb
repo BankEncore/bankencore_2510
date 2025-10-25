@@ -1,0 +1,96 @@
+<!-- app/views/admin/branches/index.html.erb -->
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-xl font-semibold">Admin · Branches</h1>
+  <% if policy(Branch).create? %>
+    <%= link_to "New Branch", new_admin_branch_path, class: "btn btn-primary btn-sm" %>
+  <% end %>
+</div>
+
+<!-- Toolbar -->
+<%= form_with url: admin_branches_path, method: :get, local: true, class: "mb-4" do %>
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-3">
+    <label class="input input-bordered flex items-center gap-2">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4a6 6 0 104.472 10.03l3.75 3.75 1.415-1.414-3.75-3.75A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"/></svg>
+      <input type="text" name="q" placeholder="Search code or name" value="<%= params[:q] %>" class="grow">
+    </label>
+
+    <select name="status" class="select select-bordered">
+      <option value="">All statuses</option>
+      <% Branch.statuses.keys.each do |s| %>
+        <option value="<%= s %>" <%= "selected" if params[:status] == s %>><%= s.humanize %></option>
+      <% end %>
+    </select>
+
+    <select name="country" class="select select-bordered">
+      <option value="">All countries</option>
+      <% System::Country.where(active: true).order(:alpha2).pluck(:alpha2).each do |c| %>
+        <option value="<%= c %>" <%= "selected" if params[:country] == c %>><%= c %></option>
+      <% end %>
+    </select>
+
+    <div class="flex gap-2">
+      <button class="btn btn-primary w-full md:w-auto">Filter</button>
+      <%= link_to "Reset", admin_branches_path, class: "btn btn-ghost w-full md:w-auto" %>
+    </div>
+  </div>
+<% end %>
+
+<!-- Summary -->
+<div class="mb-2 text-sm opacity-70">
+  <%= pluralize(@pagy&.count || @branches.size, "branch") %> found
+</div>
+
+<div class="overflow-x-auto">
+  <table class="table table-zebra">
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Country</th>
+        <th>Time zone</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @branches.each do |b| %>
+        <tr>
+          <td class="font-mono"><%= b.code %></td>
+          <td><%= b.name %></td>
+          <td>
+            <span class="badge <%= b.active? ? 'badge-success' : (b.inactive? ? 'badge-ghost' : 'badge-outline') %> capitalize">
+              <%= b.status %>
+            </span>
+          </td>
+          <td><%= b.country_alpha2 %></td>
+          <td class="font-mono text-xs"><%= b.time_zone %></td>
+          <td class="text-right space-x-1">
+            <%= link_to "Show", [:admin, b], class: "btn btn-ghost btn-xs" %>
+            <% if policy(b).update? %>
+              <%= link_to "Edit", edit_admin_branch_path(b), class: "btn btn-ghost btn-xs" %>
+            <% end %>
+            <% if policy(b).destroy? %>
+              <%= link_to "Delete", [:admin, b],
+                    data: { turbo_method: :delete, turbo_confirm: "Delete #{b.code}?" },
+                    class: "btn btn-ghost btn-xs text-error" %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+      <% if @branches.empty? %>
+        <tr>
+          <td colspan="6">
+            <div class="alert">
+              <span>No branches match your filters.</span>
+            </div>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%# Pagy nav if using Pagy %>
+<% if defined?(pagy_nav) && @pagy %>
+  <div class="mt-4"><%= pagy_nav(@pagy) %></div>
+<% end %>

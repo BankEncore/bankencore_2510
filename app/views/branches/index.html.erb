@@ -1,0 +1,10 @@
+<!-- app/views/branches/index.html.erb -->
+<h1 class="text-xl font-semibold mb-4">Branches</h1>
+<ul class="divide-y">
+  <% @branches.each do |b| %>
+    <li class="py-2">
+      <%= link_to "#{b.code} – #{b.name}", branch_path(b.public_id || b) %>
+      <span class="badge badge-sm <%= b.status == "active" ? "badge-success" : "badge-ghost" %>"><%= b.status %></span>
+    </li>
+  <% end %>
+</ul>
