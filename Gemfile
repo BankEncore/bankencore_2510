@@ -106,4 +106,4 @@ group :tools do
 end
 
 gem "roo", "~> 3.0"
-gem "dotenv-rails", groups: [:development, :test]
+gem "dotenv-rails", groups: [ :development, :test ]
