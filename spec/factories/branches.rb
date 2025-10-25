@@ -1,9 +1,9 @@
 # spec/factories/branches.rb
 FactoryBot.define do
   factory :branch do
-    sequence(:code) { |n| format("%03d", n) }
+    sequence(:code) { |n| "BR#{n}" }
     name { "Test Branch" }
-    status { "active" }
+    status { :active }
     time_zone { "America/New_York" }
     address_1 { "1 Test Way" }
     city { "Pittsburgh" }

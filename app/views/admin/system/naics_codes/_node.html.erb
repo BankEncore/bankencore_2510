@@ -11,7 +11,9 @@
             <path d="M9 18l6-6-6-6" />
           </svg>
         </span>
-        <%= link_to "#{node.code} — #{node.title}", system_naics_code_path(node), class: "link" %>
+        <%= link_to "#{node.code} — #{node.title}",
+            admin_system_naics_code_admin_path(version: node.version, code: node.code),
+            class: "link" %>
       </div>
     </summary>
 

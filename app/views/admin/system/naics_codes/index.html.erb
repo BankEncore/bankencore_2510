@@ -1,7 +1,9 @@
 <!-- app/views/system/naics_codes/index.html.erb -->
 <div class="flex items-center justify-between mb-4">
   <h1 class="text-xl font-semibold">NAICS</h1>
-  <%= link_to "New", new_admin_system_naics_code_path, class: "btn btn-primary btn-sm" %>
+  <%= link_to "New",
+            admin_system_new_naics_code_path(version: @version),
+            class: "btn btn-primary btn-sm" %>
 </div>
 
 <%= form_with url: admin_system_naics_codes_path, method: :get, local: true,

@@ -8,6 +8,7 @@ class System::NaicsCodesController < ApplicationController
   # GET /system/naics/:version
   # Params: q (code/title search), items
   def index
+    @version = params[:version]
     authorize ::System::NaicsCode
 
     @versions = ::System::NaicsCode.distinct.order(version: :desc).pluck(:version)
@@ -27,7 +28,10 @@ class System::NaicsCodesController < ApplicationController
 
   # GET /system/naics/:version/:code
   def show
-    authorize @naics
+    @naics = ::System::NaicsCode.find_by!(               # ADD
+      version: params[:version], code: params[:code]
+    )
+    authorize @naics                                     # MOVE authorize after @naics is set
 
     @ancestors = []
     node = @naics

@@ -1,12 +1,15 @@
-# app/policies/admin/branch_policy.rb
-# new
 class Admin::BranchPolicy < ApplicationPolicy
-  def index? = can?("branches.read")
-  def show?  = can?("branches.read")
-  def create? = can?("branches.write")
-  def update? = can?("branches.write")
-  def destroy? = can?("branches.write")
+  def index?   = user.can?("branches.read")  || user.can?("admin.access")
+  def show?    = index?
+  def new?     = create?
+  def create?  = user.can?("branches.write") || user.can?("admin.access")
+  def edit?    = update?
+  def update?  = user.can?("branches.write") || user.can?("admin.access")
+  def destroy? = user.can?("branches.admin") || user.can?("admin.access")
+
   class Scope < Scope
-    def resolve = can?("branches.read") ? @scope.all : @scope.none
+    def resolve
+      user.can?("branches.read") || user.can?("admin.access") ? scope.all : scope.none
+    end
   end
 end

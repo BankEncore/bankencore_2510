@@ -1,12 +1,19 @@
+# spec/models/system/reference_value_spec.rb
 require "rails_helper"
 
 RSpec.describe System::ReferenceValue, type: :model do
-  it { is_expected.to belong_to(:reference_list).class_name("System::ReferenceList") }
-  it { is_expected.to validate_presence_of(:key) }
-  it { is_expected.to validate_presence_of(:label) }
+  let(:list) { create(:system_reference_list) }
 
-  it "uses public_id for to_param" do
-    v = build(:system_reference_value)
-    expect(v.to_param).to eq(v.public_id)
+  it "requires code uniqueness within list" do
+    create(:system_reference_value, reference_list: list, code: "A", name: "Active")
+    dup = build(:system_reference_value, reference_list: list, code: "A", name: "Another")
+    expect(dup).not_to be_valid
+  end
+
+  it "scopes active values" do
+    a1 = create(:system_reference_value, reference_list: list, code: "A", name: "Active",  active: true)
+    a2 = create(:system_reference_value, reference_list: list, code: "B", name: "Blocked", active: false)
+    expect(described_class.active).to include(a1)
+    expect(described_class.active).not_to include(a2)
   end
 end

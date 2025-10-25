@@ -3,9 +3,13 @@
 <!-- Breadcrumbs -->
 <div class="breadcrumbs text-sm mb-4">
   <ul>
-    <li><%= link_to "NAICS", system_naics_codes_path, class: "badge badge-ghost" %></li>
+    <li><%= link_to "NAICS #{@naics.version}",
+                admin_system_naics_codes_path(version: @naics.version),
+                class: "badge badge-ghost" %></li>
     <% (@ancestors || []).each do |a| %>
-      <li><%= link_to a.code, system_naics_code_path(a), class: "badge badge-outline" %></li>
+      <li><%= link_to a.code,
+                admin_system_naics_code_admin_path(version: a.version, code: a.code),
+                class: "badge badge-outline" %></li>
     <% end %>
     <li><span class="badge badge-primary"><%= @naics.code %></span></li>
   </ul>
@@ -17,8 +21,12 @@
     <%= @naics.code %>: <span class="font-normal not-italic"><%= @naics.title %></span>
   </h1>
   <div class="shrink-0 space-x-2">
-    <%= link_to "Edit", edit_admin_system_naics_code_path(@naics), class: "btn btn-sm" %>
-    <%= link_to "Back", admin_system_naics_codes_path, class: "btn btn-ghost btn-sm" %>
+    <%= link_to "Edit",
+            admin_system_edit_naics_code_path(version: @naics.version, code: @naics.code),
+            class: "btn btn-sm" %>
+    <%= link_to "Back",
+            admin_system_naics_codes_path(version: @naics.version),
+            class: "btn btn-ghost btn-sm" %>
   </div>
 </div>
 
@@ -32,7 +40,9 @@
         <dt class="opacity-60 col-span-1">Parent</dt>
         <dd class="col-span-2">
           <% if @parent %>
-            <%= link_to "#{@parent.code}: #{@parent.title}", system_naics_code_path(@parent), class: "link" %>
+            <%= link_to "#{@parent.code}: #{@parent.title}",
+            admin_system_naics_code_admin_path(version: @parent.version, code: @parent.code),
+            class: "link" %>
           <% else %>
             -
           <% end %>
@@ -59,7 +69,9 @@
           <% (@lineage || []).each do |n| %>
             <li>
               <span class="font-mono">
-                <%= link_to n.code, admin_system_naics_code_path(n), class: "link" %>
+                <%= link_to n.code,
+                  admin_system_naics_code_admin_path(version: n.version, code: n.code),
+                  class: "link" %>
               </span>
               <span class="opacity-60">—</span>
               <span><%= n.title %></span>

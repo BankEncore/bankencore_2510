@@ -30,5 +30,7 @@ module Bankencore
     config.paths.add "app/lib", eager_load: true
     config.autoload_paths  << Rails.root.join("app/lib")
     config.eager_load_paths << Rails.root.join("app/lib")
+    config.autoload_paths  << Rails.root.join("app/policies")
+    config.eager_load_paths << Rails.root.join("app/policies")
   end
 end

@@ -1,11 +1,10 @@
 # spec/factories/system_reference_lists.rb
-# new
 FactoryBot.define do
+  sequence(:ref_list_key)  { |n| "status_#{n}" }
+  sequence(:ref_list_name) { |n| "Status values #{n}" }
+
   factory :system_reference_list, class: "System::ReferenceList" do
-    sequence(:key)  { |n| "ref.list_#{n}" }
-    sequence(:name) { |n| "Reference List #{n}" }
-    description { "Test reference list" }
-    active { true }
-    metadata { {} }
+    key  { generate(:ref_list_key) }
+    name { generate(:ref_list_name) }
   end
 end

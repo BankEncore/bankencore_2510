@@ -1,10 +1,8 @@
 # spec/support/auth_helpers.rb
 module AuthHelpers
-  def sign_in_confirmed(user = create(:user, :confirmed))
-    sign_in user
+  def sign_in_admin
+    user = create(:user, :system_admin)
+    sign_in user, scope: :user
+    user
   end
-end
-
-RSpec.configure do |config|
-  config.include AuthHelpers, type: :request   # add :system if you use it there too
 end

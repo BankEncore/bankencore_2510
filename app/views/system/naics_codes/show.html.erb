@@ -1,15 +1,24 @@
 <!-- app/views/system/naics_codes/show.html.erb -->
-
 <!-- Breadcrumbs -->
-<div class="breadcrumbs text-sm mb-4">
-  <ul>
-    <li><%= link_to "NAICS", system_naics_codes_path, class: "badge badge-ghost" %></li>
-    <% @ancestors.each do |a| %>
-      <li><%= link_to a.code, system_naics_code_path(a), class: "badge badge-outline" %></li>
-    <% end %>
-    <li><span class="badge badge-primary"><%= @naics.code %></span></li>
-  </ul>
-</div>
+<ul class="breadcrumbs text-sm mb-4">
+  <li>
+    <%= link_to "NAICS #{@naics.version}",
+                system_naics_version_path(version: @naics.version),
+                class: "badge badge-ghost" %>
+  </li>
+  <% @ancestors.each do |a| %>
+    <li>
+      <%= link_to a.code,
+                  system_naics_code_path(version: a.version, code: a.code),
+                  class: "badge badge-outline" %>
+    </li>
+  <% end %>
+  <li><span class="badge badge-primary"><%= @naics.code %></span></li>
+</ul>
+
+<%= link_to "Back",
+            system_naics_version_path(version: @naics.version),
+            class: "btn btn-ghost btn-sm" %>
 
 <!-- Record header banner -->
 <div class="bg-base-200 p-4 rounded-lg mb-4 flex items-center gap-3 justify-between">
@@ -18,7 +27,7 @@
   </h1>
 <div class="shrink-0 space-x-2">
     <%# public back %>
-    <%= link_to "Back", system_naics_codes_path, class: "btn btn-ghost btn-sm" %>
+    <%= link_to "Back", system_naics_version_path(version: @naics.version), class: "btn btn-ghost btn-sm" %>
 
     <%# optional: show admin edit only to admins %>
   <% if current_user&.system_admin? %>

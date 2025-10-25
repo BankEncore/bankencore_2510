@@ -27,8 +27,12 @@ module System
     validates :active, inclusion: { in: [ true, false ] }
 
     # metadata is jsonb; ensure hash
-    validate do
-      errors.add(:metadata, "must be an object") unless metadata.is_a?(Hash)
+    if column_names.include?("metadata")
+      validate do
+        value = self[:metadata]
+        self[:metadata] = {} if value.nil?
+        errors.add(:metadata, "must be an object") unless self[:metadata].is_a?(Hash)
+      end
     end
 
     # ---------- Scopes ----------
