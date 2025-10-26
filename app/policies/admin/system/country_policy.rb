@@ -1,19 +1,18 @@
 # app/policies/admin/system/country_policy.rb
-# new
-class Admin::System::CountryPolicy < ApplicationPolicy
-  # reads require system.read, writes require system.write
+module Admin
+  module System
+    class CountryPolicy < ApplicationPolicy
+      def index?   ; can?("admin.access") && can?("system.read")  ; end
+      def show?    ; index?                                      ; end
+      def new?     ; can?("admin.access") && can?("system.write") ; end
+      def create?  ; new?                                        ; end
+      def edit?    ; new?                                        ; end
+      def update?  ; new?                                        ; end
+      def destroy? ; can?("admin.access") && can?("system.write") ; end
 
-  def index?  = can?("system.read")
-  def show?   = can?("system.read")
-  def create? = can?("system.write")
-  def update? = can?("system.write")
-  def destroy? = can?("system.write")
-  def new?    = create?
-  def edit?   = update?
-
-  class Scope < Scope
-    def resolve
-      can?("system.read") ? @scope.all : @scope.none
+      class Scope < ApplicationPolicy::Scope
+        def resolve ; scope.all ; end
+      end
     end
   end
 end

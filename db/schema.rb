@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_23_020533) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_25_214122) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -202,6 +202,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_23_020533) do
     t.boolean "active", default: true, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "tags", default: [], null: false, array: true
     t.index ["key"], name: "index_system_reference_lists_on_key", unique: true
   end
 

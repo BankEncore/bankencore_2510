@@ -10,18 +10,24 @@ FactoryBot.define do
       confirmed_at { Time.current }
     end
 
+    # Full-access admin for policy specs
     trait :adminish do
       after(:create) do |u|
-        %w[admin system_admin staff staff_admin superadmin].each do |key|
-          role = Role.find_or_create_by!(key:) { |r| r.name = key.titleize }
-          u.roles << role unless u.roles.exists?(role.id)
+        # permissions
+        p_read  = Permission.find_or_create_by!(key: "system.read")  { _1.name = "System Read" }
+        p_write = Permission.find_or_create_by!(key: "system.write") { _1.name = "System Write" }
+        p_admin = Permission.find_or_create_by!(key: "admin.access") { _1.name = "Admin Access" }
+
+        # role
+        role = Role.find_or_create_by!(key: "sysadmin") { _1.name = "Sysadmin" }
+
+        # role ↔ permissions
+        [p_read, p_write, p_admin].each do |perm|
+          RolePermission.find_or_create_by!(role:, permission: perm)
         end
-      end
-      after(:build) do |u|
-        u.admin = true if u.respond_to?(:admin=)
-        u.define_singleton_method(:admin?)        { true } unless u.respond_to?(:admin?)
-        u.define_singleton_method(:system_admin?) { true } unless u.respond_to?(:system_admin?)
-        u.define_singleton_method(:has_role?)     { |_k| true }
+
+        # user ↔ role
+        UserRole.find_or_create_by!(user: u, role:)
       end
     end
   end

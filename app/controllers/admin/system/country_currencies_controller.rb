@@ -9,7 +9,7 @@ class Admin::System::CountryCurrenciesController < Admin::BaseController
   # GET /admin/system/country_currencies
   # Filters: ?country_alpha2=US&currency_code=USD&q=usd
   def index
-    authorize [ :admin, :system, ::System::CountryCurrency ]
+    authorize [:admin, ::System::CountryCurrency]
 
     scope = policy_scope(::System::CountryCurrency)
               .includes(:country, :currency)
@@ -33,23 +33,23 @@ class Admin::System::CountryCurrenciesController < Admin::BaseController
 
   # GET /admin/system/country_currencies/US-USD
   def show
-    authorize [ :admin, :system, @country_currency ]
+    authorize [:admin, @country_currency]
   end
 
   def new
     @country_currency = ::System::CountryCurrency.new
-    authorize [ :admin, :system, @country_currency ]
+    authorize [:admin, @country_currency]
   end
 
   def edit
-    authorize [ :admin, :system, @country_currency ]
+    authorize [:admin, @country_currency]
   end
 
   # POST /admin/system/country_currencies
   def create
     @country_currency = ::System::CountryCurrency.new(permitted_params)
     normalize_keys(@country_currency)
-    authorize [ :admin, :system, @country_currency ]
+    authorize [:admin, @country_currency]
 
     if @country_currency.save
       redirect_to admin_system_country_currency_path(
@@ -64,7 +64,7 @@ class Admin::System::CountryCurrenciesController < Admin::BaseController
 
   # PATCH/PUT /admin/system/country_currencies/US-USD
   def update
-    authorize [ :admin, :system, @country_currency ]
+    authorize [:admin, @country_currency]
     attrs = permitted_params
     normalize_hash!(attrs)
 
@@ -80,7 +80,7 @@ class Admin::System::CountryCurrenciesController < Admin::BaseController
   end
 
   def destroy
-    authorize [ :admin, :system, @country_currency ]
+    authorize [:admin, @country_currency]
     @country_currency.destroy!
     redirect_to admin_system_country_currencies_path, notice: "Deleted"
   end

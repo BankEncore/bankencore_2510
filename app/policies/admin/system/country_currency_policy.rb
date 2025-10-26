@@ -1,17 +1,18 @@
 # app/policies/admin/system/country_currency_policy.rb
-class Admin::System::CountryCurrencyPolicy < ApplicationPolicy
-  # reads require system.read, writes require system.write
-  def index?  = can?("system.read")
-  def show?   = can?("system.read")
-  def create? = can?("system.write")
-  def update? = can?("system.write")
-  def destroy? = can?("system.write")
-  def new?    = create?
-  def edit?   = update?
+module Admin
+  module System
+    class CountryCurrencyPolicy < ApplicationPolicy
+      def index?   ; can?("admin.access") && can?("system.read")  ; end
+      def show?    ; index? ; end
+      def new?     ; can?("admin.access") && can?("system.write") ; end
+      def create?  ; new? ; end
+      def edit?    ; new? ; end
+      def update?  ; new? ; end
+      def destroy? ; can?("admin.access") && can?("system.write") ; end
 
-  class Scope < Scope
-    def resolve
-      can?("system.read") ? @scope.all : @scope.none
+      class Scope < ApplicationPolicy::Scope
+        def resolve ; scope.all ; end
+      end
     end
   end
 end

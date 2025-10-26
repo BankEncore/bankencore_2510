@@ -59,8 +59,8 @@ Rails.application.routes.draw do
         constraints: { country_alpha2: ISO2, currency_code: ISO3 }
 
     # NAICS by version + code
-    get "naics/:version",                    to: "naics_codes#index", as: :naics_version, constraints: { version: NAICS_VER }
-    get "naics/:version/:code",              to: "naics_codes#show",  as: :naics_code,    constraints: { version: NAICS_VER, code: NAICS_CODE }
+    get "naics/:version",       to: "naics_codes#index", as: :naics_version
+    get "naics/:version/:code", to: "naics_codes#show",  as: :naics_code
   end
 
   # ===================== Admin =====================

@@ -171,7 +171,7 @@ GEM
     jbuilder (2.14.1)
       actionview (>= 7.0.0)
       activesupport (>= 7.0.0)
-    json (2.15.1)
+    json (2.15.2)
     kamal (2.8.1)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -294,6 +294,11 @@ GEM
       nio4r (~> 2.0)
     pundit (2.5.2)
       activesupport (>= 3.0.0)
+    pundit-matchers (4.0.0)
+      rspec-core (~> 3.12)
+      rspec-expectations (~> 3.12)
+      rspec-mocks (~> 3.12)
+      rspec-support (~> 3.12)
     raabro (1.4.0)
     racc (1.8.1)
     rack (3.2.3)
@@ -531,6 +536,7 @@ DEPENDENCIES
   propshaft
   puma (>= 5.0)
   pundit
+  pundit-matchers
   rack-attack
   rails (~> 8.0.3)
   roo (~> 3.0)

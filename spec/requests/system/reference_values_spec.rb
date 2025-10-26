@@ -31,6 +31,6 @@ RSpec.describe "System::ReferenceValues", type: :request do
          params: { system_reference_value: { reference_list_id: list.id,
                                              code: "B", name: "Broken",
                                              metadata: "not_json" } }
-    expect(response).to have_http_status(:unprocessable_entity).or have_http_status(:found)
+    expect(response).to have_http_status(:unprocessable_content).or have_http_status(:found)
   end
 end

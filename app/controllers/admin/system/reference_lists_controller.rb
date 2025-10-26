@@ -1,37 +1,59 @@
 # app/controllers/admin/system/reference_lists_controller.rb
-# new
 class Admin::System::ReferenceListsController < Admin::BaseController
+  before_action :set_list, only: %i[show edit update destroy]
+
+  # GET /admin/system/reference_lists
   def index
-    @lists = policy_scope(System::ReferenceList)
-    authorize System::ReferenceList
+    authorize [:admin, System::ReferenceList]
+    @lists = policy_scope([:admin, System::ReferenceList])
   end
 
-  def show; authorize @list; end
-  def new  ; @list = System::ReferenceList.new; authorize @list; end
+  # GET /admin/system/reference_lists/:id
+  def show
+    authorize [:admin, @list]
+  end
 
+  # GET /admin/system/reference_lists/new
+  def new
+    @list = System::ReferenceList.new
+    authorize [:admin, @list]
+  end
+
+  # POST /admin/system/reference_lists
   def create
-    @list = System::ReferenceList.new(list_params); authorize @list
-    if @list.save then redirect_to [ :admin, :system, @list ], notice: "Created"
-    else render :new, status: :unprocessable_entity
+    @list = System::ReferenceList.new(list_params)
+    authorize [:admin, @list]
+    if @list.save
+      redirect_to [:admin, :system, @list], notice: "Created"
+    else
+      render :new, status: :unprocessable_content
     end
   end
 
-  def edit; authorize @list; end
+  # GET /admin/system/reference_lists/:id/edit
+  def edit
+    authorize [:admin, @list]
+  end
 
+  # PATCH/PUT /admin/system/reference_lists/:id
   def update
-    authorize @list
-    if @list.update(list_params) then redirect_to [ :admin, :system, @list ], notice: "Updated"
-    else render :edit, status: :unprocessable_entity
+    authorize [:admin, @list]
+    if @list.update(list_params)
+      redirect_to [:admin, :system, @list], notice: "Updated"
+    else
+      render :edit, status: :unprocessable_content
     end
   end
 
+  # DELETE /admin/system/reference_lists/:id
   def destroy
-    authorize @list
+    authorize [:admin, @list]
     @list.destroy!
-    redirect_to [ :admin, :system, :reference_lists ], notice: "Deleted"
+    redirect_to [:admin, :system, :reference_lists], notice: "Deleted"
   end
 
   private
+
   def set_list
     pid = params[:public_id] || params[:reference_list_public_id] || params[:id]
     @list = System::ReferenceList.find_by!(public_id: pid)

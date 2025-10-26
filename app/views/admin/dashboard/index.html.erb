@@ -30,13 +30,26 @@
         <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:country_currencies]) %> records</div>
       <% end %>
 
-    <% if @latest_naics_version.present? %>
-      <%= link_to admin_system_naics_codes_path(version: @latest_naics_version), class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
+      <% latest = System::NaicsCode.order(version: :desc).limit(1).pick(:version) %>
+      <% can_admin = policy([:admin, System::NaicsCode]).index? rescue false %>
+
+      <% if can_admin %>
+        <% if latest.present? %>
+          <%= link_to admin_system_naics_codes_path(version: latest),
+                      class: "card bg-base-100 shadow p-4 block" do %>
+            <div class="text-sm text-base-content/70">System • Admin</div>
+            <div class="text-xl font-medium">NAICS Codes</div>
+            <div class="text-sm mt-2"><%= number_with_delimiter(System::NaicsCode.count) %> records</div>
+          <% end %>
+        <% else %>
+          <div class="card bg-base-100 shadow p-4 opacity-70">
+            <div class="text-sm text-base-content/70">System • Admin</div>
+            <div class="text-xl font-medium">NAICS Codes</div>
+            <div class="text-sm mt-2">No data yet</div>
+          </div>
+        <% end %>
       <% end %>
-      <div class="text-sm text-base-content/70">System • Admin</div>
-      <div class="text-xl font-medium">NAICS Codes</div>
-      <div class="text-sm mt-2"><%= number_with_delimiter(@counts[:naics_codes]) %> records</div>
-    <% end %>
+
 
     <%= link_to admin_system_reference_lists_path, class: "card bg-base-100 shadow hover:shadow-lg transition p-4" do %>
       <div class="text-sm text-base-content/70">System • Admin</div>

@@ -1,7 +1,6 @@
 # app/controllers/admin/dashboard_controller.rb
-# new
 module Admin
-  class Admin::DashboardController < Admin::BaseController
+  class DashboardController < Admin::BaseController
     def index
       @counts = {
         ach_routings:       ::Payments::AchRouting.count,
@@ -12,8 +11,10 @@ module Admin
         users:              ::User.count,
         branches:           ::Branch.count
       }
-      # Latest NAICS version for links that require a version param
-      @latest_naics_version = ::System::NaicsCode.distinct.order(version: :desc).limit(1).pluck(:version).first
+
+      @latest_naics_version = ::System::NaicsCode.order(version: :desc).limit(1).pick(:version)
+      @can_view_naics       = policy([:admin, ::System::NaicsCode]).index? rescue false
+      #                               ^^^^^^^^ use the model under System, not Admin::System
     end
   end
 end

@@ -1,19 +1,11 @@
 # app/policies/admin/system/naics_code_policy.rb
-# new
-class Admin::System::NaicsCodePolicy < ApplicationPolicy
-  # reads require system.read, writes require system.write
-
-  def index?  = can?("system.read")
-  def show?   = can?("system.read")
-  def create? = can?("system.write")
-  def update? = can?("system.write")
-  def destroy? = can?("system.write")
-  def new?    = create?
-  def edit?   = update?
-
-  class Scope < Scope
-    def resolve
-      can?("system.read") ? @scope.all : @scope.none
+module Admin
+  module System
+    class NaicsCodePolicy < ApplicationPolicy
+      def index? = can?("admin.access") && can?("system.read")
+    class Scope < ApplicationPolicy::Scope
+      def resolve = scope.all
     end
   end
+end
 end

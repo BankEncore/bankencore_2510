@@ -1,8 +1,7 @@
 # spec/factories/branch_memberships.rb
-# new
 FactoryBot.define do
   factory :branch_membership do
-    association :user
-    association :branch
+    association :branch, factory: [:branch, :no_hours], strategy: :create
+    association :user, strategy: :create
   end
 end
