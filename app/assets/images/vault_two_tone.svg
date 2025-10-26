@@ -1,0 +1,11 @@
+<svg class="size-8" viewBox="0 0 24 24" fill="none" aria-label="BankEncore vault mark"
+     style="--c1: var(--color-primary, var(--p)); --c2: var(--color-accent, var(--a));">
+  <circle cx="16.5" cy="12" r="5.5" stroke="var(--c1)" stroke-width="2"/>
+  <circle cx="16.5" cy="12" r="1.2" fill="var(--c1)"/>
+  <path d="M16.5 6.5v2.3M16.5 15.2v2.3" stroke="var(--c1)" stroke-width="2" stroke-linecap="round"/>
+  <g stroke="var(--c2)" stroke-width="2" stroke-linecap="round">
+    <path d="M3.5 7h8"/>
+    <path d="M3.5 12h8"/>
+    <path d="M3.5 17h8"/>
+  </g>
+</svg>

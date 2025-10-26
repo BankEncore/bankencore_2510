@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require "warden"
 require "warden/test/helpers"
 

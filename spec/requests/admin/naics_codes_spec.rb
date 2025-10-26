@@ -2,21 +2,22 @@
 require "rails_helper"
 
 RSpec.describe "Admin::System::NaicsCodes", type: :request do
-  let(:admin)   { create(:user, :confirmed, :adminish) }
+  let(:admin)   { create(:user, :confirmed, :system_admin) }
   let(:version) { "2022" }
 
-  it "index ok" do
+  before do
     bypass_admin_auth!
     sign_in admin, scope: :user
-    get admin_system_naics_codes_path(version:)
+  end
+
+  it "index ok" do
+    get admin_system_naics_codes_path(version: version)
     expect(response).to have_http_status(:ok)
   end
 
   it "show ok" do
-    bypass_admin_auth!
-    sign_in admin, scope: :user
-    n = create(:system_naics_code, version:, code: "311", title: "Food", level: 3)
-    get admin_system_naics_code_admin_path(version: n.version, code: n.code)
+    n = create(:system_naics_code, version: version, code: "311", title: "Food", level: 3)
+    get admin_system_naics_code_path(version: n.version, code: n.code)
     expect(response).to have_http_status(:ok)
   end
 end

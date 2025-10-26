@@ -1,17 +1,18 @@
 <header class="navbar bg-base-100 shadow">
   <div class="flex-1">
-    <%= link_to "BankEncore",
-      (user_signed_in? ? root_path : new_user_session_path),
-      class: "btn btn-ghost text-xl" %>
+    <%= link_to (user_signed_in? ? root_path : new_user_session_path),
+                class: "btn btn-ghost text-xl gap-2" do %>
+      <!-- If your SVG uses currentColor, set the wrapper color -->
+      <span class="inline-flex items-center gap-2 text-primary
+                   [&>span>svg]:h-7 [&>span>svg]:w-7">
+        <%= app_logo %>
+        <span class="hidden sm:inline font-semibold leading-none">BankEncore</span>
+      </span>
+      <span class="sr-only">BankEncore</span>
+    <% end %>
   </div>
 
   <div class="flex-none flex items-center gap-3">
-    <form action="/search" method="get" class="hidden md:block">
-      <label class="input input-bordered flex items-center gap-2 w-72">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4a6 6 0 104.472 10.03l3.75 3.75 1.415-1.414-3.75-3.75A6 6 0 0010 4zm0 2a4 4 0 110 8 4 4 0 010-8z"/></svg>
-        <input name="q" placeholder="Search" class="grow" />
-      </label>
-    </form>
 
     <%# Pundit %>
     <% if policy(:admin_dashboard).index? %>

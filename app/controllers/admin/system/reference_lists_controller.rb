@@ -4,27 +4,27 @@ class Admin::System::ReferenceListsController < Admin::BaseController
 
   # GET /admin/system/reference_lists
   def index
-    authorize [:admin, System::ReferenceList]
-    @lists = policy_scope([:admin, System::ReferenceList])
+    authorize [ :admin, System::ReferenceList ]
+    @lists = policy_scope([ :admin, System::ReferenceList ])
   end
 
   # GET /admin/system/reference_lists/:id
   def show
-    authorize [:admin, @list]
+    authorize [ :admin, @list ]
   end
 
   # GET /admin/system/reference_lists/new
   def new
     @list = System::ReferenceList.new
-    authorize [:admin, @list]
+    authorize [ :admin, @list ]
   end
 
   # POST /admin/system/reference_lists
   def create
     @list = System::ReferenceList.new(list_params)
-    authorize [:admin, @list]
+    authorize [ :admin, @list ]
     if @list.save
-      redirect_to [:admin, :system, @list], notice: "Created"
+      redirect_to [ :admin, :system, @list ], notice: "Created"
     else
       render :new, status: :unprocessable_content
     end
@@ -32,14 +32,14 @@ class Admin::System::ReferenceListsController < Admin::BaseController
 
   # GET /admin/system/reference_lists/:id/edit
   def edit
-    authorize [:admin, @list]
+    authorize [ :admin, @list ]
   end
 
   # PATCH/PUT /admin/system/reference_lists/:id
   def update
-    authorize [:admin, @list]
+    authorize [ :admin, @list ]
     if @list.update(list_params)
-      redirect_to [:admin, :system, @list], notice: "Updated"
+      redirect_to [ :admin, :system, @list ], notice: "Updated"
     else
       render :edit, status: :unprocessable_content
     end
@@ -47,9 +47,9 @@ class Admin::System::ReferenceListsController < Admin::BaseController
 
   # DELETE /admin/system/reference_lists/:id
   def destroy
-    authorize [:admin, @list]
+    authorize [ :admin, @list ]
     @list.destroy!
-    redirect_to [:admin, :system, :reference_lists], notice: "Deleted"
+    redirect_to [ :admin, :system, :reference_lists ], notice: "Deleted"
   end
 
   private

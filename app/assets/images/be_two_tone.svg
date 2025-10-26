@@ -1,0 +1,13 @@
+<svg class="size-8" viewBox="0 0 24 24" fill="none" aria-label="BankEncore monogram"
+     style="--c1: var(--color-primary, var(--p)); --c2: var(--color-accent, var(--a));">
+  <g stroke="var(--c1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3v18"/>
+    <path d="M5 6h6a3 3 0 0 1 0 6H5z"/>
+    <path d="M5 12h7a3 3 0 0 1 0 6H5z"/>
+  </g>
+  <g stroke="var(--c2)" stroke-width="2" stroke-linecap="round">
+    <path d="M13 6h6"/>
+    <path d="M12 12h7"/>
+    <path d="M13 18h6"/>
+  </g>
+</svg>

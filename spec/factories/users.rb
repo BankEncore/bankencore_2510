@@ -22,7 +22,7 @@ FactoryBot.define do
         role = Role.find_or_create_by!(key: "sysadmin") { _1.name = "Sysadmin" }
 
         # role ↔ permissions
-        [p_read, p_write, p_admin].each do |perm|
+        [ p_read, p_write, p_admin ].each do |perm|
           RolePermission.find_or_create_by!(role:, permission: perm)
         end
 

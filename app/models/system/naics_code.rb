@@ -6,7 +6,7 @@ class System::NaicsCode < ApplicationRecord
   validates :version, :code, :title, :level, presence: true
   # shape
   validates :code,  format: { with: /\A\d{2,6}\z/ }
-  validates :level, inclusion: { in: [2,3,4,5,6] }
+  validates :level, inclusion: { in: [ 2, 3, 4, 5, 6 ] }
   # uniqueness per version
   validates :code, uniqueness: { scope: :version }
 

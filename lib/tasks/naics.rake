@@ -4,7 +4,7 @@ require "csv"
 namespace :naics do
   # rails "naics:import[/abs/path/naics_2022.csv]"
   desc "Import NAICS CSV with headers: Code,Title,Description (assumes version=2022)"
-  task :import, [:csv_path] => :environment do |_, args|
+  task :import, [ :csv_path ] => :environment do |_, args|
     path = args[:csv_path] or abort "CSV path required"
     now  = Time.current
     idx  = :index_system_naics_codes_on_version_and_code
@@ -42,7 +42,7 @@ namespace :naics do
         description: desc,
         parent_code: parent.(code),
         level:       code.length,
-        sector:      code[0,2],
+        sector:      code[0, 2],
         active:      true,
         created_at:  now,
         updated_at:  now

@@ -1,0 +1,10 @@
+<svg class="size-8 text-primary" viewBox="0 0 24 24" fill="none" aria-label="BankEncore monogram">
+  <g stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M5 3v18"/>
+    <path d="M5 6h6a3 3 0 0 1 0 6H5z"/>
+    <path d="M5 12h7a3 3 0 0 1 0 6H5z"/>
+    <path d="M13 6h6"/>
+    <path d="M12 12h7"/>
+    <path d="M13 18h6"/>
+  </g>
+</svg>

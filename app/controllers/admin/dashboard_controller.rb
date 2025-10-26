@@ -13,7 +13,7 @@ module Admin
       }
 
       @latest_naics_version = ::System::NaicsCode.order(version: :desc).limit(1).pick(:version)
-      @can_view_naics       = policy([:admin, ::System::NaicsCode]).index? rescue false
+      @can_view_naics       = policy([ :admin, ::System::NaicsCode ]).index? rescue false
       #                               ^^^^^^^^ use the model under System, not Admin::System
     end
   end

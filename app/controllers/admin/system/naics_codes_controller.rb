@@ -3,9 +3,9 @@ class Admin::System::NaicsCodesController < Admin::BaseController
   include Pagy::Backend
 
   def index
-    authorize [:admin, System::NaicsCode]
+    authorize [ :admin, System::NaicsCode ]
     @version = params[:version]
-    scope = policy_scope([:admin, System::NaicsCode]).for_version(@version)
+    scope = policy_scope([ :admin, System::NaicsCode ]).for_version(@version)
 
     scope = scope.active(ActiveModel::Type::Boolean.new.cast(params[:active])) if params.key?(:active)
     scope = scope.sector(params[:sector])            if params[:sector].present?
