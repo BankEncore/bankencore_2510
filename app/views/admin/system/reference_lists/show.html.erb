@@ -1,6 +1,4 @@
-<%# app/views/admin/system/reference_lists/show.html.erb %>
-
-<%# Breadcrumbs %>
+<!-- app/views/admin/system/reference_lists/show.html.erb -->
 <nav class="breadcrumbs text-sm mb-4">
   <ul>
     <li><%= link_to "Admin", admin_root_path, class: "badge badge-ghost" %></li>
@@ -9,20 +7,29 @@
   </ul>
 </nav>
 
-<%# Actions %>
 <div class="flex gap-2 mb-4">
   <%= link_to "Edit", edit_admin_system_reference_list_path(@list), class: "btn btn-primary btn-sm" %>
   <%= link_to "New Value", new_admin_system_reference_list_reference_value_path(@list), class: "btn btn-secondary btn-sm" %>
   <%= link_to "Delete",
               admin_system_reference_list_path(@list),
-              data: { turbo_method: :delete, turbo_confirm: "Delete this list? Values will be blocked by FK." },
+              data: { turbo_method: :delete, turbo_confirm: "Delete this list? Values are FK-protected." },
               class: "btn btn-error btn-outline btn-sm" %>
   <%= link_to "Back", admin_system_reference_lists_path, class: "btn btn-ghost btn-sm" %>
 </div>
 
-<%= render "shared/reference_lists/summary", list: @list, show_api: true %>
+<div class="card bg-base-100 shadow">
+  <div class="card-body space-y-2">
+    <h2 class="card-title">Details</h2>
+    <div><span class="font-semibold">Name:</span> <%= @list.name %></div>
+    <div><span class="font-semibold">Key:</span> <span class="font-mono"><%= @list.key %></span></div>
+    <div><span class="font-semibold">Active:</span> <%= @list.active ? "yes" : "no" %></div>
+    <div><span class="font-semibold">Description:</span><br><%= simple_format(@list.description) %></div>
+    <div class="text-xs opacity-70">
+      Created <%= @list.created_at&.to_fs(:db) %> · Updated <%= @list.updated_at&.to_fs(:db) %>
+    </div>
+  </div>
+</div>
 
-<%# Values table %>
 <div class="card bg-base-100 shadow mt-6">
   <div class="card-body">
     <div class="flex items-center justify-between">
@@ -46,17 +53,20 @@
         <tbody>
           <% @list.reference_values.ordered.each do |v| %>
             <tr>
-              <td class="whitespace-nowrap"><%= v.position %></td>
+              <td class="whitespace-nowrap"><%= v.sort_index %></td>
               <td class="font-mono"><%= v.code.presence || "—" %></td>
-              <td class="font-mono"><%= v.key %></td>
-              <td><%= v.label %></td>
+              <td><%= v.name %></td>
               <td><%= v.active ? "yes" : "no" %></td>
-              <td class="text-xs"><%= v.effective_from&.to_s || "—" %> → <%= v.effective_to&.to_s || "—" %></td>
+              <td class="text-xs"><%= v.valid_from&.to_s || "—" %> → <%= v.valid_to&.to_s || "—" %></td>
               <td class="text-right whitespace-nowrap">
-                <%= link_to "Show", admin_system_reference_value_path(v), class: "link link-primary mr-2" %>
-                <%= link_to "Edit", edit_admin_system_reference_value_path(v), class: "link mr-2" %>
+                <%= link_to "Show",
+                            admin_system_reference_list_reference_value_path(@list, v),
+                            class: "link link-primary mr-2" %>
+                <%= link_to "Edit",
+                            edit_admin_system_reference_list_reference_value_path(@list, v),
+                            class: "link mr-2" %>
                 <%= link_to "Delete",
-                            admin_system_reference_value_path(v),
+                            admin_system_reference_list_reference_value_path(@list, v),
                             data: { turbo_method: :delete, turbo_confirm: "Delete this value?" },
                             class: "link link-error" %>
               </td>

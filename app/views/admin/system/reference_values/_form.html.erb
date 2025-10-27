@@ -1,103 +1,24 @@
-<%# locals: value (defaults to @value), list (optional @list when nested) %>
-<% value ||= @value %>
-<% list  ||= @list || value.reference_list %>
+<%# app/views/admin/system/reference_values/_form.html.erb %>
+<% action_url =
+     value.persisted? ?
+       admin_system_reference_list_reference_value_path(list, value) :
+       admin_system_reference_list_reference_values_path(list)
+%>
+<% http_method = value.persisted? ? :patch : :post %>
 
-<%= form_with model: value,
-              url: (value.persisted? ? admin_system_reference_value_path(value) :
-                    list ? admin_system_reference_list_reference_values_path(list) : admin_system_reference_values_path),
-              class: "space-y-4" do |f| %>
-
-  <% if value.errors.any? %>
-    <div class="alert alert-error">
-      <strong><%= pluralize(value.errors.count, "error") %> prevented saving:</strong>
-      <ul class="list-disc ml-6"><% value.errors.full_messages.each { |m| concat content_tag(:li, m) } %></ul>
-    </div>
-  <% end %>
-
-  <%# List binding %>
-  <% if list %>
-    <%= f.hidden_field :reference_list_id, value: list.id %>
-    <p class="text-sm opacity-70">List: <code><%= list.key %></code></p>
-  <% else %>
-    <div>
-      <%= f.label :reference_list_id, "Reference List", class: "label" %>
-      <%= f.collection_select :reference_list_id,
-            System::ReferenceList.order(:key), :id, :key,
-            {}, class: "select select-bordered w-full" %>
-    </div>
-  <% end %>
-
-  <div class="grid md:grid-cols-2 gap-4">
-    <div>
-      <%= f.label :key, class: "label" %>
-      <%= f.text_field :key, class: "input input-bordered w-full font-mono", required: true %>
-    </div>
-
-    <div>
-      <%= f.label :code, class: "label" %>
-      <%= f.text_field :code, class: "input input-bordered w-full font-mono" %>
-      <p class="text-xs opacity-70 mt-1">External or standard code; unique within list.</p>
-    </div>
-
-    <div>
-      <%= f.label :label, class: "label" %>
-      <%= f.text_field :label, class: "input input-bordered w-full", required: true %>
-    </div>
-
-    <div>
-      <%= f.label :short_label, class: "label" %>
-      <%= f.text_field :short_label, class: "input input-bordered w-full" %>
-    </div>
-
-    <div>
-      <%= f.label :position, class: "label" %>
-      <%= f.number_field :position, class: "input input-bordered w-full", step: 1, min: 0 %>
-    </div>
-
-    <div>
-      <%= f.label :active, class: "label" %><br>
-      <%= f.check_box :active, class: "toggle toggle-primary" %>
-    </div>
-
-    <div>
-      <%= f.label :effective_from, class: "label" %>
-      <%= f.date_field :effective_from, class: "input input-bordered w-full" %>
-    </div>
-
-    <div>
-      <%= f.label :effective_to, class: "label" %>
-      <%= f.date_field :effective_to, class: "input input-bordered w-full" %>
-    </div>
-
-    <div class="md:col-span-2">
-      <%= f.label :parent_id, "Parent (optional)", class: "label" %>
-      <%= f.collection_select :parent_id,
-            (list || value.reference_list).reference_values.where.not(id: value.id).ordered,
-            :id, :label, { include_blank: "— none —" },
-            class: "select select-bordered w-full" %>
-    </div>
-
-    <div class="md:col-span-2">
-      <%= f.label :description, class: "label" %>
-      <%= f.text_area :description, rows: 3, class: "textarea textarea-bordered w-full" %>
-    </div>
-
-    <div class="md:col-span-2">
-      <%= f.label :metadata, "Metadata (JSON)", class: "label" %>
-      <%= text_area_tag :metadata_json,
-            JSON.pretty_generate(value.metadata || {}),
-            name: "system_reference_value[metadata_json]",
-            rows: 10,
-            class: "textarea textarea-bordered w-full font-mono text-xs" %>
-      <p class="text-xs opacity-70 mt-1">Paste valid JSON. Stored in <code>metadata</code>.</p>
-    </div>
+<%= form_with model: value, url: action_url, method: http_method, local: true do |f| %>
+  <div class="grid gap-4 md:grid-cols-2">
+    <div><%= f.label :code %><%= f.text_field :code, class: "input input-bordered w-full" %></div>
+    <div><%= f.label :name %><%= f.text_field :name, class: "input input-bordered w-full" %></div>
+    <div><%= f.label :short_name %><%= f.text_field :short_name, class: "input input-bordered w-full" %></div>
+    <div><%= f.label :sort_index %><%= f.number_field :sort_index, class: "input input-bordered w-full" %></div>
+    <div class="flex items-center gap-2 mt-6"><%= f.check_box :active %><%= f.label :active %></div>
   </div>
 
-  <div class="flex items-center gap-2 pt-2">
+  <div class="mt-4"><%= f.label :description %><%= f.text_area :description, rows: 3, class: "textarea textarea-bordered w-full" %></div>
+
+  <div class="mt-6">
     <%= f.submit class: "btn btn-primary" %>
-    <%= link_to "Cancel",
-          (value.persisted? ? admin_system_reference_value_path(value) :
-           list ? admin_system_reference_list_reference_values_path(list) : admin_system_reference_values_path),
-          class: "btn btn-ghost" %>
+    <%= link_to "Cancel", admin_system_reference_list_reference_values_path(list), class: "btn btn-ghost ml-2" %>
   </div>
 <% end %>

@@ -12,7 +12,7 @@
         <tbody>
           <% @values.each do |v| %>
             <tr>
-              <td><code class="badge badge-ghost"><%= v.key %></code></td>
+              <td><code class="badge badge-ghost"><%= v.code %></code></td>
               <td><%= link_to v.label, system_reference_list_reference_value_path(@list, v), class: "link link-primary" %></td>
               <td><%= v.code %></td>
               <td><span class="badge <%= v.active ? 'badge-success' : 'badge-ghost' %>"><%= v.active ? "Active" : "Inactive" %></span></td>

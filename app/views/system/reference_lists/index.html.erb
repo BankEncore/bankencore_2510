@@ -24,7 +24,6 @@
             <tr>
               <td><%= v.position %></td>
               <td class="font-mono"><%= v.code.presence || "—" %></td>
-              <td class="font-mono"><%= v.key %></td>
               <td><%= v.label %></td>
               <td class="text-xs"><%= v.effective_from&.to_s || "—" %> → <%= v.effective_to&.to_s || "—" %></td>
               <td class="text-right"><%= link_to "Show", system_reference_value_path(v), class: "link link-primary" %></td>

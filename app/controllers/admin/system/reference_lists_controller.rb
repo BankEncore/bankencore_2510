@@ -2,24 +2,20 @@
 class Admin::System::ReferenceListsController < Admin::BaseController
   before_action :set_list, only: %i[show edit update destroy]
 
-  # GET /admin/system/reference_lists
   def index
     authorize [ :admin, System::ReferenceList ]
     @lists = policy_scope([ :admin, System::ReferenceList ])
   end
 
-  # GET /admin/system/reference_lists/:id
   def show
     authorize [ :admin, @list ]
   end
 
-  # GET /admin/system/reference_lists/new
   def new
-    @list = System::ReferenceList.new
+    @list = System::ReferenceList.new(active: true)
     authorize [ :admin, @list ]
   end
 
-  # POST /admin/system/reference_lists
   def create
     @list = System::ReferenceList.new(list_params)
     authorize [ :admin, @list ]
@@ -30,12 +26,10 @@ class Admin::System::ReferenceListsController < Admin::BaseController
     end
   end
 
-  # GET /admin/system/reference_lists/:id/edit
   def edit
     authorize [ :admin, @list ]
   end
 
-  # PATCH/PUT /admin/system/reference_lists/:id
   def update
     authorize [ :admin, @list ]
     if @list.update(list_params)
@@ -45,24 +39,25 @@ class Admin::System::ReferenceListsController < Admin::BaseController
     end
   end
 
-  # DELETE /admin/system/reference_lists/:id
   def destroy
     authorize [ :admin, @list ]
     @list.destroy!
-    redirect_to [ :admin, :system, :reference_lists ], notice: "Deleted"
+    redirect_to admin_system_reference_lists_path, notice: "Deleted"
   end
 
   private
 
   def set_list
-    pid = params[:public_id] || params[:reference_list_public_id] || params[:id]
-    @list = System::ReferenceList.find_by!(public_id: pid)
+    lookup = (params[:key] || params[:reference_list_key] || params[:id]).to_s
+    @list =
+      System::ReferenceList.find_by(key: lookup) ||
+      (lookup.match?(/\A\d+\z/) ? System::ReferenceList.find(lookup) : nil)
+
+    raise ActiveRecord::RecordNotFound, "ReferenceList not found" unless @list
   end
 
   def list_params
-    p = params.require(:system_reference_list)
-              .permit(:key, :name, :description, :schema_version, :visibility, :tags)
-    p[:tags] = p[:tags].to_s.split(",").map(&:strip).reject(&:blank?)
-    p
+    params.require(:system_reference_list)
+          .permit(:key, :name, :description, :active) # no visibility/schema_version/tags
   end
 end

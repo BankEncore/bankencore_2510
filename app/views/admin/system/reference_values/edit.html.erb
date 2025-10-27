@@ -1,8 +1,17 @@
-<h1 class="text-xl font-semibold mb-4">Edit Value — <%= @list.name %></h1>
-
-<%= render "form", list: @list, value: @value %>
+<%# app/views/admin/system/reference_values/edit.html.erb %>
+<h1 class="text-xl font-semibold">Edit Reference Value</h1>
 
 <div class="mt-4">
-  <%= link_to "Back to value", admin_system_reference_value_path(@value), class: "link link-primary mr-4" %>
-  <%= link_to "Back to list values", admin_system_reference_list_reference_values_path(@list), class: "link" %>
+  <%= link_to "Back to value",
+      admin_system_reference_list_reference_value_path(@list, @value),
+      class: "link link-primary mr-4" %>
+  <%= link_to "Back to list values",
+      admin_system_reference_list_reference_values_path(@list),
+      class: "link" %>
+</div>
+
+<div class="card bg-base-100 shadow mt-4">
+  <div class="card-body">
+    <%= render "form", list: @list, value: @value %>
+  </div>
 </div>

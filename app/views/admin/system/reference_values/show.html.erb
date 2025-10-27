@@ -4,41 +4,45 @@
   <ul>
     <li><%= link_to "Admin", admin_root_path, class: "badge badge-ghost" %></li>
     <li><%= link_to "Reference Lists", admin_system_reference_lists_path, class: "badge badge-ghost" %></li>
-    <li><%= link_to @value.reference_list.key, admin_system_reference_list_path(@value.reference_list), class: "badge badge-ghost" %></li>
-    <li><span class="badge badge-primary"><%= @value.key %></span></li>
+    <li><%= link_to @value.reference_list.key,
+                    admin_system_reference_list_path(@value.reference_list, format: nil),
+                    class: "badge badge-ghost" %></li>
+    <li><span class="badge badge-primary"><%= @value.code %></span></li>
   </ul>
 </nav>
 
 <div class="flex gap-2 mb-4">
-  <%= link_to "Edit", edit_admin_system_reference_value_path(@value), class: "btn btn-primary btn-sm" %>
-  <%= link_to "Delete", admin_system_reference_value_path(@value),
-        data: { turbo_method: :delete, turbo_confirm: "Delete this value?" },
-        class: "btn btn-error btn-outline btn-sm" %>
+  <%= link_to "Edit",
+      edit_admin_system_reference_list_reference_value_path(@value.reference_list, @value),
+      class: "btn btn-primary btn-sm" %>
+  <%= link_to "Delete",
+      admin_system_reference_list_reference_value_path(@value.reference_list, @value),
+      data: { turbo_method: :delete, turbo_confirm: "Delete this value?" },
+      class: "btn btn-error btn-outline btn-sm" %>
   <%= link_to "Back", (@value.reference_list ? admin_system_reference_list_reference_values_path(@value.reference_list) : admin_system_reference_values_path), class: "btn btn-ghost btn-sm" %>
 </div>
 
-<div class="grid md:grid-cols-2 gap-6">
-  <div class="card bg-base-100 shadow">
-    <div class="card-body">
-      <h2 class="card-title">Value</h2>
-      <div class="text-sm space-y-1">
-        <div><span class="font-medium">Public ID:</span> <code><%= @value.public_id %></code></div>
-        <div><span class="font-medium">List:</span> <%= link_to @value.reference_list.key, admin_system_reference_list_path(@value.reference_list) %></div>
-        <div><span class="font-medium">Key:</span> <code><%= @value.key %></code></div>
-        <div><span class="font-medium">Code:</span> <code><%= @value.code.presence || "—" %></code></div>
-        <div><span class="font-medium">Label:</span> <%= @value.label %></div>
-        <div><span class="font-medium">Short label:</span> <%= @value.short_label.presence || "—" %></div>
-        <div><span class="font-medium">Active:</span> <%= @value.active ? "yes" : "no" %></div>
-        <div><span class="font-medium">Effective:</span> <%= @value.effective_from&.to_s || "—" %> → <%= @value.effective_to&.to_s || "—" %></div>
-        <div><span class="font-medium">Parent:</span>
-          <% if @value.parent %>
-            <%= link_to @value.parent.label, admin_system_reference_value_path(@value.parent) %>
-          <% else %>—<% end %>
-        </div>
-        <div class="opacity-70">Created <%= time_ago_in_words(@value.created_at) %> ago · Updated <%= time_ago_in_words(@value.updated_at) %> ago</div>
-      </div>
+<div class="card bg-base-100 shadow">
+  <div class="card-body space-y-1 text-sm">
+    <h2 class="card-title">Value</h2>
+    <div><span class="font-medium">List:</span>
+      <%= link_to @value.reference_list.key,
+                  admin_system_reference_list_path(@value.reference_list, format: nil) %>
+    </div>
+    <div><span class="font-medium">Code:</span> <code><%= @value.code.presence || "—" %></code></div>
+    <div><span class="font-medium">Name:</span> <%= @value.name %></div>
+    <div><span class="font-medium">Short name:</span> <%= @value.short_name.presence || "—" %></div>
+    <div><span class="font-medium">Active:</span> <%= @value.active ? "yes" : "no" %></div>
+    <div><span class="font-medium">Effective:</span>
+      <span class="text-xs"><%= @value.valid_from&.to_fs(:db) || "—" %> → <%= @value.valid_to&.to_fs(:db) || "—" %></span>
+    </div>
+    <div><span class="font-medium">External code:</span> <%= @value.external_code.presence || "—" %></div>
+    <div><span class="font-medium">Description:</span><br><%= simple_format(@value.description) %></div>
+    <div class="text-xs opacity-70">
+      Created <%= @value.created_at&.to_fs(:db) %> · Updated <%= @value.updated_at&.to_fs(:db) %>
     </div>
   </div>
+</div>
 
   <div class="card bg-base-100 shadow">
     <div class="card-body">

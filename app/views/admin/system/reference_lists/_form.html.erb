@@ -23,26 +23,6 @@
       <p class="text-xs opacity-70 mt-1">Namespaced machine key. Unique.</p>
     </div>
 
-    <div>
-      <%= f.label :visibility, class: "label" %>
-      <%= f.select :visibility, [%w[public public], %w[internal internal], %w[private private]],
-                   {}, class: "select select-bordered w-full" %>
-    </div>
-
-    <div>
-      <%= f.label :schema_version, class: "label" %>
-      <%= f.text_field :schema_version, class: "input input-bordered w-full", placeholder: "v1.0" %>
-      <p class="text-xs opacity-70 mt-1">Bump when value metadata contract changes.</p>
-    </div>
-
-    <div class="md:col-span-2">
-      <%= f.label :tags, class: "label" %>
-      <%= f.text_field :tags, value: Array(list.tags).join(", "),
-                       class: "input input-bordered w-full",
-                       data: { controller: "comma-tags" } %>
-      <p class="text-xs opacity-70 mt-1">Comma-separated tags. Stored as array.</p>
-    </div>
-
     <div class="md:col-span-2">
       <%= f.label :description, class: "label" %>
       <%= f.text_area :description, rows: 3, class: "textarea textarea-bordered w-full" %>

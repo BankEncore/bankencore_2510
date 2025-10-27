@@ -6,6 +6,7 @@ class System::ReferenceListsController < ApplicationController
 
   # GET /system/reference_lists
   # Filters: ?q=time&active=true
+
   def index
     scope = policy_scope(System::ReferenceList).order(:key)
 
