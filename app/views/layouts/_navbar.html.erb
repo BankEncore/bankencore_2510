@@ -1,56 +1,31 @@
 <header class="navbar bg-base-100 shadow">
-  <div class="flex-1">
+  <div class="navbar-start">
     <%= link_to (user_signed_in? ? root_path : new_user_session_path),
-                class: "btn btn-ghost text-xl gap-2" do %>
-      <!-- If your SVG uses currentColor, set the wrapper color -->
-      <span class="inline-flex items-center gap-2 text-primary
-                   [&>span>svg]:h-7 [&>span>svg]:w-7">
-        <%= app_logo %>
-        <span class="hidden sm:inline font-semibold leading-none">BankEncore</span>
-      </span>
+                class: "btn btn-ghost px-2 gap-2 items-center text-primary" do %>
+      <%= render "shared/bankencore_logo_horizontal" %>
       <span class="sr-only">BankEncore</span>
     <% end %>
   </div>
 
-  <div class="flex-none flex items-center gap-3">
+  <div class="navbar-center">
+    <form action="#" method="get" class="join">
+      <input name="q" class="input input-bordered join-item w-64" placeholder="Search"/>
+      <button class="btn btn-primary join-item" type="submit">Search</button>
+    </form>
+  </div>
 
-    <%# Pundit %>
-    <% if policy(:admin_dashboard).index? %>
-      <%= link_to "Admin", admin_root_path %>
+  <!-- Right: Admin + User -->
+  <!-- app/views/layouts/_navbar.html.erb -->
+  <div class="navbar-end gap-3">
+    <% if defined?(policy) && policy(:admin_dashboard).index? %>
+      <%= link_to "Admin", admin_root_path, class: "btn btn-ghost" %>
     <% end %>
+    <%= render "layouts/user_menu" %>
+  </div>
+  <% content_for :page_scripts do %>
+    <%= render "layouts/theme_switcher_script" %>
+  <% end %>
 
-
-    <%# CanCanCan
-    <%# if defined?(can?) && can?(:read, :admin_dashboard) %>
-    <%#   = link_to "Admin", admin_root_path, class: "btn btn-ghost" %>
-    <%# end %>
-
-    <%# Simple helper fallback
-    <%# if respond_to?(:can_access_admin?) && can_access_admin? %>
-    <%#   = link_to "Admin", admin_root_path, class: "btn btn-ghost" %>
-    <%# end %>
-
-    <% if user_signed_in? %>
-      <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-          <div class="w-10 rounded-full bg-neutral text-neutral-content grid place-items-center">
-            <span class="font-bold"><%= current_user.email.first.upcase %></span>
-          </div>
-        </div>
-        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-56">
-          <li><%= link_to "Profile", "/profile" %></li>
-          <li><%= link_to "Settings", "/settings" %></li>
-          <li>
-            <%= button_to "Sign out", destroy_user_session_path,
-                  method: :delete,
-                  form: { class: "contents" },
-                  class: "justify-start w-full text-left" %>
-          </li>
-          <li><%= render "layouts/theme_switcher" %></li>
-        </ul>
-      </div>
-    <% else %>
-      <%= link_to "Sign in", new_user_session_path, class: "btn btn-ghost" %>
-    <% end %>
+</div>
   </div>
 </header>

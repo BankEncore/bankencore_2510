@@ -50,5 +50,23 @@ function init() {
 
 document.addEventListener("DOMContentLoaded", init);
 document.addEventListener("turbo:load", init);
+
+(function(){
+  function wire() {
+    document.querySelectorAll('[data-auto-dismiss]').forEach(el => {
+      if (el.__wired) return; el.__wired = true;
+      const t = parseInt(el.dataset.timeout || "4000", 10);
+      const close = () => {
+        el.classList.add('opacity-0','-translate-y-1');
+        setTimeout(() => el.remove(), 200);
+      };
+      el.querySelector('[data-close]')?.addEventListener('click', close);
+      setTimeout(close, t);
+    });
+  }
+  document.addEventListener('DOMContentLoaded', wire);
+  document.addEventListener('turbo:load', wire);
+})();
+
 </script>
 <% end %>

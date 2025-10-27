@@ -1,14 +1,20 @@
-<% flash.each do |type, message| %>
-  <% Array(message).each do |msg| %>
-    <div class="alert <%= flash_klass(type) %> mb-4"
-         role="<%= flash_role(type) %>" aria-live="polite">
-      <span><%= msg %></span>
-      <button type="button" class="btn btn-ghost btn-sm ml-auto"
-              onclick="this.closest('.alert').remove()">✕</button>
-    </div>
-  <% end %>
-<% end %>
-<% flash.discard %>
-<script>
-  setTimeout(() => { const n = document.getElementById("flash"); if(n) n.remove(); }, 4000);
-</script>
+<!-- app/views/layouts/_flash.html.erb -->
+<% return if flash.empty? %>
+<div id="flash"
+     class="fixed top-20 inset-x-0 z-50 px-4">
+  <div class="mx-auto w-full max-w-4xl">
+    <% flash.each do |type, msg| %>
+      <% next if msg.blank? %>
+      <% level = { notice: "alert-success", alert: "alert-error", error: "alert-error", warning: "alert-warning", info: "alert-info" }[type.to_sym] || "alert-info" %>
+
+      <div class="alert <%= level %> w-full shadow rounded-box
+                  text-base md:text-lg py-4 transition duration-200 ease-out
+                  opacity-100 translate-y-0"
+           role="status" aria-live="polite"
+           data-auto-dismiss data-timeout="5000">
+        <span><%= msg %></span>
+        <button class="btn btn-ghost btn-xs ml-auto" type="button" aria-label="Close" data-close>✕</button>
+      </div>
+    <% end %>
+  </div>
+</div>

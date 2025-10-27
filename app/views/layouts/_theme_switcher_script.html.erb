@@ -1,0 +1,34 @@
+<!-- app/views/layouts/_theme_switcher_script.html.erb -->
+<script>
+(() => {
+  const root = document.documentElement;
+  const palettes = document.querySelectorAll(".be-theme__palette");
+  const mode = document.querySelector(".be-theme__mode");
+  const controller = document.querySelector(".be-theme__controller");
+  if (!controller) return;
+
+  const apply = () => {
+    const pal = [...palettes].find(r => r.checked)?.value || "cool";
+    const dark = !!mode?.checked;
+    const theme = pal === "warm" ? (dark ? "encoreWarmDark" : "encoreWarm")
+                                 : (dark ? "encoreCoolDark" : "encoreCool");
+    controller.value = theme;
+    controller.checked = true;
+    root.setAttribute("data-theme", theme);
+  };
+
+  const init = () => {
+    const current = root.getAttribute("data-theme") || "encoreCool";
+    const isWarm = current.includes("Warm");
+    const isDark = current.endsWith("Dark");
+    [...palettes].forEach(r => r.checked = isWarm ? r.value === "warm" : r.value === "cool");
+    if (mode) mode.checked = isDark;
+    controller.value = current;
+    controller.checked = true;
+  };
+
+  palettes.forEach(r => r.addEventListener("change", apply));
+  mode?.addEventListener("change", apply);
+  init();
+})();
+</script>
