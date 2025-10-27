@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_10_25_214122) do
+ActiveRecord::Schema[8.0].define(version: 2025_10_27_143526) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -73,6 +73,218 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_25_214122) do
     t.index ["public_id"], name: "index_branches_on_public_id", unique: true
     t.index ["status"], name: "index_branches_on_status"
     t.check_constraint "status = ANY (ARRAY[0, 1])", name: "chk_branches_status"
+  end
+
+  create_table "parties_disclosures", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "disclosure_type_code", null: false
+    t.string "ack_type_code"
+    t.datetime "acknowledged_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ack_type_code"], name: "index_parties_disclosures_on_ack_type_code"
+    t.index ["disclosure_type_code"], name: "index_parties_disclosures_on_disclosure_type_code"
+    t.index ["party_id"], name: "index_parties_disclosures_on_party_id"
+  end
+
+  create_table "parties_email_addresses", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "email_type_code", null: false
+    t.string "email"
+    t.datetime "verified_at", precision: nil
+    t.boolean "preferred", default: false, null: false
+    t.date "valid_from"
+    t.date "valid_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_parties_email_addresses_on_email"
+    t.index ["email_type_code"], name: "index_parties_email_addresses_on_email_type_code"
+    t.index ["party_id", "email_type_code", "email"], name: "idx_unique_party_email_by_type", unique: true
+    t.index ["party_id"], name: "idx_unique_preferred_email_per_party", unique: true, where: "(preferred = true)"
+    t.index ["party_id"], name: "index_parties_email_addresses_on_party_id"
+  end
+
+  create_table "parties_identities", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "identity_type_code", null: false
+    t.string "number"
+    t.string "issuing_country"
+    t.bigint "system_region_id"
+    t.string "issuer_name"
+    t.date "issued_on"
+    t.date "expires_on"
+    t.jsonb "metadata", default: {}, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["expires_on"], name: "index_parties_identities_on_expires_on"
+    t.index ["identity_type_code"], name: "index_parties_identities_on_identity_type_code"
+    t.index ["metadata"], name: "index_parties_identities_on_metadata", using: :gin
+    t.index ["party_id"], name: "index_parties_identities_on_party_id"
+  end
+
+  create_table "parties_individuals", id: false, force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "residence_country"
+    t.date "birth_date"
+    t.string "gender_code"
+    t.string "marital_status_code"
+    t.string "immigration_status_code"
+    t.string "education_level_code"
+    t.string "home_ownership_code"
+    t.string "race_code"
+    t.string "employment_type_code"
+    t.string "occupation_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["party_id"], name: "index_parties_individuals_on_party_id", unique: true
+    t.index ["residence_country"], name: "index_parties_individuals_on_residence_country"
+  end
+
+  create_table "parties_names", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "name_type_code", null: false
+    t.string "full_name"
+    t.string "family_name"
+    t.string "given_name"
+    t.string "middle_name"
+    t.string "prefix_code"
+    t.string "suffix_code"
+    t.boolean "preferred", default: false, null: false
+    t.date "valid_from"
+    t.date "valid_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name_type_code"], name: "index_parties_names_on_name_type_code"
+    t.index ["party_id"], name: "idx_unique_preferred_name_per_party", unique: true, where: "(preferred = true)"
+    t.index ["party_id"], name: "index_parties_names_on_party_id"
+    t.index ["preferred"], name: "index_parties_names_on_preferred"
+  end
+
+  create_table "parties_organizations", id: false, force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.date "established_on"
+    t.string "residence_country"
+    t.string "organization_type_code"
+    t.bigint "system_naics_code_id"
+    t.string "tax_exempt_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["organization_type_code"], name: "index_parties_organizations_on_organization_type_code"
+    t.index ["party_id"], name: "index_parties_organizations_on_party_id", unique: true
+    t.index ["system_naics_code_id"], name: "index_parties_organizations_on_system_naics_code_id"
+    t.index ["tax_exempt_code"], name: "index_parties_organizations_on_tax_exempt_code"
+  end
+
+  create_table "parties_parties", force: :cascade do |t|
+    t.uuid "public_id", default: -> { "gen_random_uuid()" }, null: false
+    t.string "profile_number", null: false
+    t.string "relationship_to_institution_code", default: "customer", null: false
+    t.bigint "preferred_party_name_id"
+    t.date "established_on", default: -> { "CURRENT_DATE" }, null: false
+    t.string "withholding_option_code"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["preferred_party_name_id"], name: "index_parties_parties_on_preferred_party_name_id"
+    t.index ["profile_number"], name: "index_parties_parties_on_profile_number", unique: true
+    t.index ["public_id"], name: "index_parties_parties_on_public_id", unique: true
+    t.index ["relationship_to_institution_code"], name: "index_parties_parties_on_relationship_to_institution_code"
+    t.index ["withholding_option_code"], name: "index_parties_parties_on_withholding_option_code"
+  end
+
+  create_table "parties_phones", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "phone_type_code", null: false
+    t.string "e164"
+    t.datetime "verified_at", precision: nil
+    t.boolean "preferred", default: false, null: false
+    t.date "valid_from"
+    t.date "valid_to"
+    t.string "invalid_reason"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["e164"], name: "index_parties_phones_on_e164"
+    t.index ["party_id"], name: "idx_unique_preferred_phone_per_party", unique: true, where: "(preferred = true)"
+    t.index ["party_id"], name: "index_parties_phones_on_party_id"
+    t.index ["phone_type_code"], name: "index_parties_phones_on_phone_type_code"
+  end
+
+  create_table "parties_postal_addresses", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "address_use_code"
+    t.string "address_type_code"
+    t.string "line1"
+    t.string "line2"
+    t.string "line3"
+    t.string "line4"
+    t.string "city"
+    t.bigint "system_region_id"
+    t.string "postal_code"
+    t.string "country"
+    t.boolean "preferred", default: false, null: false
+    t.date "valid_from"
+    t.date "valid_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["address_type_code"], name: "index_parties_postal_addresses_on_address_type_code"
+    t.index ["address_use_code"], name: "index_parties_postal_addresses_on_address_use_code"
+    t.index ["country"], name: "index_parties_postal_addresses_on_country"
+    t.index ["party_id"], name: "idx_unique_preferred_address_per_party", unique: true, where: "(preferred = true)"
+    t.index ["party_id"], name: "index_parties_postal_addresses_on_party_id"
+    t.index ["system_region_id"], name: "index_parties_postal_addresses_on_system_region_id"
+  end
+
+  create_table "parties_relationships", force: :cascade do |t|
+    t.bigint "source_party_id", null: false
+    t.bigint "target_party_id", null: false
+    t.string "relationship_type_code", null: false
+    t.decimal "ownership_percent", precision: 5, scale: 2
+    t.string "status_code"
+    t.date "valid_from"
+    t.date "valid_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_party_id", "target_party_id", "relationship_type_code"], name: "idx_party_rel_key"
+    t.index ["status_code"], name: "index_parties_relationships_on_status_code"
+    t.check_constraint "source_party_id <> target_party_id", name: "chk_party_rel_not_self"
+    t.check_constraint "valid_to IS NULL OR valid_from IS NULL OR valid_from <= valid_to", name: "chk_valid_range_rel"
+  end
+
+  create_table "parties_secret_data", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "secret_type", null: false
+    t.string "secret_value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["party_id", "secret_type"], name: "index_parties_secret_data_on_party_id_and_secret_type", unique: true
+    t.index ["party_id"], name: "index_parties_secret_data_on_party_id"
+  end
+
+  create_table "parties_tax_ids", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "tax_id_type_code", null: false
+    t.string "value", null: false
+    t.string "country"
+    t.date "b_notice1_sent_on"
+    t.date "b_notice2_sent_on"
+    t.date "w8_signed_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["party_id", "tax_id_type_code", "value"], name: "idx_unique_taxid_per_party_type", unique: true
+    t.index ["party_id"], name: "index_parties_tax_ids_on_party_id"
+    t.index ["tax_id_type_code"], name: "index_parties_tax_ids_on_tax_id_type_code"
+  end
+
+  create_table "parties_web_addresses", force: :cascade do |t|
+    t.bigint "party_id", null: false
+    t.string "url"
+    t.boolean "preferred", default: false, null: false
+    t.date "valid_from"
+    t.date "valid_to"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["party_id"], name: "idx_unique_preferred_web_per_party", unique: true, where: "(preferred = true)"
+    t.index ["party_id"], name: "index_parties_web_addresses_on_party_id"
+    t.index ["url"], name: "index_parties_web_addresses_on_url"
   end
 
   create_table "payments_ach_routings", force: :cascade do |t|
@@ -289,6 +501,28 @@ ActiveRecord::Schema[8.0].define(version: 2025_10_25_214122) do
   add_foreign_key "branch_memberships", "branches"
   add_foreign_key "branch_memberships", "users"
   add_foreign_key "branches", "system_countries", column: "country_alpha2", primary_key: "alpha2"
+  add_foreign_key "parties_disclosures", "parties_parties", column: "party_id"
+  add_foreign_key "parties_email_addresses", "parties_parties", column: "party_id"
+  add_foreign_key "parties_identities", "parties_parties", column: "party_id"
+  add_foreign_key "parties_identities", "system_countries", column: "issuing_country", primary_key: "alpha2"
+  add_foreign_key "parties_identities", "system_regions"
+  add_foreign_key "parties_individuals", "parties_parties", column: "party_id"
+  add_foreign_key "parties_individuals", "system_countries", column: "residence_country", primary_key: "alpha2"
+  add_foreign_key "parties_names", "parties_parties", column: "party_id"
+  add_foreign_key "parties_organizations", "parties_parties", column: "party_id"
+  add_foreign_key "parties_organizations", "system_countries", column: "residence_country", primary_key: "alpha2"
+  add_foreign_key "parties_organizations", "system_naics_codes"
+  add_foreign_key "parties_parties", "parties_names", column: "preferred_party_name_id"
+  add_foreign_key "parties_phones", "parties_parties", column: "party_id"
+  add_foreign_key "parties_postal_addresses", "parties_parties", column: "party_id"
+  add_foreign_key "parties_postal_addresses", "system_countries", column: "country", primary_key: "alpha2"
+  add_foreign_key "parties_postal_addresses", "system_regions"
+  add_foreign_key "parties_relationships", "parties_parties", column: "source_party_id"
+  add_foreign_key "parties_relationships", "parties_parties", column: "target_party_id"
+  add_foreign_key "parties_secret_data", "parties_parties", column: "party_id"
+  add_foreign_key "parties_tax_ids", "parties_parties", column: "party_id"
+  add_foreign_key "parties_tax_ids", "system_countries", column: "country", primary_key: "alpha2"
+  add_foreign_key "parties_web_addresses", "parties_parties", column: "party_id"
   add_foreign_key "role_permissions", "permissions"
   add_foreign_key "role_permissions", "roles"
   add_foreign_key "system_country_currencies", "system_countries", column: "country_alpha2", primary_key: "alpha2"

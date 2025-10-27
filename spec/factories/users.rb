@@ -1,34 +1,32 @@
 # spec/factories/users.rb
 FactoryBot.define do
   factory :user do
-    email      { Faker::Internet.unique.email }
-    password   { "ChangeMe123!" }
-    first_name { "Test" }
-    last_name  { "User" }
+    sequence(:email) { |n| "user#{n}@example.com" }
+    password     { "ChangeMe123!" }
+    first_name   { "Test" }
+    last_name    { "User" }
 
+    # used by many specs
     trait :confirmed do
-      confirmed_at { Time.current }
+      confirmed_at { Time.current }             # Devise confirmable-friendly
     end
 
-    # Full-access admin for policy specs
+    # legacy admin wiring used across specs
     trait :adminish do
+      confirmed                                 # most specs expect confirmed admins
       after(:create) do |u|
-        # permissions
-        p_read  = Permission.find_or_create_by!(key: "system.read")  { _1.name = "System Read" }
-        p_write = Permission.find_or_create_by!(key: "system.write") { _1.name = "System Write" }
-        p_admin = Permission.find_or_create_by!(key: "admin.access") { _1.name = "Admin Access" }
-
-        # role
-        role = Role.find_or_create_by!(key: "sysadmin") { _1.name = "Sysadmin" }
-
-        # role ↔ permissions
-        [ p_read, p_write, p_admin ].each do |perm|
-          RolePermission.find_or_create_by!(role:, permission: perm)
-        end
-
-        # user ↔ role
+        p_admin = Permission.find_or_create_by!(key: "admin.access") { _1.name = "Admin access" }
+        p_read  = Permission.find_or_create_by!(key: "system.read")  { _1.name = "System read" }
+        p_write = Permission.find_or_create_by!(key: "system.write") { _1.name = "System write" }
+        role    = Role.find_or_create_by!(key: "sysadmin")           { _1.name = "Sysadmin" }
+        [ p_admin, p_read, p_write ].each { |perm| RolePermission.find_or_create_by!(role:, permission: perm) }
         UserRole.find_or_create_by!(user: u, role:)
       end
+    end
+
+    # alias used by newer specs
+    trait :system_admin do
+      adminish
     end
   end
 end

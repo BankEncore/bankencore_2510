@@ -22,7 +22,7 @@ class Admin::System::ReferenceListsController < Admin::BaseController
     if @list.save
       redirect_to [ :admin, :system, @list ], notice: "Created"
     else
-      render :new, status: :unprocessable_content
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -33,9 +33,9 @@ class Admin::System::ReferenceListsController < Admin::BaseController
   def update
     authorize [ :admin, @list ]
     if @list.update(list_params)
-      redirect_to [ :admin, :system, @list ], notice: "Updated"
+      redirect_to admin_system_reference_list_path(@list), notice: "Updated"
     else
-      render :edit, status: :unprocessable_content
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -48,16 +48,11 @@ class Admin::System::ReferenceListsController < Admin::BaseController
   private
 
   def set_list
-    lookup = (params[:key] || params[:reference_list_key] || params[:id]).to_s
-    @list =
-      System::ReferenceList.find_by(key: lookup) ||
-      (lookup.match?(/\A\d+\z/) ? System::ReferenceList.find(lookup) : nil)
-
-    raise ActiveRecord::RecordNotFound, "ReferenceList not found" unless @list
+    @list = System::ReferenceList.find_by!(key: params[:key])
   end
 
+  # do not permit :key unless you support renaming
   def list_params
-    params.require(:system_reference_list)
-          .permit(:key, :name, :description, :active) # no visibility/schema_version/tags
+    params.require(:system_reference_list).permit(:name, :description)
   end
 end

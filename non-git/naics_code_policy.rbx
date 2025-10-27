@@ -4,6 +4,6 @@ class Admin::System::NaicsCodePolicy < Admin::BasePolicy
   def show?  = index?
 
   class Scope < Scope
-    def resolve = (can?("admin.access") && can?("system.read")) ? scope.all : scope.none
+    def resolve = (user&.can?("admin.access") && user&.can?("system.read")) ? scope.all : scope.none
   end
 end

@@ -59,51 +59,61 @@ Rails.application.routes.draw do
     get "naics/:version/:code", to: "naics_codes#show",  as: :naics_code
   end
 
-  # ===================== Admin =====================
+    # ===================== Admin =====================
 
-  namespace :admin do
-    root "dashboard#index"
+    namespace :admin do
+      root "dashboard#index"
 
-    resources :users,    param: :public_id, constraints: { public_id: UUID }
-    resources :branches, param: :public_id, constraints: { public_id: UUID }
+      resources :users,    param: :public_id, constraints: { public_id: UUID }
+      resources :branches, param: :public_id, constraints: { public_id: UUID }
 
-    namespace :payments do
-      resources :ach_routings, param: :public_id, constraints: { public_id: UUID }
-    end
+      namespace :payments do
+        resources :ach_routings, param: :public_id, constraints: { public_id: UUID }
+      end
 
-    namespace :system do
-      # allow dots in :key/:code
-      scope format: false do
-        resources :reference_lists, param: :key, constraints: { key: REF_CODE } do
-          resources :reference_values, param: :code, constraints: { code: REF_CODE }
+      namespace :system do
+        # allow dots in :key/:code
+        scope format: false do
+          resources :reference_lists, param: :key, constraints: { key: REF_CODE } do
+            resources :reference_values, param: :code, constraints: { code: REF_CODE }
+          end
         end
+
+        resources :countries,  param: :alpha2,  constraints: { alpha2: ISO2 }
+        resources :currencies, param: :code,    constraints: { code:  ISO3 }
+        resources :regions,    param: :iso_code, constraints: { iso_code: ISO_REGION }
+
+        # NAICS index + show (version passed as query param)
+        resources :naics_codes, only: %i[index show], param: :code, constraints: { code: NAICS_CODE }
+
+        # CountryCurrencies CRUD by composite key
+        resources :country_currencies, only: %i[index new create]
+        get    "country_currencies/:country_alpha2-:currency_code",      to: "country_currencies#show",   as: :country_currency,      constraints: { country_alpha2: ISO2, currency_code: ISO3 }
+        get    "country_currencies/:country_alpha2-:currency_code/edit", to: "country_currencies#edit",   as: :edit_country_currency, constraints: { country_alpha2: ISO2, currency_code: ISO3 }
+        patch  "country_currencies/:country_alpha2-:currency_code",      to: "country_currencies#update",                             constraints: { country_alpha2: ISO2, currency_code: ISO3 }
+        put    "country_currencies/:country_alpha2-:currency_code",      to: "country_currencies#update",                             constraints: { country_alpha2: ISO2, currency_code: ISO3 }
+        delete "country_currencies/:country_alpha2-:currency_code",      to: "country_currencies#destroy",                            constraints: { country_alpha2: ISO2, currency_code: ISO3 }
       end
-
-      resources :countries,  param: :alpha2, constraints: { alpha2: ISO2 }
-      resources :currencies, param: :code,   constraints: { code: ISO3 }
-      resources :regions,    param: :iso_code, constraints: { iso_code: ISO_REGION }
-
-      # NAICS CRUD grouped by version
-      scope "naics/:version", constraints: { version: NAICS_VER } do
-        get   "/",              to: "naics_codes#index", as: :naics_codes
-        post  "/",              to: "naics_codes#create"
-        get   "/new",           to: "naics_codes#new",   as: :new_naics_code
-        get   "/:code/edit",    to: "naics_codes#edit",  as: :edit_naics_code, constraints: { code: NAICS_CODE }
-        get   "/:code",         to: "naics_codes#show",  as: :naics_code_admin, constraints: { code: NAICS_CODE }
-        patch "/:code",         to: "naics_codes#update",                      constraints: { code: NAICS_CODE }
-        put   "/:code",         to: "naics_codes#update",                      constraints: { code: NAICS_CODE }
-        delete "/:code",        to: "naics_codes#destroy",                     constraints: { code: NAICS_CODE }
-      end
-
-      # CountryCurrencies CRUD by composite key
-      resources :country_currencies, only: %i[index new create]
-      get    "country_currencies/:country_alpha2-:currency_code",        to: "country_currencies#show",   as: :country_currency,        constraints: { country_alpha2: ISO2, currency_code: ISO3 }
-      get    "country_currencies/:country_alpha2-:currency_code/edit",   to: "country_currencies#edit",   as: :edit_country_currency,   constraints: { country_alpha2: ISO2, currency_code: ISO3 }
-      patch  "country_currencies/:country_alpha2-:currency_code",        to: "country_currencies#update",                                   constraints: { country_alpha2: ISO2, currency_code: ISO3 }
-      put    "country_currencies/:country_alpha2-:currency_code",        to: "country_currencies#update",                                   constraints: { country_alpha2: ISO2, currency_code: ISO3 }
-      delete "country_currencies/:country_alpha2-:currency_code",        to: "country_currencies#destroy",                                   constraints: { country_alpha2: ISO2, currency_code: ISO3 }
     end
-  end
+
+    # ---- Parties ----
+
+    # config/routes.rb
+    namespace :parties do
+      resources :parties, path: "/" do
+        resource  :individual,   only: %i[show create update destroy]
+        resource  :organization, only: %i[show create update destroy]
+        resources :names
+        resources :phones
+        resources :postal_addresses
+        resources :email_addresses
+        resources :web_addresses
+        resources :tax_ids
+        resources :identities
+        resources :disclosures
+        resources :relationships, only: %i[index create update destroy]
+      end
+    end
 
   # ---- Engines ----
   mount ActiveStorage::Engine => "/rails/active_storage"

@@ -10,6 +10,7 @@ module Bankencore
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 8.0
+    config.active_record.schema_format = :sql
 
     # Please, add to the `ignore` list any other `lib` subdirectories that do
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
@@ -32,5 +33,9 @@ module Bankencore
     config.eager_load_paths << Rails.root.join("app/lib")
     config.autoload_paths  << Rails.root.join("app/policies")
     config.eager_load_paths << Rails.root.join("app/policies")
+
+    config.active_record.encryption.primary_key = ENV["ACTIVE_RECORD_ENCRYPTION_PRIMARY_KEY"]
+    config.active_record.encryption.deterministic_key = ENV["ACTIVE_RECORD_ENCRYPTION_DETERMINISTIC_KEY"]
+    config.active_record.encryption.key_derivation_salt = ENV["ACTIVE_RECORD_ENCRYPTION_KEY_DERIVATION_SALT"]
   end
 end

@@ -2,6 +2,8 @@
 class System::NaicsCode < ApplicationRecord
   self.table_name = "system_naics_codes"
 
+  def to_param = key
+
   # presence
   validates :version, :code, :title, :level, presence: true
   # shape

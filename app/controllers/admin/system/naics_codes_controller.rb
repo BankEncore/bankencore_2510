@@ -4,19 +4,24 @@ class Admin::System::NaicsCodesController < Admin::BaseController
 
   def index
     authorize [ :admin, System::NaicsCode ]
-    @version = params[:version]
-    scope = policy_scope([ :admin, System::NaicsCode ]).for_version(@version)
+    @version = params[:version].presence
+
+    scope = Admin::System::NaicsCodePolicy::Scope.new(current_user, System::NaicsCode).resolve
+    scope = scope.for_version(@version) if @version
 
     scope = scope.active(ActiveModel::Type::Boolean.new.cast(params[:active])) if params.key?(:active)
     scope = scope.sector(params[:sector])            if params[:sector].present?
     scope = scope.where(level: params[:level].to_i)  if params[:level].present?
+    scope = scope.where("code ILIKE :q OR title ILIKE :q OR description ILIKE :q", q: "%#{params[:q].to_s.strip}%") if params[:q].present?
 
-    if (q = params[:q].to_s.strip.presence)
-      like = "%#{q}%"
-      scope = scope.where("code ILIKE ? OR title ILIKE ? OR description ILIKE ?", like, like, like)
-    end
+    @pagy, @naics_codes = pagy(scope.order(:code), items: (params[:items].presence || 50).to_i)
+  end
 
-      scope = scope.order(:code)
-      @pagy, @naics_codes = pagy(scope, items: (params[:items].presence || 50).to_i)
-    end
+  def show
+    authorize [ :admin, System::NaicsCode ]
+    @version = params[:version].presence
+    scope = Admin::System::NaicsCodePolicy::Scope.new(current_user, System::NaicsCode).resolve
+    scope = scope.for_version(@version) if @version
+    render json: scope.find_by!(code: params[:code])
+  end
 end

@@ -4,11 +4,6 @@
   <h1 class="text-xl font-semibold">NAICS <%= @version %></h1>
 
   <%# Show admin "New" only if the admin route exists and policy allows %>
-  <% if defined?(new_admin_system_naics_code_path) && (policy([:admin, System::NaicsCode]).index? rescue false) %>
-    <%= link_to "New",
-                new_admin_system_naics_code_path(version: @version),
-                class: "btn btn-primary btn-sm" %>
-  <% end %>
 </div>
 
 <%= form_with url: system_naics_version_path(version: @version), method: :get, local: true,
@@ -39,7 +34,7 @@
   <table class="table table-zebra table-sm">
     <thead class="sticky top-0 bg-base-100 z-10">
       <tr>
-        <th>Year</th><th>Code</th><th>Title</th><th>Sector</th><th>Parent</th><th>Lvl</th><th>Active</th>
+        <th>Version</th><th>Code</th><th>Title</th><th>Sector</th><th>Parent</th><th>Lvl</th><th>Active</th>
       </tr>
     </thead>
     <tbody>
