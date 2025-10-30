@@ -1,8 +1,6 @@
 <!-- app/views/payments/ach_routings/index.html.erb -->
-<!-- app/views/payments/ach_routings/index.html.erb -->
 <div class="flex items-center justify-between mb-4">
   <h1 class="text-2xl font-semibold">ACH Routings</h1>
-
   <% if current_user&.system_admin? %>
     <%= link_to "Add", new_admin_payments_ach_routing_path, class: "btn btn-primary" %>
   <% end %>
@@ -11,22 +9,19 @@
 <%= form_with url: payments_ach_routings_path, method: :get, local: true,
               class: "mb-3 flex flex-wrap sm:flex-nowrap items-center gap-2" do |f| %>
   <label class="input input-bordered flex items-center gap-2 flex-1 min-w-[220px]">
-    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor"><path d="M10 4a6 6 0 104.472 10.03l3.75 3.75 1.415-1.414-3.75-3.75A6 6 0 0010 4z"/></svg>
-    <%= f.text_field :q, value: @q, placeholder: "Search routing # or name", class: "grow" %>
+    <svg class="h-5 w-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M10 4a6 6 0 104.472 10.03l3.75 3.75 1.415-1.414-3.75-3.75A6 6 0 0010 4z"/>
+    </svg>
+    <%= f.text_field :q, value: @q.to_s, placeholder: "Search routing # or name", class: "grow" %>
   </label>
 
-  <select name="state" class="select select-bordered select-sm shrink-0">
-    <option value="" <%= "selected" if @state.blank? %>>All states</option>
-    <% @states.each do |st| %>
-      <option value="<%= st %>" <%= "selected" if @state == st %>><%= st %></option>
-    <% end %>
-  </select>
+  <%= select_tag :state,
+        options_for_select([["All states",""]] + Array(@states).map { |st| [st, st] }, @state.to_s),
+        class: "select select-bordered select-sm shrink-0" %>
 
-  <select name="items" class="select select-bordered select-sm shrink-0">
-    <% [25,50,100,200].each do |n| %>
-      <option value="<%= n %>" <%= "selected" if params[:items].to_i == n %>><%= n %></option>
-    <% end %>
-  </select>
+  <%= select_tag :items,
+        options_for_select([25,50,100,200], params[:items].to_i.nonzero? || 25),
+        class: "select select-bordered select-sm shrink-0" %>
 
   <%= f.submit "Apply", class: "btn btn-sm shrink-0" %>
 <% end %>
@@ -35,7 +30,12 @@
   <table class="table table-zebra table-sm">
     <thead>
       <tr>
-        <th>Routing #</th><th>Name</th><th>City</th><th>State</th><th>Type</th><th></th>
+        <th>Routing #</th>
+        <th>Name</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Flags</th>
+        <th></th>
       </tr>
     </thead>
     <tbody>
@@ -44,30 +44,30 @@
           <td class="font-mono"><%= r.routing_number %></td>
           <td><%= r.customer_name %></td>
           <td><%= r.city %></td>
-          <td><%= r.state_code %></td>
-          <td><%= r.office_code %></td> <!-- 'O' main, 'B' branch -->
+          <td><%= r.state_code || r.state %></td>
+          <td class="whitespace-nowrap"><%= routing_flags_badges(r) %></td>
           <td><%= link_to "Show", payments_ach_routing_path(r), class: "btn btn-xs" %></td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
-    <% if @pagy.pages > 1 %>
+  <% if defined?(@pagy) && @pagy && @pagy.pages > 1 %>
     <% base = params.permit(:q, :items, :state).to_h %>
     <div class="mt-4 flex items-center justify-between">
       <div class="text-sm opacity-70">Page <%= @pagy.page %> of <%= @pagy.pages %></div>
-      <nav class="join">
+      <nav class="join" aria-label="Pagination">
         <% if @pagy.prev %>
           <%= link_to "«", url_for(base.merge(page: @pagy.prev)), class: "join-item btn btn-sm", rel: "prev" %>
         <% else %>
-          <span class="join-item btn btn-sm btn-disabled">«</span>
+          <span class="join-item btn btn-sm btn-disabled" aria-disabled="true">«</span>
         <% end %>
 
         <% @pagy.series.each do |item| %>
           <% if item == :gap %>
-            <span class="join-item btn btn-sm btn-disabled">…</span>
+            <span class="join-item btn btn-sm btn-disabled" aria-hidden="true">…</span>
           <% elsif item == @pagy.page %>
-            <span class="join-item btn btn-sm btn-active"><%= item %></span>
+            <span class="join-item btn btn-sm btn-active" aria-current="page"><%= item %></span>
           <% else %>
             <%= link_to item, url_for(base.merge(page: item)), class: "join-item btn btn-sm" %>
           <% end %>
@@ -76,10 +76,9 @@
         <% if @pagy.next %>
           <%= link_to "»", url_for(base.merge(page: @pagy.next)), class: "join-item btn btn-sm", rel: "next" %>
         <% else %>
-          <span class="join-item btn btn-sm btn-disabled">»</span>
+          <span class="join-item btn btn-sm btn-disabled" aria-disabled="true">»</span>
         <% end %>
       </nav>
     </div>
   <% end %>
-
 </div>
