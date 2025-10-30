@@ -1,11 +1,13 @@
-# app/controllers/admin/system/home_controller.rb
-# new
+# app/controllers/home_controller.rb
 class HomeController < ApplicationController
-  def index
-    # If user is not signed in, redirect to the Devise sign-in page.
-    # Use the Devise route helper rather than routing-time constraints.
-    unless user_signed_in?
-      redirect_to new_user_session_path
+  skip_after_action :verify_authorized, only: :forbidden
+  skip_after_action :verify_policy_scoped, only: :forbidden
+
+  def forbidden
+    respond_to do |format|
+      format.html { render file: Rails.public_path.join("403.html"), status: :forbidden, layout: false }
+      format.turbo_stream { head :forbidden }
+      format.any { head :forbidden }
     end
   end
 end

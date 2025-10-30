@@ -50,7 +50,7 @@ class Admin::System::NaicsCodesController < Admin::BaseController
     if @naics.save
       redirect_to admin_system_naics_code_admin_path(version: @naics.version, code: @naics.code), notice: "Created"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -65,7 +65,7 @@ class Admin::System::NaicsCodesController < Admin::BaseController
     if @naics.update(naics_params)
       redirect_to admin_system_naics_code_admin_path(version: @naics.version, code: @naics.code), notice: "Updated"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

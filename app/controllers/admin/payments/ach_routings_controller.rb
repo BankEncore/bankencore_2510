@@ -22,7 +22,7 @@ module Admin
           redirect_to admin_payments_ach_routing_path(@ach_routing), notice: "Saved"
         else
           load_frb_options
-          render :new, status: :unprocessable_entity
+          render :new, status: :unprocessable_content
         end
       end
 
@@ -32,7 +32,7 @@ module Admin
           redirect_to admin_payments_ach_routing_path(@ach_routing), notice: "Updated"
         else
           load_frb_options
-          render :edit, status: :unprocessable_entity
+          render :edit, status: :unprocessable_content
         end
       end
 

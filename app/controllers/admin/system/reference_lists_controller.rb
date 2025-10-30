@@ -22,7 +22,7 @@ class Admin::System::ReferenceListsController < Admin::BaseController
     if @list.save
       redirect_to [ :admin, :system, @list ], notice: "Created"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -35,7 +35,7 @@ class Admin::System::ReferenceListsController < Admin::BaseController
     if @list.update(list_params)
       redirect_to admin_system_reference_list_path(@list), notice: "Updated"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

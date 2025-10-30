@@ -5,5 +5,5 @@ module Parties::BelongsToParty
     before_action :set_party
   end
   private
-  def set_party = @party = Party.find(params[:party_id])
+  def set_party = @party = Parties::Party.find(params[:party_id])
 end

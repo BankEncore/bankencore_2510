@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     if @user.update(attrs)
       redirect_to @user, notice: "Updated"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
 
     def set_user

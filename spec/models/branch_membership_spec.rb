@@ -2,7 +2,7 @@
 require "rails_helper"
 
 RSpec.describe BranchMembership, type: :model do
-  before { create(:system_country) } # alpha2: "US"
+  # before { create(:system_country) } # alpha2: "US"
 
   let(:user)   { create(:user) }
   let(:branch) { create(:branch, :no_hours) } # persists, satisfies FKs

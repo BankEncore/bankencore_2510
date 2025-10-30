@@ -12,7 +12,7 @@ class Admin::System::ReferenceListsController < Admin::BaseController
   def create
     @list = System::ReferenceList.new(list_params); authorize @list
     if @list.save then redirect_to [ :admin, :system, @list ], notice: "Created"
-    else render :new, status: :unprocessable_entity
+    else render :new, status: :unprocessable_content
     end
   end
 
@@ -21,7 +21,7 @@ class Admin::System::ReferenceListsController < Admin::BaseController
   def update
     authorize @list
     if @list.update(list_params) then redirect_to [ :admin, :system, @list ], notice: "Updated"
-    else render :edit, status: :unprocessable_entity
+    else render :edit, status: :unprocessable_content
     end
   end
 

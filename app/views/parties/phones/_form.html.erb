@@ -1,0 +1,31 @@
+<!-- app/views/parties/phones/_form.html.erb -->
+<% new_record = !phone.persisted? %>
+<%= form_with(
+      model: phone,                                  # still binds errors/attributes
+      scope: :parties_phone,
+      url:   new_record ? party_phones_path(@party)  : party_phone_path(@party, phone),
+      method: new_record ? :post : :patch
+    ) do |f| %>
+
+  <div>
+    <%= f.label :phone_type_code %>
+    <%= f.text_field :phone_type_code %>
+  </div>
+  <div>
+    <%= f.label :e164, "Phone (E.164, e.g. +14155550123)" %>
+    <%= f.text_field :e164 %>
+  </div>
+  <div>
+    <%= f.label :extension %>
+    <%= f.text_field :extension %>
+  </div>
+  <div>
+    <%= f.label :preferred %>
+    <%= f.check_box :preferred %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
+
+

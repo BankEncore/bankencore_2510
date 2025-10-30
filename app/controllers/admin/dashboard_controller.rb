@@ -1,7 +1,12 @@
 # app/controllers/admin/dashboard_controller.rb
-module Admin
-  class DashboardController < Admin::BaseController
-    def index
+class Admin::DashboardController < ApplicationController
+  # This page doesn’t list a collection, so don’t enforce policy_scope
+  skip_after_action :verify_policy_scoped, only: :index
+  # But do enforce that we authorized something
+  after_action :verify_authorized, only: :index
+
+  def index
+    authorize [ :admin, :dashboard ], :index?
       @counts = {
         ach_routings:       ::Payments::AchRouting.count,
         country_currencies: ::System::CountryCurrency.count,
@@ -16,5 +21,4 @@ module Admin
       @can_view_naics       = policy([ :admin, ::System::NaicsCode ]).index? rescue false
       #                               ^^^^^^^^ use the model under System, not Admin::System
     end
-  end
 end

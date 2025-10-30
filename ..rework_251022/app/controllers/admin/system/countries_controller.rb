@@ -49,7 +49,7 @@ class Admin::System::CountriesController < Admin::BaseController
       redirect_to admin_system_country_path(@country.alpha2), notice: "Created"
     else
       load_collections
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -71,7 +71,7 @@ class Admin::System::CountriesController < Admin::BaseController
       redirect_to dest, notice: "Updated"
     else
       load_collections
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

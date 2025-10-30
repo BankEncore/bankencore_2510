@@ -1,0 +1,11 @@
+<!-- app/views/parties/parties/show.html.erb -->
+<ul>
+  <% @party.phones.each do |ph| %>
+    <% next unless ph.persisted? %>
+    <li>
+      <%= ph.phone_type_code %> <%= ph.e164 %> <%= "(preferred)" if ph.preferred %>
+      <%= link_to "Edit", edit_party_phone_path(@party, ph) %> |
+      <%= button_to "Delete", party_phone_path(@party, ph), method: :delete, form: { data: { turbo_confirm: "Delete?" } } %>
+    </li>
+  <% end %>
+</ul>

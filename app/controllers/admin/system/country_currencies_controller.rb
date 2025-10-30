@@ -58,7 +58,7 @@ class Admin::System::CountryCurrenciesController < Admin::BaseController
       ), notice: "Created"
     else
       load_collections
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -75,7 +75,7 @@ class Admin::System::CountryCurrenciesController < Admin::BaseController
       ), notice: "Updated"
     else
       load_collections
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

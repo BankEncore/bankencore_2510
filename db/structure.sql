@@ -284,7 +284,8 @@ CREATE TABLE public.parties_email_addresses (
     valid_from date,
     valid_to date,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    CONSTRAINT chk_parties_email_addresses_valid_range CHECK (((valid_from IS NULL) OR (valid_to IS NULL) OR (valid_from <= valid_to)))
 );
 
 
@@ -385,7 +386,8 @@ CREATE TABLE public.parties_names (
     valid_from date,
     valid_to date,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    CONSTRAINT chk_parties_names_valid_range CHECK (((valid_from IS NULL) OR (valid_to IS NULL) OR (valid_from <= valid_to)))
 );
 
 
@@ -475,7 +477,8 @@ CREATE TABLE public.parties_phones (
     valid_to date,
     invalid_reason character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    CONSTRAINT chk_parties_phones_valid_range CHECK (((valid_from IS NULL) OR (valid_to IS NULL) OR (valid_from <= valid_to)))
 );
 
 
@@ -519,7 +522,8 @@ CREATE TABLE public.parties_postal_addresses (
     valid_from date,
     valid_to date,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    CONSTRAINT chk_parties_postal_addresses_valid_range CHECK (((valid_from IS NULL) OR (valid_to IS NULL) OR (valid_from <= valid_to)))
 );
 
 
@@ -663,7 +667,8 @@ CREATE TABLE public.parties_web_addresses (
     valid_from date,
     valid_to date,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    CONSTRAINT chk_parties_web_addresses_valid_range CHECK (((valid_from IS NULL) OR (valid_to IS NULL) OR (valid_from <= valid_to)))
 );
 
 
@@ -1682,6 +1687,14 @@ ALTER TABLE ONLY public.system_regions
 
 
 --
+-- Name: parties_names uq_parties_names_id_party; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.parties_names
+    ADD CONSTRAINT uq_parties_names_id_party UNIQUE (id, party_id);
+
+
+--
 -- Name: user_roles user_roles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2279,6 +2292,41 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
+-- Name: uq_email_addresses_one_preferred; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uq_email_addresses_one_preferred ON public.parties_email_addresses USING btree (party_id) WHERE preferred;
+
+
+--
+-- Name: uq_names_one_preferred; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uq_names_one_preferred ON public.parties_names USING btree (party_id) WHERE preferred;
+
+
+--
+-- Name: uq_phones_one_preferred; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uq_phones_one_preferred ON public.parties_phones USING btree (party_id) WHERE preferred;
+
+
+--
+-- Name: uq_postal_addresses_one_preferred; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uq_postal_addresses_one_preferred ON public.parties_postal_addresses USING btree (party_id) WHERE preferred;
+
+
+--
+-- Name: uq_web_addresses_one_preferred; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX uq_web_addresses_one_preferred ON public.parties_web_addresses USING btree (party_id) WHERE preferred;
+
+
+--
 -- Name: user_index; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2290,6 +2338,14 @@ CREATE INDEX user_index ON public.audits USING btree (user_id, user_type);
 --
 
 CREATE TRIGGER trg_parties_profile_number BEFORE INSERT ON public.parties_parties FOR EACH ROW EXECUTE FUNCTION public.set_party_profile_number();
+
+
+--
+-- Name: parties_parties fk_pref_name_same_party; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.parties_parties
+    ADD CONSTRAINT fk_pref_name_same_party FOREIGN KEY (preferred_party_name_id, id) REFERENCES public.parties_names(id, party_id) ON UPDATE RESTRICT ON DELETE SET NULL;
 
 
 --
@@ -2306,6 +2362,14 @@ ALTER TABLE ONLY public.parties_individuals
 
 ALTER TABLE ONLY public.system_country_currencies
     ADD CONSTRAINT fk_rails_09c0ac7dfb FOREIGN KEY (country_alpha2) REFERENCES public.system_countries(alpha2);
+
+
+--
+-- Name: parties_email_addresses fk_rails_14bb43975b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.parties_email_addresses
+    ADD CONSTRAINT fk_rails_14bb43975b FOREIGN KEY (party_id) REFERENCES public.parties_parties(id) NOT VALID;
 
 
 --
@@ -2541,20 +2605,17 @@ ALTER TABLE ONLY public.parties_tax_ids
 
 
 --
--- Name: parties_parties fk_rails_fa74f88e18; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.parties_parties
-    ADD CONSTRAINT fk_rails_fa74f88e18 FOREIGN KEY (preferred_party_name_id) REFERENCES public.parties_names(id);
-
-
---
 -- PostgreSQL database dump complete
 --
 
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251028024533'),
+('20251028021305'),
+('20251028014613'),
+('20251028014550'),
+('20251028012942'),
 ('20251027192346'),
 ('20251027143526'),
 ('20251027143525'),

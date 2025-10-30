@@ -25,7 +25,7 @@ class Admin::System::ReferenceValuesController < ApplicationController
     if @value.save
       redirect_to admin_system_reference_value_path(@value.public_id)
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -38,7 +38,7 @@ class Admin::System::ReferenceValuesController < ApplicationController
     if @value.update(value_params)
       redirect_to admin_system_reference_value_path(@value.public_id)
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

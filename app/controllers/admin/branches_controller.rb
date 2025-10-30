@@ -20,7 +20,7 @@ class Admin::BranchesController < Admin::BaseController
     if @branch.save
       redirect_to [ :admin, @branch ]
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -30,7 +30,7 @@ class Admin::BranchesController < Admin::BaseController
     if @branch.update(branch_params)
       redirect_to [ :admin, @branch ]
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

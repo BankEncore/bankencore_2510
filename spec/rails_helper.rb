@@ -7,6 +7,7 @@ abort("The Rails environment is running in production mode!") if Rails.env.produ
 require "rspec/rails"
 require "factory_bot_rails"   # ← add
 require "devise"              # optional but harmless
+require "pundit/rspec"
 
 # Maintain test schema
 begin
@@ -23,10 +24,13 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   # Devise helpers
-  # config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Devise::Test::IntegrationHelpers, type: :request
   # config.include Devise::Test::IntegrationHelpers, type: :system
   config.include Devise::Test::ControllerHelpers,  type: :controller
   config.include Devise::Test::ControllerHelpers,  type: :view
+  config.include Pundit::RSpec::Matchers
+
+  config.include Warden::Test::Helpers, type: :request
 
   config.use_transactional_fixtures = true
   config.infer_spec_type_from_file_location!

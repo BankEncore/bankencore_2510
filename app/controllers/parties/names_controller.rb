@@ -1,57 +1,49 @@
 # app/controllers/parties/names_controller.rb
-class Parties::NamesController < ApplicationController
-  before_action :set_party
-  before_action :set_name, only: %i[show update destroy]
+class Parties::NamesController < Parties::BaseController
+  before_action :set_name, only: %i[edit update destroy]
 
   def index
-    authorize @party, :show?
-    @names = @party.names.order(preferred: :desc, created_at: :asc)
-    respond_to do |fmt|
-      fmt.html
-      fmt.json { render json: @names }
-    end
+    authorize Parties::Name
+    @names = @party.names.order(preferred: :desc, id: :desc)
   end
 
-  def show
+  def new
+    @name = @party.names.build
     authorize @name
-    render json: @name
   end
 
   def create
     @name = @party.names.build(name_params)
     authorize @name
     if @name.save
-      render json: @name, status: :created
+      redirect_to party_path(@party), notice: "Name added"
     else
-      render json: { errors: @name.errors.full_messages }, status: :unprocessable_entity
+      redirect_to party_path(@party),
+        alert: preferred_alert_for(@name),
+        status: :see_other
     end
   end
 
   def update
     authorize @name
     if @name.update(name_params)
-      render json: @name
+      redirect_to party_path(@party), notice: "Name updated"
     else
-      render json: { errors: @name.errors.full_messages }, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
+        redirect_to party_path(@party),
+        alert: preferred_alert_for(@name),
+        status: :see_other
     end
   end
 
   def destroy
     authorize @name
     @name.destroy
-    head :no_content
+    redirect_to party_path(@party), notice: "Name deleted"
   end
 
   private
-
-  def set_party
-    @party = Party.find(params[:party_id])
-  end
-
-  def set_name
-    @name = @party.names.find(params[:id])
-  end
-
+  def set_name = @name = @party.names.find(params[:id])
   def name_params
     params.require(:parties_name).permit(
       :name_type_code, :full_name, :family_name, :given_name, :middle_name,

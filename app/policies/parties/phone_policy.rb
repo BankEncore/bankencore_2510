@@ -1,1 +1,1 @@
-class Parties::PhonePolicy < Parties::BasePolicy; end
+class Parties::PhonePolicy < Parties::BaseChildPolicy; end

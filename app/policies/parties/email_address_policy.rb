@@ -1,1 +1,1 @@
-class Parties::EmailAddressPolicy < Parties::BasePolicy; end
+class Parties::EmailAddressPolicy < Parties::BaseChildPolicy; end

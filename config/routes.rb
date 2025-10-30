@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   # ===================== Public =====================
 
+  get "/403", to: "home#forbidden", as: :forbidden
+
   resources :branches, only: %i[index show], param: :public_id, constraints: { public_id: UUID }
 
   namespace :payments do
@@ -99,21 +101,18 @@ Rails.application.routes.draw do
     # ---- Parties ----
 
     # config/routes.rb
-    namespace :parties do
-      resources :parties, path: "/" do
-        resource  :individual,   only: %i[show create update destroy]
-        resource  :organization, only: %i[show create update destroy]
-        resources :names
-        resources :phones
-        resources :postal_addresses
-        resources :email_addresses
-        resources :web_addresses
-        resources :tax_ids
-        resources :identities
-        resources :disclosures
-        resources :relationships, only: %i[index create update destroy]
-      end
+    resources :parties, module: :parties do
+      resources :tax_ids
+      resources :phones
+      resources :postal_addresses
+      resources :web_addresses
+      resources :names
+      resources :email_addresses
+      resources :identities
+      resource  :individual, only: %i[show create update destroy]
+      resource  :organization, only: %i[show create update destroy]
     end
+
 
   # ---- Engines ----
   mount ActiveStorage::Engine => "/rails/active_storage"

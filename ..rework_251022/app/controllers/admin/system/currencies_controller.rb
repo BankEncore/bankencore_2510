@@ -34,7 +34,7 @@ class Admin::System::CurrenciesController < Admin::BaseController
     if @currency.save
       redirect_to admin_system_currency_path(@currency.code), notice: "Created"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -59,7 +59,7 @@ class Admin::System::CurrenciesController < Admin::BaseController
         redirect_to admin_system_currency_path(@currency.code), notice: "Updated"
       end
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

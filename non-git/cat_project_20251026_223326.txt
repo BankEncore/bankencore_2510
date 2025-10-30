@@ -1406,7 +1406,7 @@ class Admin::BranchesController < Admin::BaseController
     if @branch.save
       redirect_to [ :admin, @branch ]
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -1416,7 +1416,7 @@ class Admin::BranchesController < Admin::BaseController
     if @branch.update(branch_params)
       redirect_to [ :admin, @branch ]
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -1519,7 +1519,7 @@ module Admin
           redirect_to admin_payments_ach_routing_path(@ach_routing), notice: "Saved"
         else
           load_frb_options
-          render :new, status: :unprocessable_entity
+          render :new, status: :unprocessable_content
         end
       end
 
@@ -1529,7 +1529,7 @@ module Admin
           redirect_to admin_payments_ach_routing_path(@ach_routing), notice: "Updated"
         else
           load_frb_options
-          render :edit, status: :unprocessable_entity
+          render :edit, status: :unprocessable_content
         end
       end
 
@@ -1610,7 +1610,7 @@ class Admin::System::CountriesController < Admin::BaseController
       redirect_to admin_system_country_path(@country.alpha2), notice: "Created"
     else
       load_collections
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -1632,7 +1632,7 @@ class Admin::System::CountriesController < Admin::BaseController
       redirect_to dest, notice: "Updated"
     else
       load_collections
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -1753,7 +1753,7 @@ class Admin::System::CountryCurrenciesController < Admin::BaseController
       ), notice: "Created"
     else
       load_collections
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -1770,7 +1770,7 @@ class Admin::System::CountryCurrenciesController < Admin::BaseController
       ), notice: "Updated"
     else
       load_collections
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -1860,7 +1860,7 @@ class Admin::System::CurrenciesController < Admin::BaseController
     if @currency.save
       redirect_to admin_system_currency_path(@currency.code), notice: "Created"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -1885,7 +1885,7 @@ class Admin::System::CurrenciesController < Admin::BaseController
         redirect_to admin_system_currency_path(@currency.code), notice: "Updated"
       end
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -2063,7 +2063,7 @@ class Admin::System::ReferenceValuesController < Admin::BaseController
     if @value.save
       redirect_to admin_system_reference_list_reference_value_path(@list.key, @value.code), notice: "Created"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -2076,7 +2076,7 @@ class Admin::System::ReferenceValuesController < Admin::BaseController
     if @value.update(permitted)
       redirect_to admin_system_reference_list_reference_value_path(@list.key, @value.code), notice: "Updated"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -2160,7 +2160,7 @@ class Admin::System::RegionsController < Admin::BaseController
       redirect_to admin_system_region_path(@region.iso_code), notice: "Created"
     else
       load_collections
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -2182,7 +2182,7 @@ class Admin::System::RegionsController < Admin::BaseController
       redirect_to dest, notice: "Updated"
     else
       load_collections
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -2249,7 +2249,7 @@ class Admin::UsersController < Admin::BaseController
     if @user.save
       redirect_to [ :admin, @user ], notice: "User created."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -2263,7 +2263,7 @@ class Admin::UsersController < Admin::BaseController
     if @user.update(attrs)
       redirect_to [ :admin, @user ], notice: "Updated."
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 
@@ -2734,7 +2734,7 @@ class UsersController < ApplicationController
     if @user.update(attrs)
       redirect_to @user, notice: "Updated"
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
 
     def set_user
@@ -9383,7 +9383,7 @@ Devise.setup do |config|
   # apps is `200 OK` and `302 Found` respectively, but new apps are generated with
   # these new defaults that match Hotwire/Turbo behavior.
   # Note: These might become the new default in future versions of Devise.
-  config.responder.error_status = :unprocessable_entity
+  config.responder.error_status = :unprocessable_content
   config.responder.redirect_status = :see_other
 
   # ==> Configuration for :registerable

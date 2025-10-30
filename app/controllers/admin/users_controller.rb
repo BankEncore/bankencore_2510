@@ -23,7 +23,7 @@ class Admin::UsersController < Admin::BaseController
     if @user.save
       redirect_to [ :admin, @user ], notice: "User created."
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
@@ -37,7 +37,7 @@ class Admin::UsersController < Admin::BaseController
     if @user.update(attrs)
       redirect_to [ :admin, @user ], notice: "Updated."
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_content
     end
   end
 

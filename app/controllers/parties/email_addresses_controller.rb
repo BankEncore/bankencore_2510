@@ -1,40 +1,60 @@
 # app/controllers/parties/email_addresses_controller.rb
-class Parties::EmailAddressesController < ApplicationController
-  include Parties::BelongsToParty
-  before_action :set_email, only: %i[show update destroy]
+class Parties::EmailAddressesController < Parties::BaseController
+  before_action :set_email, only: %i[edit update destroy]
 
   def index
-    authorize @party, :show?
-    render json: @party.email_addresses.order(preferred: :desc, created_at: :asc)
+    authorize Parties::EmailAddress
+    @emails = @party.email_addresses.order(preferred: :desc, id: :desc)
   end
 
-  def show
+  def new
+    @email = @party.email_addresses.build
     authorize @email
-    render json: @email
   end
 
   def create
-    rec = @party.email_addresses.build(email_params)
-    authorize rec
-    rec.save ? render(json: rec, status: :created) :
-               render(json: { errors: rec.errors.full_messages }, status: :unprocessable_entity)
+    @email = @party.email_addresses.build(email_params)
+    authorize @email
+    if @email.save
+      redirect_to party_path(@party), notice: "Email added"
+    else
+      if @email.errors[:preferred].present?
+        redirect_to party_path(@party),
+          alert: "Only one preferred record is allowed per party.",
+          status: :see_other
+      else
+        render plain: @email.errors.full_messages.to_sentence,
+          status: :unprocessable_content # Rack warns: :unprocessable_content soon
+      end
+    end
   end
 
   def update
     authorize @email
-    @email.update(email_params) ? render(json: @email) :
-      render(json: { errors: @email.errors.full_messages }, status: :unprocessable_entity)
+    if @email.update(email_params)
+      redirect_to party_path(@party), notice: "Email updated"
+    else
+      if @email.errors[:preferred].present?
+        redirect_to party_path(@party),
+          alert: "Only one preferred record is allowed per party.",
+          status: :see_other
+      else
+        render plain: @email.errors.full_messages.to_sentence,
+          status: :unprocessable_content
+      end
+    end
   end
 
   def destroy
     authorize @email
     @email.destroy
-    head :no_content
+    redirect_to party_path(@party), notice: "Email deleted"
   end
 
   private
   def set_email = @email = @party.email_addresses.find(params[:id])
   def email_params
-    params.require(:parties_email_address).permit(:email_type_code, :email, :verified_at, :preferred, :valid_from, :valid_to)
+    params.require(:parties_email_address)
+          .permit(:email_type_code, :email, :verified_at, :preferred, :valid_from, :valid_to)
   end
 end
