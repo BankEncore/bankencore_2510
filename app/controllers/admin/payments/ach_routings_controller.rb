@@ -7,19 +7,19 @@ module Admin
       include Pagy::Backend
 
       def index
-        authorize [:admin, ::Payments::AchRouting], :index?
+        authorize [ :admin, ::Payments::AchRouting ], :index?
 
         @q      = params[:q].to_s.strip
         @active = ActiveModel::Type::Boolean.new.cast(params[:active])
         @state  = params[:state].presence
 
-        scope = policy_scope([:admin, ::Payments::AchRouting])
+        scope = policy_scope([ :admin, ::Payments::AchRouting ])
         scope = scope.where("routing_number ILIKE :q OR customer_name ILIKE :q", q: "%#{@q}%") if @q.present?
         scope = scope.where(active: @active) if params.key?(:active)
         scope = scope.where(state_code: @state) if @state.present?
 
         # Provide the list the borrowed view expects
-        @states = policy_scope([:admin, ::Payments::AchRouting])
+        @states = policy_scope([ :admin, ::Payments::AchRouting ])
                     .distinct.order(:state_code).pluck(:state_code).compact
 
         @pagy, @ach_routings = pagy(scope.order(:routing_number), items: (params[:items].presence || 50).to_i)
@@ -31,9 +31,9 @@ module Admin
 
 
       def show
-        scope  = policy_scope([:admin, ::Payments::AchRouting])
+        scope  = policy_scope([ :admin, ::Payments::AchRouting ])
         @ach_routing = scope.find(params[:id])
-        authorize [:admin, @ach_routing], :show?
+        authorize [ :admin, @ach_routing ], :show?
         render template: "payments/ach_routings/show"
       end
 
