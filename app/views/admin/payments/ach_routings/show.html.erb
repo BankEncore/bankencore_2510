@@ -1,0 +1,83 @@
+<%# app/views/admin/payments/ach_routings/show.html.erb %>
+
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">
+    ACH Routing <span class="font-mono"><%= @ach_routing.routing_number %></span>
+  </h1>
+  <div class="flex gap-2">
+    <%= link_to "Edit", edit_polymorphic_path([:admin, @ach_routing]), class: "btn btn-primary" %>
+    <%= link_to "Back", admin_payments_ach_routings_path, class: "btn btn-ghost" %>
+  </div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-4">
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Institution</h2>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <div class="text-xs opacity-70">Routing #</div>
+          <div class="font-mono"><%= @ach_routing.routing_number %></div>
+        </div>
+        <div>
+          <div class="text-xs opacity-70">New Routing #</div>
+          <div class="font-mono"><%= @ach_routing.new_routing_number.presence || "—" %></div>
+        </div>
+        <div class="col-span-2">
+          <div class="text-xs opacity-70">Institution</div>
+          <div><%= @ach_routing.customer_name %></div>
+        </div>
+        <div class="col-span-2">
+          <div class="text-xs opacity-70">Address</div>
+          <div>
+            <%= [@ach_routing.address, @ach_routing.city, (@ach_routing.state || @ach_routing.state_code), @ach_routing.zip_code].compact.join(", ") %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title">Details</h2>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <div class="text-xs opacity-70">Office</div>
+          <div><%= @ach_routing.office_code %></div>
+        </div>
+        <div>
+          <div class="text-xs opacity-70">Servicing FRB</div>
+          <div class="font-mono"><%= @ach_routing.servicing_frb_number || "—" %></div>
+        </div>
+        <div>
+          <div class="text-xs opacity-70">Phone</div>
+          <div class="font-mono"><%= @ach_routing.phone_number || "—" %></div>
+        </div>
+        <div>
+          <div class="text-xs opacity-70">Active</div>
+          <div><%= @ach_routing.active? ? "Yes" : "No" %></div>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div class="text-xs opacity-70">Flags</div>
+        <div class="flex flex-wrap gap-2 mt-1">
+          <% [
+               ["U.S. Treasury", @ach_routing.us_treasury],
+               ["USPS Money Order", @ach_routing.us_postal_service],
+               ["Federal Reserve Bank", @ach_routing.federal_reserve_bank],
+               ["On Us", @ach_routing.on_us],
+               ["Special Handling", @ach_routing.special_handling]
+             ].each do |label, flag| %>
+            <span class="badge <%= flag ? 'badge-primary' : 'badge-ghost' %>"><%= label %></span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <div class="text-xs opacity-70">Notes</div>
+        <div><%= @ach_routing.notes.presence || "—" %></div>
+      </div>
+    </div>
+  </div>
+</div>

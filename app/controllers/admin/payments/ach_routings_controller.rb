@@ -7,12 +7,36 @@ module Admin
       include Pagy::Backend
 
       def index
-        redirect_to payments_ach_routings_path
+        authorize [:admin, ::Payments::AchRouting], :index?
+
+        @q      = params[:q].to_s.strip
+        @active = ActiveModel::Type::Boolean.new.cast(params[:active])
+        @state  = params[:state].presence
+
+        scope = policy_scope([:admin, ::Payments::AchRouting])
+        scope = scope.where("routing_number ILIKE :q OR customer_name ILIKE :q", q: "%#{@q}%") if @q.present?
+        scope = scope.where(active: @active) if params.key?(:active)
+        scope = scope.where(state_code: @state) if @state.present?
+
+        # Provide the list the borrowed view expects
+        @states = policy_scope([:admin, ::Payments::AchRouting])
+                    .distinct.order(:state_code).pluck(:state_code).compact
+
+        @pagy, @ach_routings = pagy(scope.order(:routing_number), items: (params[:items].presence || 50).to_i)
+
+        # render the non-admin template and pass the search path it should use
+        render template: "payments/ach_routings/index",
+              locals: { search_path: admin_payments_ach_routings_path }
       end
 
+
       def show
-        redirect_to payments_ach_routing_path(find_record.public_id)
+        scope  = policy_scope([:admin, ::Payments::AchRouting])
+        @ach_routing = scope.find(params[:id])
+        authorize [:admin, @ach_routing], :show?
+        render template: "payments/ach_routings/show"
       end
+
       def new    = @ach_routing = ::Payments::AchRouting.new
       def edit   = @ach_routing = find_record
 

@@ -1,11 +1,15 @@
-<!-- app/views/admin/payments/ach_routings/_form.html.erb -->
+<%# app/views/.../_form.html.erb %>
+<% ar = local_assigns.fetch(:ach_routing, @ach_routing) %>
+<% ns = local_assigns[:ns] %> <%# nil or :admin %>
 
-<% ar = local_assigns[:ach_routing] || @ach_routing %>
+<% collection_key = ns ? [:admin, ::Payments::AchRouting] : [::Payments::AchRouting] %>
+<% member_key     = ns ? [:admin, ar]                     : [ar] %>
 
 <%= form_with model: ar,
-              url: (ar.persisted? ? admin_payments_ach_routing_path(ar)
-                                  : admin_payments_ach_routings_path),
+              url: (ar.persisted? ? polymorphic_path(member_key)
+                                   : polymorphic_path(collection_key)),
               class: "space-y-4" do |f| %>
+
   <% if ar.errors.any? %>
     <div class="alert alert-error">
       <span><%= pluralize(ar.errors.count, "error") %> prevented saving.</span>
@@ -67,9 +71,9 @@
         <label class="form-control">
           <div class="label"><span class="label-text">Servicing FRB</span></div>
           <%= f.select :servicing_frb_number,
-                      options_for_select(@frb_options || [], ar.servicing_frb_number),
-                      { include_blank: true },
-                      class: "select select-bordered w-full" %>
+                       options_for_select(local_assigns.fetch(:frb_options, @frb_options || []), ar.servicing_frb_number),
+                       { include_blank: true },
+                       class: "select select-bordered w-full" %>
         </label>
       </div>
     </div>
@@ -107,7 +111,7 @@
   <div class="flex gap-2">
     <%= f.submit class: "btn btn-primary" %>
     <%= link_to "Cancel",
-                (ar.persisted? ? admin_payments_ach_routing_path(ar) : admin_payments_ach_routings_path),
+                (ar.persisted? ? polymorphic_path(member_key) : polymorphic_path(collection_key)),
                 class: "btn btn-ghost" %>
   </div>
 <% end %>

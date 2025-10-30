@@ -1,0 +1,63 @@
+<%# app/views/admin/payments/ach_routings/index.html.erb %>
+
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-bold">ACH Routings</h1>
+  <%= link_to "New", new_admin_payments_ach_routing_path, class: "btn btn-primary" %>
+</div>
+
+<%= form_with url: admin_payments_ach_routings_path, method: :get, local: true, class: "mb-4" do %>
+  <div class="join">
+    <input
+      type="text"
+      name="q"
+      value="<%= params[:q] %>"
+      placeholder="Search routing #, name…"
+      class="input input-bordered join-item w-72" />
+    <button class="btn btn-ghost join-item" type="submit">Search</button>
+  </div>
+
+  <label class="label cursor-pointer ml-3 inline-flex gap-2 align-middle">
+    <span class="label-text">Active only</span>
+    <input type="checkbox" name="active" value="1"
+           <%= "checked" if ActiveModel::Type::Boolean.new.cast(params[:active]) %>
+           class="toggle" />
+  </label>
+</%=>
+
+<div class="overflow-x-auto rounded-xl border border-base-200">
+  <table class="table table-zebra">
+    <thead>
+      <tr>
+        <th>Routing #</th>
+        <th>Office</th>
+        <th>FRB</th>
+        <th>Institution</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Active</th>
+        <th class="w-1"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @ach_routings.each do |r| %>
+        <tr>
+          <td class="font-mono"><%= r.routing_number %></td>
+          <td><%= r.office_code %></td>
+          <td class="font-mono"><%= r.servicing_frb_number || r.frb_rtn %></td>
+          <td><%= r.customer_name %></td>
+          <td><%= r.city %></td>
+          <td><%= r.state || r.state_code %></td>
+          <td><%= r.active? ? "✓" : "—" %></td>
+          <td class="whitespace-nowrap text-right">
+            <%= link_to "View", polymorphic_path([:admin, r]), class: "btn btn-sm btn-ghost" %>
+            <%= link_to "Edit", edit_polymorphic_path([:admin, r]), class: "btn btn-sm btn-ghost" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<% if defined?(pagy_nav) && @pagy.present? %>
+  <div class="mt-4"><%= pagy_nav(@pagy) %></div>
+<% end %>
