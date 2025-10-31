@@ -1,11 +1,57 @@
-<!-- app/views/parties/parties/show.html.erb -->
-<ul>
-  <% @party.phones.each do |ph| %>
-    <% next unless ph.persisted? %>
-    <li>
-      <%= ph.phone_type_code %> <%= ph.e164 %> <%= "(preferred)" if ph.preferred %>
-      <%= link_to "Edit", edit_party_phone_path(@party, ph) %> |
-      <%= button_to "Delete", party_phone_path(@party, ph), method: :delete, form: { data: { turbo_confirm: "Delete?" } } %>
-    </li>
-  <% end %>
-</ul>
+<div class="mb-4">
+  <div class="bg-base-200 p-4 rounded-lg flex items-center justify-between">
+    <div>
+      <h1 class="text-xl font-semibold"><%= @party.display_name %></h1>
+      <div class="text-sm opacity-70">
+        Profile #: <span class="font-mono"><%= @party.profile_number || @party.id %></span> ·
+        <% if @party.person? %><span class="badge">Person</span><% end %>
+        <% if @party.organization? %><span class="badge badge-ghost">Organization</span><% end %>
+      </div>
+    </div>
+    <div class="flex gap-2">
+      <%= link_to "Edit", edit_party_path(@party), class: "btn btn-primary" %>
+      <%= link_to "Back", parties_path, class: "btn btn-ghost" %>
+    </div>
+  </div>
+</div>
+
+<div class="grid md:grid-cols-2 gap-4">
+  <!-- Names -->
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <div class="card-title">Names</div>
+      <% if @party.names.any? %>
+        <ul class="space-y-2">
+          <% @party.names.order(preferred: :desc, updated_at: :desc).each do |n| %>
+            <li class="flex items-center gap-2">
+              <% if n.preferred? %><span class="badge badge-primary">Preferred</span><% end %>
+              <span class="font-mono text-xs badge badge-ghost"><%= n.name_type_code %></span>
+              <span><%= n.full_name.presence || [n.family_name, n.given_name].compact.join(", ") %></span>
+              <% if n.valid_from || n.valid_to %>
+                <span class="opacity-70 text-xs">
+                  (<%= [n.valid_from, n.valid_to].compact.join(" – ") %>)
+                </span>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="opacity-70">No names yet.</p>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Profile subtype -->
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <div class="card-title">Profile</div>
+      <% if @party.person? %>
+        <%= render "parties/individuals/show", individual: @party.individual %>
+      <% elsif @party.organization? %>
+        <%= render "parties/organizations/show", organization: @party.organization %>
+      <% else %>
+        <p class="opacity-70">No subtype set.</p>
+      <% end %>
+    </div>
+  </div>
+</div>

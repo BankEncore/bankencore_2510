@@ -1,0 +1,15 @@
+key: parties.marital_status
+name: Marital Status
+values:
+  - code: single
+    name: "Single"
+    position: 10
+  - code: married
+    name: "Married"
+    position: 20
+  - code: divorced
+    name: "Divorced"
+    position: 30
+  - code: widowed
+    name: "Widowed"
+    position: 40

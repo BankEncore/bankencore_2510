@@ -1,2 +1,41 @@
-<!-- app/views/parties/parties/index.html.erb -->
-<h1>Parties</h1>
+<div class="flex items-center justify-between mb-4">
+  <h1 class="text-2xl font-semibold">Parties</h1>
+  <%= link_to "New Party", new_party_path, class: "btn btn-primary" %>
+</div>
+
+<div class="overflow-x-auto">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Profile #</th>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Relationship</th>
+        <th>Established</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @parties.each do |p| %>
+        <tr>
+          <td class="font-mono"><%= p.profile_number || p.id %></td>
+          <td><%= p.display_name %></td>
+          <td>
+            <% if p.person? %>
+              <span class="badge">Person</span>
+            <% elsif p.organization? %>
+              <span class="badge badge-ghost">Organization</span>
+            <% else %>
+              <span class="badge badge-outline">Unspecified</span>
+            <% end %>
+          </td>
+          <td><%= p.relationship_to_institution_code.presence || "—" %></td>
+          <td><%= p.established_on&.to_s || "—" %></td>
+          <td class="text-right">
+            <%= link_to "Open", party_path(p), class: "btn btn-sm" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

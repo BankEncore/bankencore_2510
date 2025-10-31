@@ -1,0 +1,15 @@
+key: parties.withholding_option
+name: Withholding Option
+values:
+  - code: none
+    name: "No Withholding"
+    position: 10
+  - code: backup
+    name: "Backup Withholding"
+    position: 20
+  - code: exempt
+    name: "Exempt"
+    position: 30
+  - code: foreign
+    name: "Foreign / NRA"
+    position: 40

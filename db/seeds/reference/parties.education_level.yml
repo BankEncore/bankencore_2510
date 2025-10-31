@@ -1,0 +1,15 @@
+key: parties.education_level
+name: Education Level
+values:
+  - code: hs
+    name: "High School / GED"
+    position: 10
+  - code: college
+    name: "College / Associate / Bachelor"
+    position: 20
+  - code: graduate
+    name: "Graduate / Masters"
+    position: 30
+  - code: doctorate
+    name: "Doctorate / Professional"
+    position: 40

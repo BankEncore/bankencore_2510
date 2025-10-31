@@ -1,0 +1,8 @@
+<%# locals: organization: %>
+<dl class="grid grid-cols-3 gap-2">
+  <dt class="opacity-60">Country</dt><dd class="col-span-2"><%= organization.residence_country || "—" %></dd>
+  <dt class="opacity-60">Entity Type</dt><dd class="col-span-2"><%= organization.organization_type_code || "—" %></dd>
+  <dt class="opacity-60">Tax Exempt</dt><dd class="col-span-2"><%= organization.tax_exempt_code || "—" %></dd>
+  <dt class="opacity-60">NAICS</dt><dd class="col-span-2"><%= organization.naics_code || "—" %></dd>
+  <dt class="opacity-60">Established</dt><dd class="col-span-2"><%= organization.established_on || "—" %></dd>
+</dl>

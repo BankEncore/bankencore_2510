@@ -1,0 +1,204 @@
+<%= form_with model: @party, class: "space-y-6" do |f| %>
+  <!-- Profile (Party) -->
+  <div class="card bg-base-100 shadow">
+    <div class="card-body grid grid-cols-2 gap-4">
+      <h2 class="card-title col-span-2">Profile</h2>
+
+      <div>
+        <%= f.label :relationship_to_institution_code, "Relationship to Institution", class: "label" %>
+        <%= ref_select f, :relationship_to_institution_code,
+              list_key: "parties.relationship_to_institution",
+              default: "customer",
+              class: "select select-bordered w-full" %>
+      </div>
+
+      <div>
+        <%= f.label :withholding_option_code, "Withholding Option", class: "label" %>
+        <%= ref_select f, :withholding_option_code,
+              list_key: "parties.withholding_option",
+              default: "none",
+              class: "select select-bordered w-full" %>
+      </div>
+    </div>
+  </div>
+
+  <!-- Names (ALWAYS visible) -->
+  <div class="card bg-base-100 shadow">
+    <div class="card-body space-y-4">
+      <h2 class="card-title">Name</h2>
+
+      <% @party.names.build(preferred: true, name_type_code: "preferred_display") if @party.names.empty? %>
+
+      <%= f.fields_for :names do |nf| %>
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <%= nf.label :name_type_code, "Name Type", class: "label" %>
+            <%= nf.select :name_type_code,
+                  options_for_select(ref_options("parties.name_type"),
+                    nf.object.name_type_code.presence || "preferred_display"),
+                  {},
+                  class: "select select-bordered w-full" %>
+          </div>
+
+          <div class="col-span-2">
+            <%= nf.label :full_name, "Full Name (orgs), optional for people", class: "label" %>
+            <%= nf.text_field :full_name, class: "input input-bordered w-full" %>
+          </div>
+
+          <div>
+            <%= nf.label :family_name, class: "label" %>
+            <%= nf.text_field :family_name, class: "input input-bordered w-full" %>
+          </div>
+          <div>
+            <%= nf.label :given_name, class: "label" %>
+            <%= nf.text_field :given_name, class: "input input-bordered w-full" %>
+          </div>
+          <div>
+            <%= nf.label :middle_name, class: "label" %>
+            <%= nf.text_field :middle_name, class: "input input-bordered w-full" %>
+          </div>
+          <div>
+            <%= nf.label :prefix_code, "Prefix", class: "label" %>
+            <%= nf.text_field :prefix_code, class: "input input-bordered w-full" %>
+          </div>
+          <div>
+            <%= nf.label :suffix_code, "Suffix", class: "label" %>
+            <%= nf.text_field :suffix_code, class: "input input-bordered w-full" %>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2 mt-2">
+          <%= nf.hidden_field :preferred, value: 0 %>
+          <%= nf.check_box :preferred, {}, 1, 0 %>
+          <span class="opacity-80">Preferred</span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div><%= f.hidden_field :profile_kind, value: (@party.person? ? "person" : "organization") %></div>
+
+  <!-- Person fields -->
+  <div id="person-fields" class="card bg-base-100 shadow">
+    <div class="card-body grid grid-cols-2 gap-4">
+      <h2 class="card-title col-span-2">Individual</h2>
+      <%= f.fields_for :individual do |pf| %>
+        <div>
+          <%= pf.label :residence_country, "Country of Residence", class: "label" %>
+          <%= country_select pf, :residence_country,
+                default: nil,       # no default; user chooses
+                include_blank: true,
+                class: "select select-bordered w-full" %>
+        </div>
+
+        <div>
+          <%= pf.label :birth_date, class: "label" %>
+          <%= pf.date_field :birth_date, class: "input input-bordered w-full" %>
+        </div>
+
+        <div>
+          <%= pf.label :gender_code, "Gender", class: "label" %>
+          <%= ref_select pf, :gender_code,
+                list_key: "parties.gender",
+                default: nil, include_blank: true,
+                class: "select select-bordered w-full" %>
+        </div>
+
+        <div>
+          <%= pf.label :marital_status_code, "Marital Status", class: "label" %>
+          <%= ref_select pf, :marital_status_code,
+                list_key: "parties.marital_status",
+                default: nil, include_blank: true,
+                class: "select select-bordered w-full" %>
+        </div>
+
+        <div>
+          <%= pf.label :education_level_code, "Education", class: "label" %>
+          <%= ref_select pf, :education_level_code,
+                list_key: "parties.education_level",
+                default: nil, include_blank: true,
+                class: "select select-bordered w-full" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <!-- Organization fields -->
+  <div id="org-fields" class="card bg-base-100 shadow">
+    <div class="card-body grid grid-cols-2 gap-4">
+      <h2 class="card-title col-span-2">Organization</h2>
+      <%= f.fields_for :organization do |of| %>
+        <div>
+          <%= of.label :residence_country, "Country of Residence", class: "label" %>
+          <%= country_select of, :residence_country,
+                default: nil, include_blank: true,
+                class: "select select-bordered w-full" %>
+        </div>
+
+        <div>
+          <%= of.label :established_on, class: "label" %>
+          <%= of.date_field :established_on, class: "input input-bordered w-full" %>
+        </div>
+
+        <div>
+          <%= of.label :organization_type_code, "Organization Type", class: "label" %>
+          <%= ref_select of, :organization_type_code,
+                list_key: "parties.organization_type",
+                default: nil, include_blank: true,
+                class: "select select-bordered w-full" %>
+        </div>
+
+        <div>
+          <%= of.label :system_naics_code_id, "NAICS (FK)", class: "label" %>
+          <%= of.number_field :system_naics_code_id, class: "input input-bordered w-full" %>
+        </div>
+
+        <div class="col-span-2">
+          <%= of.label :naics_code, "NAICS (free text/code)", class: "label" %>
+          <%= of.text_field :naics_code, class: "input input-bordered w-full" %>
+        </div>
+
+        <div>
+          <%= of.label :tax_exempt_code, "Tax Exempt", class: "label" %>
+          <%= ref_select of, :tax_exempt_code,
+                list_key: "parties.tax_exempt",
+                default: nil, include_blank: true,
+                class: "select select-bordered w-full" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="flex justify-end">
+    <%= f.submit class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<%# --------- Toggle logic (Turbo-aware) --------- %>
+<script>
+  function toggleSubtype(isPerson) {
+    const personBox = document.getElementById("person-fields");
+    const orgBox    = document.getElementById("org-fields");
+    if (!personBox || !orgBox) return;
+
+    personBox.classList.toggle("hidden", !isPerson);
+    orgBox.classList.toggle("hidden", isPerson);
+
+    personBox.querySelectorAll("input, select, textarea").forEach(el => { el.disabled = !isPerson; });
+    orgBox.querySelectorAll("input, select, textarea").forEach(el => { el.disabled = isPerson; });
+  }
+
+  function initSubtype() {
+    const checked = document.querySelector('input[name="party[profile_kind]"]:checked');
+    toggleSubtype(checked ? checked.value === "person" : true);
+  }
+
+  document.addEventListener("turbo:load", initSubtype);
+  document.addEventListener("DOMContentLoaded", initSubtype);
+
+  document.addEventListener("change", (e) => {
+    if (e.target && e.target.name === "party[profile_kind]") {
+      toggleSubtype(e.target.value === "person");
+    }
+  });
+</script>

@@ -1,0 +1,23 @@
+key: parties.name_type
+name: Name Type
+values:
+  - code: preferred_display
+    name: "Preferred Display"
+    position: 10
+    metadata:
+      applies_to: ["individual","organization"]
+  - code: legal
+    name: "Legal"
+    position: 20
+    metadata:
+      applies_to: ["organization"]
+  - code: trade
+    name: "Trade / DBA"
+    position: 30
+    metadata:
+      applies_to: ["organization"]
+  - code: alias
+    name: "Alias"
+    position: 40
+    metadata:
+      applies_to: ["individual"]

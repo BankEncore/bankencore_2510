@@ -1,0 +1,24 @@
+key: parties.organization_type
+name: Organization Type
+values:
+  - code: sole_prop
+    name: "Sole Proprietorship"
+    position: 10
+  - code: partnership
+    name: "Partnership"
+    position: 20
+  - code: llc
+    name: "Limited Liability Company"
+    position: 30
+  - code: corp_c
+    name: "Corporation – C"
+    position: 40
+  - code: corp_s
+    name: "Corporation – S"
+    position: 50
+  - code: nonprofit
+    name: "Nonprofit / 501(c)"
+    position: 60
+  - code: government
+    name: "Government Entity"
+    position: 70

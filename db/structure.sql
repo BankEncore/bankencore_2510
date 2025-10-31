@@ -354,7 +354,7 @@ ALTER SEQUENCE public.parties_identities_id_seq OWNED BY public.parties_identiti
 CREATE TABLE public.parties_individuals (
     party_id bigint NOT NULL,
     residence_country character varying,
-    birth_date date,
+    birth_date text,
     gender_code character varying,
     marital_status_code character varying,
     immigration_status_code character varying,
@@ -2611,6 +2611,7 @@ ALTER TABLE ONLY public.parties_tax_ids
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20251031035447'),
 ('20251028024533'),
 ('20251028021305'),
 ('20251028014613'),

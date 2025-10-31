@@ -1,0 +1,15 @@
+key: parties.gender
+name: Gender
+values:
+  - code: male
+    name: "Male"
+    position: 10
+  - code: female
+    name: "Female"
+    position: 20
+  - code: nonbinary
+    name: "Nonbinary"
+    position: 30
+  - code: other
+    name: "Other / Unspecified"
+    position: 40

@@ -1,0 +1,8 @@
+<%# locals: individual: %>
+<dl class="grid grid-cols-3 gap-2">
+  <dt class="opacity-60">Country</dt><dd class="col-span-2"><%= individual.residence_country || "—" %></dd>
+  <dt class="opacity-60">Birth Date</dt><dd class="col-span-2"><%= individual.birth_date || "—" %></dd>
+  <dt class="opacity-60">Gender</dt><dd class="col-span-2"><%= individual.gender_code || "—" %></dd>
+  <dt class="opacity-60">Marital</dt><dd class="col-span-2"><%= individual.marital_status_code || "—" %></dd>
+  <dt class="opacity-60">Education</dt><dd class="col-span-2"><%= individual.education_level_code || "—" %></dd>
+</dl>

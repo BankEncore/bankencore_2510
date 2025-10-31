@@ -101,18 +101,19 @@ Rails.application.routes.draw do
     # ---- Parties ----
 
     # config/routes.rb
-    resources :parties, module: :parties do
-      resources :tax_ids
-      resources :phones
-      resources :postal_addresses
-      resources :web_addresses
-      resources :names
-      resources :email_addresses
-      resources :identities
-      resource  :individual, only: %i[show create update destroy]
-      resource  :organization, only: %i[show create update destroy]
+    scope module: :parties do
+      resources :parties do
+        resources :tax_ids
+        resources :phones
+        resources :postal_addresses
+        resources :web_addresses
+        resources :names
+        resources :email_addresses
+        resources :identities
+        resource  :individual,    only: %i[show create update destroy]
+        resource  :organization,  only: %i[show create update destroy]
+      end
     end
-
 
   # ---- Engines ----
   mount ActiveStorage::Engine => "/rails/active_storage"

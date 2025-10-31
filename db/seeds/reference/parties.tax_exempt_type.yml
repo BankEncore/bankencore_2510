@@ -1,0 +1,18 @@
+key: parties.tax_exempt_type
+name: Tax Exempt Type
+values:
+  - code: none
+    name: "Not Exempt"
+    position: 10
+  - code: 501c3
+    name: "501(c)(3) – Charitable"
+    position: 20
+  - code: 501c4
+    name: "501(c)(4) – Civic / Social Welfare"
+    position: 30
+  - code: gov
+    name: "Government"
+    position: 40
+  - code: other
+    name: "Other"
+    position: 50

@@ -1,0 +1,16 @@
+key: parties.relationship_to_institution
+name: Relationship to Institution
+values:
+  - code: customer
+    name: "Customer"
+    description: "Individual or organization with an account relationship"
+    position: 10
+  - code: employee
+    name: "Employee"
+    position: 20
+  - code: vendor
+    name: "Vendor"
+    position: 30
+  - code: correspondent
+    name: "Correspondent"
+    position: 40

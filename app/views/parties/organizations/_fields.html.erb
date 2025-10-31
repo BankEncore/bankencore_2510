@@ -1,0 +1,33 @@
+<%# locals: f: %>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+  <div class="md:col-span-1">
+    <label class="label">Registration Country</label>
+    <%= f.text_field :residence_country, class: "input input-bordered w-full", placeholder: "US" %>
+  </div>
+
+  <div class="md:col-span-1">
+    <label class="label">Entity Type</label>
+    <%= f.select :organization_type_code,
+          Ref.options("parties.organization_type"),
+          { include_blank: true },
+          class: "select select-bordered w-full" %>
+  </div>
+
+  <div class="md:col-span-1">
+    <label class="label">Tax Exempt</label>
+    <%= f.select :tax_exempt_code,
+          Ref.options("parties.tax_exempt_type"),
+          { include_blank: true },
+          class: "select select-bordered w-full" %>
+  </div>
+
+  <div class="md:col-span-1">
+    <label class="label">NAICS</label>
+    <%= f.text_field :naics_code, class: "input input-bordered w-full", placeholder: "e.g., 333999" %>
+  </div>
+
+  <div class="md:col-span-1">
+    <label class="label">Established On</label>
+    <%= f.date_field :established_on, class: "input input-bordered w-full" %>
+  </div>
+</div>
