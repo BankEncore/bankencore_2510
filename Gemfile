@@ -62,7 +62,7 @@ gem "audited", "~> 5.0"                   # audit logging of model changes
 
 # CSS
 gem "tailwindcss-rails"        # Tailwind CSS via Propshaft
-gem "pagy", "~> 9.4"                     # pagination
+gem "pagy", "~> 43.0"                    # pagination
 
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
